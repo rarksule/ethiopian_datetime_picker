@@ -218,7 +218,6 @@ Future<ETDateTimeRange?> showETDateRangePicker({
     );
   }
 
-  print(MaterialLocalizations.of(context).alertDialogLabel);
 
   return showDialog<ETDateTimeRange>(
     context: context,

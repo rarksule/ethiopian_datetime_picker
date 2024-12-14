@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('en'), Locale('am')],
-      locale: Locale('am'),
+      locale: const Locale('am'),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
@@ -88,11 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           // initialDate: ETDateTime.now(),
                           firstDate: ETDateTime(2000, 8),
                           lastDate: ETDateTime(2040, 9),
-                          locale: Locale('om'),
+                          locale: const Locale('om'),
                           initialEntryMode: DatePickerEntryMode.calendarOnly,
                           initialDatePickerMode: DatePickerMode.year,
                         );
-                        if (picked != null && picked != selectedDate) {
+                        if (picked != null) {
                           setState(() {
                             label = picked.toString();
                           });
@@ -111,49 +111,45 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 250,
                               child: Column(
                                 children: <Widget>[
-                                  Container(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        CupertinoButton(
-                                          child: const Text(
-                                            'ሰርዝ',
-                                            style: TextStyle(),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      CupertinoButton(
+                                        child: const Text(
+                                          'ሰርዝ',
+                                          style: TextStyle(),
                                         ),
-                                        CupertinoButton(
-                                          child: const Text(
-                                            'እሺ',
-                                            style: TextStyle(),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop(
-                                                tempPickedDate ??
-                                                    ETDateTime.now());
-                                          },
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      CupertinoButton(
+                                        child: const Text(
+                                          'እሺ',
+                                          style: TextStyle(),
                                         ),
-                                      ],
-                                    ),
+                                        onPressed: () {
+                                          Navigator.of(context).pop(
+                                              tempPickedDate ??
+                                                  ETDateTime.now());
+                                        },
+                                      ),
+                                    ],
                                   ),
                                   const Divider(
                                     height: 0,
                                     thickness: 1,
                                   ),
                                   Expanded(
-                                    child: Container(
-                                      child: CupertinoETDatePicker(
-                                        locale: Locale('am'),
-                                        mode:
-                                            CupertinoDatePickerMode.dateAndTime,
-                                        onDateTimeChanged:
-                                            (ETDateTime dateTime) {
-                                          tempPickedDate = dateTime;
-                                        },
-                                      ),
+                                    child: CupertinoETDatePicker(
+                                      locale: const Locale('am'),
+                                      mode:
+                                          CupertinoDatePickerMode.dateAndTime,
+                                      onDateTimeChanged:
+                                          (ETDateTime dateTime) {
+                                        tempPickedDate = dateTime;
+                                      },
                                     ),
                                   ),
                                 ],
@@ -164,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         if (pickedDate != null) {
                           setState(() {
-                            label = '${pickedDate}';
+                            label = '$pickedDate';
                           });
                         }
                       },
@@ -196,51 +192,48 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 250,
                               child: Column(
                                 children: <Widget>[
-                                  Container(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        CupertinoButton(
-                                          child: const Text(
-                                            'cancel',
-                                            style: TextStyle(),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      CupertinoButton(
+                                        child: const Text(
+                                          'cancel',
+                                          style: TextStyle(),
                                         ),
-                                        CupertinoButton(
-                                          child: const Text(
-                                            'Ok',
-                                            style: TextStyle(),
-                                          ),
-                                          onPressed: () {
-                                            print(tempPickedDate ??
-                                                ETDateTime.now());
-
-                                            Navigator.of(context).pop(
-                                                tempPickedDate ??
-                                                    ETDateTime.now());
-                                          },
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      CupertinoButton(
+                                        child: const Text(
+                                          'Ok',
+                                          style: TextStyle(),
                                         ),
-                                      ],
-                                    ),
+                                        onPressed: () {
+                                          // ignore: avoid_print
+                                          print(tempPickedDate ??
+                                              ETDateTime.now());
+                                  
+                                          Navigator.of(context).pop(
+                                              tempPickedDate ??
+                                                  ETDateTime.now());
+                                        },
+                                      ),
+                                    ],
                                   ),
                                   const Divider(
                                     height: 0,
                                     thickness: 1,
                                   ),
                                   Expanded(
-                                    child: Container(
-                                      child: CupertinoETDatePicker(
-                                        locale: Locale('om'),
-                                        mode: CupertinoDatePickerMode.time,
-                                        onDateTimeChanged:
-                                            (ETDateTime dateTime) {
-                                          tempPickedDate = dateTime;
-                                        },
-                                      ),
+                                    child: CupertinoETDatePicker(
+                                      locale: const Locale('om'),
+                                      mode: CupertinoDatePickerMode.time,
+                                      onDateTimeChanged:
+                                          (ETDateTime dateTime) {
+                                        tempPickedDate = dateTime;
+                                      },
                                     ),
                                   ),
                                 ],
@@ -271,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             start: ETDateTime(2017, 1, 2),
                             end: ETDateTime(2017, 1, 10),
                           ),
-                          locale: Locale('am'),
+                          locale: const Locale('am'),
                           firstDate: ETDateTime(2010),
                           lastDate: ETDateTime(2030),
                         );
@@ -284,7 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ImageBu(
                       onTap: () async {
                         var picked = await showETTimePicker(
-                          locale: Locale('en'),
+                          locale: const Locale('en'),
                           context: context,
                           initialTime: TimeOfDay.fromDateTime(ETDateTime.now()),
                         );
@@ -305,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             start: ETDateTime(2017, 1, 2),
                             end: ETDateTime(2017, 1, 10),
                           ),
-                          locale: Locale('so'),
+                          locale: const Locale('so'),
                           firstDate: ETDateTime(2010, 8),
                           lastDate: ETDateTime(2030, 9),
                         );
@@ -386,14 +379,14 @@ class ScaleGesture extends StatefulWidget {
   final Function onTap;
 
   const ScaleGesture({
-    Key? key,
+    super.key,
     required this.child,
     this.scale = 1.1,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
-  _ScaleGestureState createState() => _ScaleGestureState();
+  State<ScaleGesture> createState() => _ScaleGestureState();
 }
 
 class _ScaleGestureState extends State<ScaleGesture> {

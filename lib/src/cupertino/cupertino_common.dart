@@ -1,6 +1,5 @@
 import 'package:ethiopian_datetime/ethiopian_datetime.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import '../calander_common.dart';
 import '../string_text.dart';
