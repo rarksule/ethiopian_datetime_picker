@@ -278,5 +278,5 @@ _Banner designed and whole package idea inspired by  [mohammad-amir-mohammadi](h
 
 ### <img src="https://github.com/rarksule/ethiopian_datetime_picker/raw/master/assets/Eyes.png" width="36px">️ Project License:
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [BSD 3-Clause License](LICENSE).
 
