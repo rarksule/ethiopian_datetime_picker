@@ -1,0 +1,22 @@
+name: ethiopian_datetime_picker
+description: DateTime Picker flutter package with cupertino mode support and 4+ local languages
+version: 0.0.1
+homepage: https://github.com/rarksule/ethiopian_datetime_picker.git
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  ethiopian_datetime: ^1.0.3
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+
