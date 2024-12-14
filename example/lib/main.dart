@@ -144,10 +144,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Expanded(
                                     child: CupertinoETDatePicker(
                                       locale: const Locale('am'),
-                                      mode:
-                                          CupertinoDatePickerMode.dateAndTime,
-                                      onDateTimeChanged:
-                                          (ETDateTime dateTime) {
+                                      mode: CupertinoDatePickerMode.dateAndTime,
+                                      onDateTimeChanged: (ETDateTime dateTime) {
                                         tempPickedDate = dateTime;
                                       },
                                     ),
@@ -214,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           // ignore: avoid_print
                                           print(tempPickedDate ??
                                               ETDateTime.now());
-                                  
+
                                           Navigator.of(context).pop(
                                               tempPickedDate ??
                                                   ETDateTime.now());
@@ -230,8 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: CupertinoETDatePicker(
                                       locale: const Locale('om'),
                                       mode: CupertinoDatePickerMode.time,
-                                      onDateTimeChanged:
-                                          (ETDateTime dateTime) {
+                                      onDateTimeChanged: (ETDateTime dateTime) {
                                         tempPickedDate = dateTime;
                                       },
                                     ),

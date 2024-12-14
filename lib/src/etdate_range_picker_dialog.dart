@@ -218,7 +218,6 @@ Future<ETDateTimeRange?> showETDateRangePicker({
     );
   }
 
-
   return showDialog<ETDateTimeRange>(
     context: context,
     barrierDismissible: barrierDismissible,
