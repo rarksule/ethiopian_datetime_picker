@@ -97,8 +97,7 @@ class _CalendarDateRangePickerState extends State<CalendarETDateRangePicker> {
 
     // Calculate the index for the initially displayed month. This is needed to
     // divide the list of months into two `SliverList`s.
-    final initialDate =
-        widget.initialStartDate ?? widget.currentDate;
+    final initialDate = widget.initialStartDate ?? widget.currentDate;
     if (!initialDate.isBefore(widget.firstDate) &&
         !initialDate.isAfter(widget.lastDate)) {
       _initialMonthIndex =
@@ -216,16 +215,14 @@ class _CalendarDateRangePickerState extends State<CalendarETDateRangePicker> {
               slivers: <Widget>[
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) =>
-                        _buildMonthItem(context, index, true),
+                    (context, index) => _buildMonthItem(context, index, true),
                     childCount: _initialMonthIndex,
                   ),
                 ),
                 SliverList(
                   key: sliverAfterKey,
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) =>
-                        _buildMonthItem(context, index, false),
+                    (context, index) => _buildMonthItem(context, index, false),
                     childCount: _numberOfMonths - _initialMonthIndex,
                   ),
                 ),
@@ -331,8 +328,7 @@ class _CalendarKeyboardNavigatorState
   void _handleDirectionFocus(DirectionalFocusIntent intent) {
     assert(_focusedDay != null);
     setState(() {
-      final nextDate =
-          _nextDateInDirection(_focusedDay!, intent.direction);
+      final nextDate = _nextDateInDirection(_focusedDay!, intent.direction);
       if (nextDate != null) {
         _focusedDay = nextDate;
         _dayTraversalDirection = intent.direction;
@@ -437,9 +433,8 @@ class _MonthItemGridDelegate extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final tileWidth =
-        (constraints.crossAxisExtent - 2 * _horizontalPadding) /
-            ETDateTime.daysPerWeek;
+    final tileWidth = (constraints.crossAxisExtent - 2 * _horizontalPadding) /
+        ETDateTime.daysPerWeek;
     return _MonthSliverGridLayout(
       crossAxisCount: ETDateTime.daysPerWeek + 2,
       dayChildWidth: tileWidth,
@@ -519,8 +514,7 @@ class _MonthSliverGridLayout extends SliverGridLayout {
   @override
   SliverGridGeometry getGeometryForChildIndex(int index) {
     final adjustedIndex = index % crossAxisCount;
-    final isEdge =
-        adjustedIndex == 0 || adjustedIndex == crossAxisCount - 1;
+    final isEdge = adjustedIndex == 0 || adjustedIndex == crossAxisCount - 1;
     final double crossAxisStart =
         math.max(0, (adjustedIndex - 1) * dayChildWidth + edgeChildWidth);
 
@@ -612,8 +606,7 @@ class _MonthItemState extends State<_MonthItem> {
     );
     _dayFocusNodes = List<FocusNode>.generate(
       daysInMonth,
-      (index) =>
-          FocusNode(skipTraversal: true, debugLabel: "Day ${index + 1}"),
+      (index) => FocusNode(skipTraversal: true, debugLabel: "Day ${index + 1}"),
     );
   }
 
@@ -642,11 +635,9 @@ class _MonthItemState extends State<_MonthItem> {
 
   void _dayFocusChanged(bool focused) {
     if (focused) {
-      final focusDirection =
-          ETFocusedDate.maybeOf(context)?.scrollDirection;
+      final focusDirection = ETFocusedDate.maybeOf(context)?.scrollDirection;
       if (focusDirection != null) {
-        var policy =
-            ScrollPositionAlignmentPolicy.explicit;
+        var policy = ScrollPositionAlignmentPolicy.explicit;
         switch (focusDirection) {
           case TraversalDirection.up:
           case TraversalDirection.left:
@@ -715,8 +706,7 @@ class _MonthItemState extends State<_MonthItem> {
     final daysInMonth = ETDateUtils.getDaysInMonth(year, month);
     final dayOffset = ETDateTime(year, month).weekday - 1;
     final localized = Localized(context);
-    final weeks =
-        ((daysInMonth + dayOffset) / ETDateTime.daysPerWeek).ceil();
+    final weeks = ((daysInMonth + dayOffset) / ETDateTime.daysPerWeek).ceil();
     final gridHeight =
         weeks * _monthItemRowHeight + (weeks - 1) * _monthItemSpaceBetweenRows;
     final dayItems = <Widget>[];
@@ -779,10 +769,9 @@ class _MonthItemState extends State<_MonthItem> {
       paddedDayItems.addAll(weekList);
     }
 
-    final maxWidth =
-        MediaQuery.orientationOf(context) == Orientation.landscape
-            ? _maxCalendarWidthLandscape
-            : _maxCalendarWidthPortrait;
+    final maxWidth = MediaQuery.orientationOf(context) == Orientation.landscape
+        ? _maxCalendarWidthLandscape
+        : _maxCalendarWidthPortrait;
     return Column(
       children: <Widget>[
         Container(
@@ -913,8 +902,7 @@ class _DayItemState extends State<_DayItem> {
       (theme) => theme?.dayBackgroundColor,
       states,
     );
-    final dayOverlayColor =
-        MaterialStateProperty.resolveWith<Color?>(
+    final dayOverlayColor = MaterialStateProperty.resolveWith<Color?>(
       (states) => effectiveValue(
         (theme) => widget.isInRange
             ? theme?.rangeSelectionOverlayColor?.resolve(states)

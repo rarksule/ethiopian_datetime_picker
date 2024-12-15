@@ -117,8 +117,7 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
       );
 
   @override
-  Color get dayPeriodColor =>
-      MaterialStateColor.resolveWith((states) {
+  Color get dayPeriodColor => MaterialStateColor.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
           return _colors.primary
               .withOpacity(_colors.brightness == Brightness.dark ? 0.24 : 0.12);
@@ -172,8 +171,7 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
   double get centerRadius => 4;
 
   @override
-  Color get dialTextColor =>
-      MaterialStateColor.resolveWith((states) {
+  Color get dialTextColor => MaterialStateColor.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
           return _colors.surface;
         }
@@ -292,8 +290,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   BorderSide get dayPeriodBorderSide => BorderSide(color: _colors.outline);
 
   @override
-  Color get dayPeriodColor =>
-      MaterialStateColor.resolveWith((states) {
+  Color get dayPeriodColor => MaterialStateColor.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
           return _colors.tertiaryContainer;
         }
@@ -321,8 +318,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
       Size(dayPeriodPortraitSize.width, dayPeriodPortraitSize.height - 8);
 
   @override
-  Color get dayPeriodTextColor =>
-      MaterialStateColor.resolveWith((states) {
+  Color get dayPeriodTextColor => MaterialStateColor.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
           if (states.contains(MaterialState.focused)) {
             return _colors.onTertiaryContainer;
@@ -370,8 +366,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   double get centerRadius => const Size.square(8).width / 2;
 
   @override
-  Color get dialTextColor =>
-      MaterialStateColor.resolveWith((states) {
+  Color get dialTextColor => MaterialStateColor.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
           return _colors.onPrimary;
         }
@@ -388,8 +383,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   Color get entryModeIconColor => _colors.onSurface;
 
   @override
-  TextStyle get helpTextStyle =>
-      MaterialStateTextStyle.resolveWith((states) {
+  TextStyle get helpTextStyle => MaterialStateTextStyle.resolveWith((states) {
         final textStyle = _textTheme.labelMedium!;
         return textStyle.copyWith(color: _colors.onSurfaceVariant);
       });
@@ -398,8 +392,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   EdgeInsetsGeometry get padding => const EdgeInsets.all(24);
 
   @override
-  Color get hourMinuteColor =>
-      MaterialStateColor.resolveWith((states) {
+  Color get hourMinuteColor => MaterialStateColor.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
           var overlayColor = _colors.primaryContainer;
           if (states.contains(MaterialState.pressed)) {

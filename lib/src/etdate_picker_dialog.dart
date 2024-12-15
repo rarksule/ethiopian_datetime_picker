@@ -241,8 +241,7 @@ Future<ETDateTime?> showETDatePicker({
     barrierLabel: barrierLabel,
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
-    builder: (context) =>
-        builder == null ? dialog : builder(context, dialog),
+    builder: (context) => builder == null ? dialog : builder(context, dialog),
     anchorPoint: anchorPoint,
   );
 }

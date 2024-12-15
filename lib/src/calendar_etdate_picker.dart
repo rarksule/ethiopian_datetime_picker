@@ -162,8 +162,7 @@ class _ETCalendarDatePickerState extends State<ETCalendarDatePicker> {
   void initState() {
     super.initState();
     _mode = widget.initialCalendarMode;
-    final currentDisplayedDate =
-        widget.initialDate ?? widget.currentDate;
+    final currentDisplayedDate = widget.initialDate ?? widget.currentDate;
     _currentDisplayedMonthDate =
         ETDateTime(currentDisplayedDate.year, currentDisplayedDate.month);
     if (widget.initialDate != null) {
@@ -182,8 +181,7 @@ class _ETCalendarDatePickerState extends State<ETCalendarDatePicker> {
     if (!_announcedInitialDate && widget.initialDate != null) {
       assert(_selectedDate != null);
       _announcedInitialDate = true;
-      final isToday =
-          ETDateUtils.isSameDay(widget.currentDate, _selectedDate);
+      final isToday = ETDateUtils.isSameDay(widget.currentDate, _selectedDate);
       final semanticLabelSuffix =
           isToday ? ", ${localized.currentDateLabel}" : "";
       SemanticsService.announce(
@@ -596,8 +594,7 @@ class _MonthPickerState extends State<_MonthPicker> {
 
     // Can we use the preferred day in this month?
     if (preferredDay <= daysInMonth) {
-      final newFocus =
-          ETDateTime(month.year, month.month, preferredDay);
+      final newFocus = ETDateTime(month.year, month.month, preferredDay);
       if (_isSelectable(newFocus)) {
         return newFocus;
       }
@@ -699,8 +696,7 @@ class _MonthPickerState extends State<_MonthPicker> {
   void _handleDirectionFocus(DirectionalFocusIntent intent) {
     assert(_focusedDay != null);
     setState(() {
-      final nextDate =
-          _nextDateInDirection(_focusedDay!, intent.direction);
+      final nextDate = _nextDateInDirection(_focusedDay!, intent.direction);
       if (nextDate != null) {
         _focusedDay = nextDate;
         if (!ETDateUtils.isSameMonth(_focusedDay, _currentMonth)) {
@@ -761,8 +757,7 @@ class _MonthPickerState extends State<_MonthPicker> {
       widget.selectableDayPredicate!.call(date);
 
   Widget _buildItems(BuildContext context, int index) {
-    final month =
-        ETDateUtils.addMonthsToMonthDate(widget.firstDate, index);
+    final month = ETDateUtils.addMonthsToMonthDate(widget.firstDate, index);
     return _DayPicker(
       key: ValueKey<ETDateTime>(month),
       selectedDate: widget.selectedDate,
@@ -900,8 +895,7 @@ class _DayPickerState extends State<_DayPicker> {
     );
     _dayFocusNodes = List<FocusNode>.generate(
       daysInMonth,
-      (index) =>
-          FocusNode(skipTraversal: true, debugLabel: "Day ${index + 1}"),
+      (index) => FocusNode(skipTraversal: true, debugLabel: "Day ${index + 1}"),
     );
   }
 
@@ -928,8 +922,7 @@ class _DayPickerState extends State<_DayPicker> {
   Widget build(BuildContext context) {
     final datePickerTheme = DatePickerTheme.of(context);
     final defaults = DatePickerTheme.defaults(context);
-    final weekdayStyle =
-        datePickerTheme.weekdayStyle ?? defaults.weekdayStyle;
+    final weekdayStyle = datePickerTheme.weekdayStyle ?? defaults.weekdayStyle;
 
     final year = widget.displayedMonth.year;
     final month = widget.displayedMonth.month;
@@ -954,8 +947,7 @@ class _DayPickerState extends State<_DayPicker> {
                 !widget.selectableDayPredicate!(dayToBuild));
         final isSelectedDay =
             ETDateUtils.isSameDay(widget.selectedDate, dayToBuild);
-        final isToday =
-            ETDateUtils.isSameDay(widget.currentDate, dayToBuild);
+        final isToday = ETDateUtils.isSameDay(widget.currentDate, dayToBuild);
 
         dayItems.add(
           _Day(
@@ -1052,8 +1044,7 @@ class _DayState extends State<_Day> {
           : theme?.dayBackgroundColor,
       states,
     );
-    final dayOverlayColor =
-        MaterialStateProperty.resolveWith<Color?>(
+    final dayOverlayColor = MaterialStateProperty.resolveWith<Color?>(
       (states) => effectiveValue(
         (theme) => theme?.dayOverlayColor?.resolve(states),
       ),
@@ -1303,18 +1294,15 @@ class _YearPickerState extends State<YearPicker> {
           : theme?.yearBackgroundColor,
       states,
     );
-    final overlayColor =
-        MaterialStateProperty.resolveWith<Color?>(
+    final overlayColor = MaterialStateProperty.resolveWith<Color?>(
       (states) => effectiveValue(
-        (theme) =>
-            theme?.yearOverlayColor?.resolve(states),
+        (theme) => theme?.yearOverlayColor?.resolve(states),
       ),
     );
 
     BoxBorder? border;
     if (isCurrentYear) {
-      final todayBorder =
-          datePickerTheme.todayBorder ?? defaults.todayBorder;
+      final todayBorder = datePickerTheme.todayBorder ?? defaults.todayBorder;
       if (todayBorder != null) {
         border = Border.fromBorderSide(todayBorder.copyWith(color: textColor));
       }
@@ -1325,9 +1313,8 @@ class _YearPickerState extends State<YearPicker> {
       borderRadius: BorderRadius.circular(decorationHeight / 2),
     );
 
-    final itemStyle =
-        (datePickerTheme.yearStyle ?? defaults.yearStyle)
-            ?.apply(color: textColor);
+    final itemStyle = (datePickerTheme.yearStyle ?? defaults.yearStyle)
+        ?.apply(color: textColor);
     Widget yearItem = Center(
       child: Container(
         decoration: decoration,

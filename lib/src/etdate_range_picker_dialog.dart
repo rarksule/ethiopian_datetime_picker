@@ -228,8 +228,7 @@ Future<ETDateTimeRange?> showETDateRangePicker({
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
     useSafeArea: false,
-    builder: (context) =>
-        builder == null ? dialog : builder(context, dialog),
+    builder: (context) => builder == null ? dialog : builder(context, dialog),
     anchorPoint: anchorPoint,
   );
 }
@@ -707,19 +706,16 @@ class _CalendarRangePickerDialog extends StatelessWidget {
     final defaults = DatePickerTheme.defaults(context);
     final dialogBackground = themeData.rangePickerBackgroundColor ??
         defaults.rangePickerBackgroundColor;
-    final headerBackground =
-        themeData.rangePickerHeaderBackgroundColor ??
-            defaults.rangePickerHeaderBackgroundColor;
-    final headerForeground =
-        themeData.rangePickerHeaderForegroundColor ??
-            defaults.rangePickerHeaderForegroundColor;
+    final headerBackground = themeData.rangePickerHeaderBackgroundColor ??
+        defaults.rangePickerHeaderBackgroundColor;
+    final headerForeground = themeData.rangePickerHeaderForegroundColor ??
+        defaults.rangePickerHeaderForegroundColor;
     final headerDisabledForeground = headerForeground?.withOpacity(0.38);
     final headlineStyle = themeData.rangePickerHeaderHeadlineStyle ??
         defaults.rangePickerHeaderHeadlineStyle;
-    final headlineHelpStyle =
-        (themeData.rangePickerHeaderHelpStyle ??
-                defaults.rangePickerHeaderHelpStyle)
-            ?.apply(color: headerForeground);
+    final headlineHelpStyle = (themeData.rangePickerHeaderHelpStyle ??
+            defaults.rangePickerHeaderHelpStyle)
+        ?.apply(color: headerForeground);
     final startDateText =
         formatRangeStartETDate(selectedStartDate, selectedEndDate, context);
     final endDateText = formatRangeEndETDate(

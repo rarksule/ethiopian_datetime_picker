@@ -193,8 +193,7 @@ class _TimePickerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeOfDayFormat =
-        MaterialLocalizations.of(context).timeOfDayFormat(
+    final timeOfDayFormat = MaterialLocalizations.of(context).timeOfDayFormat(
       alwaysUse24HourFormat: _TimePickerModel.use24HourFormatOf(context),
     );
 
@@ -298,10 +297,8 @@ class _HourMinuteControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timePickerTheme =
-        _TimePickerModel.themeOf(context);
-    final defaultTheme =
-        _TimePickerModel.defaultThemeOf(context);
+    final timePickerTheme = _TimePickerModel.themeOf(context);
+    final defaultTheme = _TimePickerModel.defaultThemeOf(context);
     final backgroundColor =
         timePickerTheme.hourMinuteColor ?? defaultTheme.hourMinuteColor;
     final shape =
@@ -361,11 +358,9 @@ class _HourControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final alwaysUse24HourFormat =
-        MediaQuery.alwaysUse24HourFormatOf(context);
+    final alwaysUse24HourFormat = MediaQuery.alwaysUse24HourFormatOf(context);
     final selectedTime = _TimePickerModel.selectedTimeOf(context);
-    final localizations =
-        MaterialLocalizations.of(context);
+    final localizations = MaterialLocalizations.of(context);
     final formattedHour = localizations.formatHour(
       selectedTime,
       alwaysUse24HourFormat: _TimePickerModel.use24HourFormatOf(context),
@@ -504,8 +499,7 @@ class _MinuteControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations =
-        MaterialLocalizations.of(context);
+    final localizations = MaterialLocalizations.of(context);
     final selectedTime = _TimePickerModel.selectedTimeOf(context);
     final formattedMinute = localizations.formatMinute(selectedTime);
     final nextMinute = selectedTime.replacing(
@@ -515,8 +509,7 @@ class _MinuteControl extends StatelessWidget {
     final previousMinute = selectedTime.replacing(
       minute: (selectedTime.minute - 1) % TimeOfDay.minutesPerHour,
     );
-    final formattedPreviousMinute =
-        localizations.formatMinute(previousMinute);
+    final formattedPreviousMinute = localizations.formatMinute(previousMinute);
 
     return Semantics(
       excludeSemantics: true,
@@ -612,10 +605,8 @@ class _DayPeriodControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timePickerTheme =
-        _TimePickerModel.themeOf(context);
-    final defaultTheme =
-        _TimePickerModel.defaultThemeOf(context);
+    final timePickerTheme = _TimePickerModel.themeOf(context);
+    final defaultTheme = _TimePickerModel.defaultThemeOf(context);
     final selectedTime = _TimePickerModel.selectedTimeOf(context);
     final amSelected = selectedTime.period == DayPeriod.am;
     final pmSelected = !amSelected;
@@ -726,12 +717,9 @@ class _AmPmButton extends StatelessWidget {
     final states = <MaterialState>{
       if (selected) MaterialState.selected,
     };
-    final timePickerTheme =
-        _TimePickerModel.themeOf(context);
-    final defaultTheme =
-        _TimePickerModel.defaultThemeOf(context);
-    final resolvedBackgroundColor =
-        MaterialStateProperty.resolveAs<Color>(
+    final timePickerTheme = _TimePickerModel.themeOf(context);
+    final defaultTheme = _TimePickerModel.defaultThemeOf(context);
+    final resolvedBackgroundColor = MaterialStateProperty.resolveAs<Color>(
       timePickerTheme.dayPeriodColor ?? defaultTheme.dayPeriodColor,
       states,
     );
@@ -739,8 +727,7 @@ class _AmPmButton extends StatelessWidget {
       timePickerTheme.dayPeriodTextColor ?? defaultTheme.dayPeriodTextColor,
       states,
     );
-    final resolvedTextStyle =
-        MaterialStateProperty.resolveAs<TextStyle?>(
+    final resolvedTextStyle = MaterialStateProperty.resolveAs<TextStyle?>(
       timePickerTheme.dayPeriodTextStyle ?? defaultTheme.dayPeriodTextStyle,
       states,
     )?.copyWith(
@@ -1310,8 +1297,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
   void _updateThetaForPan({bool roundMinutes = false}) {
     setState(() {
       final offset = _position! - _center!;
-      final labelRadius =
-          _dialSize!.shortestSide / 2 - _kTimePickerDialPadding;
+      final labelRadius = _dialSize!.shortestSide / 2 - _kTimePickerDialPadding;
       final innerRadius = labelRadius - _kTimePickerInnerDialOffset;
       var angle = (math.atan2(offset.dx, offset.dy) - math.pi / 2) % _kTwoPi;
       final radius = clampDouble(
@@ -1647,8 +1633,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
         timePickerTheme.dialHandColor ?? defaultTheme.dialHandColor;
     final labelStyle =
         timePickerTheme.dialTextStyle ?? defaultTheme.dialTextStyle;
-    final dialTextUnselectedColor =
-        MaterialStateProperty.resolveAs<Color>(
+    final dialTextUnselectedColor = MaterialStateProperty.resolveAs<Color>(
       timePickerTheme.dialTextColor ?? defaultTheme.dialTextColor,
       <MaterialState>{},
     );
@@ -1905,16 +1890,13 @@ class _TimePickerInputState extends State<_TimePickerInput>
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final timeOfDayFormat =
-        MaterialLocalizations.of(context).timeOfDayFormat(
+    final timeOfDayFormat = MaterialLocalizations.of(context).timeOfDayFormat(
       alwaysUse24HourFormat: _TimePickerModel.use24HourFormatOf(context),
     );
     final use24HourDials = hourFormat(of: timeOfDayFormat) != HourFormat.h;
     final theme = Theme.of(context);
-    final timePickerTheme =
-        _TimePickerModel.themeOf(context);
-    final defaultTheme =
-        _TimePickerModel.defaultThemeOf(context);
+    final timePickerTheme = _TimePickerModel.themeOf(context);
+    final defaultTheme = _TimePickerModel.defaultThemeOf(context);
     final localized = Localized(context);
     final hourMinuteStyle =
         timePickerTheme.hourMinuteTextStyle ?? defaultTheme.hourMinuteTextStyle;
@@ -2200,10 +2182,8 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField>
   }
 
   String get _formattedValue {
-    final alwaysUse24HourFormat =
-        MediaQuery.alwaysUse24HourFormatOf(context);
-    final localizations =
-        MaterialLocalizations.of(context);
+    final alwaysUse24HourFormat = MediaQuery.alwaysUse24HourFormatOf(context);
+    final localizations = MaterialLocalizations.of(context);
     return !widget.isHour
         ? localizations.formatMinute(widget.selectedTime)
         : localizations.formatHour(
@@ -2219,12 +2199,10 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField>
     final defaultTheme = theme.useMaterial3
         ? ETTimePickerDefaultsM3(context)
         : ETTimePickerDefaultsM2(context);
-    final alwaysUse24HourFormat =
-        MediaQuery.alwaysUse24HourFormatOf(context);
+    final alwaysUse24HourFormat = MediaQuery.alwaysUse24HourFormatOf(context);
 
-    final inputDecorationTheme =
-        timePickerTheme.inputDecorationTheme ??
-            defaultTheme.inputDecorationTheme;
+    final inputDecorationTheme = timePickerTheme.inputDecorationTheme ??
+        defaultTheme.inputDecorationTheme;
     var inputDecoration =
         const InputDecoration().applyDefaults(inputDecorationTheme);
     // Remove the hint text when focused because the centered cursor
@@ -2237,10 +2215,9 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField>
     // timePickerTheme.hourMinuteColor, use that, and otherwise use the default.
     // We ignore the value in the fillColor of the input decoration in the
     // default theme here, but it's the same as the hourMinuteColor.
-    final startingFillColor =
-        timePickerTheme.inputDecorationTheme?.fillColor ??
-            timePickerTheme.hourMinuteColor ??
-            defaultTheme.hourMinuteColor;
+    final startingFillColor = timePickerTheme.inputDecorationTheme?.fillColor ??
+        timePickerTheme.hourMinuteColor ??
+        defaultTheme.hourMinuteColor;
     final Color fillColor;
     if (theme.useMaterial3) {
       fillColor = MaterialStateProperty.resolveAs<Color>(
@@ -2546,8 +2523,7 @@ class _TimePickerState extends State<ETTimePicker> with RestorationMixin {
       return;
     }
 
-    final localizations =
-        MaterialLocalizations.of(context);
+    final localizations = MaterialLocalizations.of(context);
     _announceToAccessibility(
       context,
       localizations.formatTimeOfDay(
@@ -2592,8 +2568,7 @@ class _TimePickerState extends State<ETTimePicker> with RestorationMixin {
     final defaultTheme = theme.useMaterial3
         ? ETTimePickerDefaultsM3(context)
         : ETTimePickerDefaultsM2(context);
-    final orientation =
-        _orientation.value ?? MediaQuery.orientationOf(context);
+    final orientation = _orientation.value ?? MediaQuery.orientationOf(context);
     final timeOfDayHour = hourFormat(of: timeOfDayFormat);
     final _HourDialType hourMode;
     switch (timeOfDayHour) {

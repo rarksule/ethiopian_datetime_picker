@@ -158,8 +158,7 @@ Future<TimeOfDay?> showETTimePicker({
     barrierColor: barrierColor,
     barrierLabel: barrierLabel,
     useRootNavigator: useRootNavigator,
-    builder: (context) =>
-        builder == null ? dialog : builder(context, dialog),
+    builder: (context) => builder == null ? dialog : builder(context, dialog),
     routeSettings: routeSettings,
     anchorPoint: anchorPoint,
   );
@@ -364,8 +363,7 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
   }
 
   Size _minDialogSize(BuildContext context, {required bool useMaterial3}) {
-    final orientation =
-        _orientation.value ?? MediaQuery.orientationOf(context);
+    final orientation = _orientation.value ?? MediaQuery.orientationOf(context);
 
     switch (_entryMode.value) {
       case TimePickerEntryMode.dial:
@@ -378,8 +376,7 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
         }
       case TimePickerEntryMode.input:
       case TimePickerEntryMode.inputOnly:
-        final localizations =
-            MaterialLocalizations.of(context);
+        final localizations = MaterialLocalizations.of(context);
         final timeOfDayFormat = localizations.timeOfDayFormat(
           alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
         );
@@ -405,8 +402,7 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
   }
 
   Size _dialogSize(BuildContext context, {required bool useMaterial3}) {
-    final orientation =
-        _orientation.value ?? MediaQuery.orientationOf(context);
+    final orientation = _orientation.value ?? MediaQuery.orientationOf(context);
     // Constrain the textScaleFactor to prevent layout issues. Since only some
     // parts of the time picker scale up with textScaleFactor, we cap the factor
     // to 1.1 as that provides enough space to reasonably fit all the content.
@@ -430,8 +426,7 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
         }
       case TimePickerEntryMode.input:
       case TimePickerEntryMode.inputOnly:
-        final localizations =
-            MaterialLocalizations.of(context);
+        final localizations = MaterialLocalizations.of(context);
         final timeOfDayFormat = localizations.timeOfDayFormat(
           alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
         );
@@ -536,9 +531,8 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
         // _dialogSize returns "padded" sizes.
         tapTargetSizeOffset = const Offset(0, -12);
     }
-    final dialogSize =
-        _dialogSize(context, useMaterial3: theme.useMaterial3) +
-            tapTargetSizeOffset;
+    final dialogSize = _dialogSize(context, useMaterial3: theme.useMaterial3) +
+        tapTargetSizeOffset;
     final minDialogSize =
         _minDialogSize(context, useMaterial3: theme.useMaterial3) +
             tapTargetSizeOffset;

@@ -45,8 +45,7 @@ const TextStyle _kDefaultPickerTextStyle = TextStyle(
 /// Adjusts the text style color based on the validity status indicated by [isValid].
 /// Returns the modified text style with color adjustments.
 TextStyle _themeTextStyle(BuildContext context, {bool isValid = true}) {
-  final style =
-      CupertinoTheme.of(context).textTheme.dateTimePickerTextStyle;
+  final style = CupertinoTheme.of(context).textTheme.dateTimePickerTextStyle;
   return isValid
       ? style.copyWith(
           color: CupertinoDynamicColor.maybeResolve(style.color, context),
@@ -115,8 +114,7 @@ class _DatePickerLayoutDelegate extends MultiChildLayoutDelegate {
     }
 
     for (var i = 0; i < columnWidths.length; i++) {
-      final index =
-          textDirectionFactor == 1 ? i : columnWidths.length - i - 1;
+      final index = textDirectionFactor == 1 ? i : columnWidths.length - i - 1;
 
       var childWidth = columnWidths[index] + _kDatePickerPadSize * 2;
       if (index == 0 || index == columnWidths.length - 1) {
@@ -427,8 +425,7 @@ class CupertinoETDatePicker extends StatefulWidget {
         // just some dates are measured.
         for (var i = 1; i <= 13; i++) {
           // An arbitrary date.
-          final date =
-              datePickerMediumDate(ETDateTime(2018, i, 25), context);
+          final date = datePickerMediumDate(ETDateTime(2018, i, 25), context);
           if (longestText.length < date.length) {
             longestText = date;
           }
@@ -710,9 +707,8 @@ class _CupertinoDatePickerDateTimeState extends State<CupertinoETDatePicker> {
   void _onSelectedItemChange(int index) {
     final selected = selectedDateTime;
 
-    final isDateInvalid =
-        (widget.minimumDate?.isAfter(selected) ?? false) ||
-            (widget.maximumDate?.isBefore(selected) ?? false);
+    final isDateInvalid = (widget.minimumDate?.isAfter(selected) ?? false) ||
+        (widget.maximumDate?.isBefore(selected) ?? false);
 
     if (isDateInvalid) {
       return;
@@ -902,8 +898,7 @@ class _CupertinoDatePickerDateTimeState extends State<CupertinoETDatePicker> {
           onSelectedItemChanged: _onSelectedItemChange,
           looping: true,
           selectionOverlay: selectionOverlay,
-          children:
-              List<Widget>.generate(60 ~/ widget.minuteInterval, (index) {
+          children: List<Widget>.generate(60 ~/ widget.minuteInterval, (index) {
             final minute = index * widget.minuteInterval;
 
             final date = ETDateTime(
@@ -997,8 +992,7 @@ class _CupertinoDatePickerDateTimeState extends State<CupertinoETDatePicker> {
 
     if (minCheck || maxCheck) {
       // We have minCheck === !maxCheck.
-      final targetDate =
-          minCheck ? widget.minimumDate! : widget.maximumDate!;
+      final targetDate = minCheck ? widget.minimumDate! : widget.maximumDate!;
       _scrollToDate(targetDate, selectedDate, minCheck);
     }
   }
@@ -1058,10 +1052,9 @@ class _CupertinoDatePickerDateTimeState extends State<CupertinoETDatePicker> {
     ];
 
     // Swap the hours and minutes if RTL to ensure they are in the correct position.
-    final pickerBuilders =
-        Directionality.of(context) == TextDirection.rtl
-            ? <_ColumnBuilder>[_buildMinutePicker, _buildHourPicker]
-            : <_ColumnBuilder>[_buildHourPicker, _buildMinutePicker];
+    final pickerBuilders = Directionality.of(context) == TextDirection.rtl
+        ? <_ColumnBuilder>[_buildMinutePicker, _buildHourPicker]
+        : <_ColumnBuilder>[_buildHourPicker, _buildMinutePicker];
 
     // Adds am/pm column if the picker is not using 24h format.
     if (!widget.use24hFormat) {
@@ -1285,8 +1278,7 @@ class _CupertinoDatePickerDateState extends State<CupertinoETDatePicker> {
     TransitionBuilder itemPositioningBuilder,
     Widget selectionOverlay,
   ) {
-    final daysInCurrentMonth =
-        _lastDayInMonth(selectedYear, selectedMonth).day;
+    final daysInCurrentMonth = _lastDayInMonth(selectedYear, selectedMonth).day;
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
         if (notification is ScrollStartNotification) {
@@ -1370,15 +1362,13 @@ class _CupertinoDatePickerDateState extends State<CupertinoETDatePicker> {
           selectionOverlay: selectionOverlay,
           children: List<Widget>.generate(12, (index) {
             final month = index + 1;
-            final isInvalidMonth =
-                (widget.minimumDate?.year == selectedYear &&
-                        widget.minimumDate!.month > month) ||
-                    (widget.maximumDate?.year == selectedYear &&
-                        widget.maximumDate!.month < month);
-            final monthName =
-                (widget.mode == CupertinoDatePickerMode.monthYear)
-                    ? datePickerStandaloneMonth(month, context)
-                    : datePickerMonth(month, context);
+            final isInvalidMonth = (widget.minimumDate?.year == selectedYear &&
+                    widget.minimumDate!.month > month) ||
+                (widget.maximumDate?.year == selectedYear &&
+                    widget.maximumDate!.month < month);
+            final monthName = (widget.mode == CupertinoDatePickerMode.monthYear)
+                ? datePickerStandaloneMonth(month, context)
+                : datePickerMonth(month, context);
 
             return itemPositioningBuilder(
               context,
@@ -1456,8 +1446,7 @@ class _CupertinoDatePickerDateState extends State<CupertinoETDatePicker> {
         ETDateTime(selectedYear, selectedMonth, selectedDay + 1);
 
     final minCheck = widget.minimumDate?.isBefore(maxSelectedDate) ?? true;
-    final maxCheck =
-        widget.maximumDate?.isBefore(minSelectedDate) ?? false;
+    final maxCheck = widget.maximumDate?.isBefore(minSelectedDate) ?? false;
 
     return minCheck && !maxCheck && minSelectedDate.day == selectedDay;
   }
@@ -1474,8 +1463,7 @@ class _CupertinoDatePickerDateState extends State<CupertinoETDatePicker> {
 
     // Whenever scrolling lands on an invalid entry, the picker
     // automatically scrolls to a valid one.
-    final minSelectDate =
-        ETDateTime(selectedYear, selectedMonth, selectedDay);
+    final minSelectDate = ETDateTime(selectedYear, selectedMonth, selectedDay);
     final maxSelectDate =
         ETDateTime(selectedYear, selectedMonth, selectedDay + 1);
 
@@ -1484,8 +1472,7 @@ class _CupertinoDatePickerDateState extends State<CupertinoETDatePicker> {
 
     if (!minCheck || maxCheck) {
       // We have minCheck === !maxCheck.
-      final targetDate =
-          minCheck ? widget.maximumDate! : widget.minimumDate!;
+      final targetDate = minCheck ? widget.maximumDate! : widget.minimumDate!;
       _scrollToDate(targetDate);
       return;
     }
@@ -1522,8 +1509,7 @@ class _CupertinoDatePickerDateState extends State<CupertinoETDatePicker> {
     var pickerBuilders = <_ColumnBuilder>[];
     var columnWidths = <double>[];
 
-    final datePickerDateOrder =
-        dateOrder ?? localizations.datePickerDateOrder;
+    final datePickerDateOrder = dateOrder ?? localizations.datePickerDateOrder;
 
     switch (datePickerDateOrder) {
       case DatePickerDateOrder.mdy:
@@ -1761,15 +1747,13 @@ class _CupertinoDatePickerMonthYearState extends State<CupertinoETDatePicker> {
           selectionOverlay: selectionOverlay,
           children: List<Widget>.generate(12, (index) {
             final month = index + 1;
-            final isInvalidMonth =
-                (widget.minimumDate?.year == selectedYear &&
-                        widget.minimumDate!.month > month) ||
-                    (widget.maximumDate?.year == selectedYear &&
-                        widget.maximumDate!.month < month);
-            final monthName =
-                (widget.mode == CupertinoDatePickerMode.monthYear)
-                    ? datePickerStandaloneMonth(month, context)
-                    : datePickerMonth(month, context);
+            final isInvalidMonth = (widget.minimumDate?.year == selectedYear &&
+                    widget.minimumDate!.month > month) ||
+                (widget.maximumDate?.year == selectedYear &&
+                    widget.maximumDate!.month < month);
+            final monthName = (widget.mode == CupertinoDatePickerMode.monthYear)
+                ? datePickerStandaloneMonth(month, context)
+                : datePickerMonth(month, context);
 
             return itemPositioningBuilder(
               context,
@@ -1844,8 +1828,7 @@ class _CupertinoDatePickerMonthYearState extends State<CupertinoETDatePicker> {
         ETDateTime(selectedYear, selectedMonth, widget.initialDateTime.day + 1);
 
     final minCheck = widget.minimumDate?.isBefore(maxSelectedDate) ?? true;
-    final maxCheck =
-        widget.maximumDate?.isBefore(minSelectedDate) ?? false;
+    final maxCheck = widget.maximumDate?.isBefore(minSelectedDate) ?? false;
 
     return minCheck && !maxCheck;
   }
@@ -1871,8 +1854,7 @@ class _CupertinoDatePickerMonthYearState extends State<CupertinoETDatePicker> {
 
     if (!minCheck || maxCheck) {
       // We have minCheck === !maxCheck.
-      final targetDate =
-          minCheck ? widget.maximumDate! : widget.minimumDate!;
+      final targetDate = minCheck ? widget.maximumDate! : widget.minimumDate!;
       _scrollToDate(targetDate);
       return;
     }
@@ -1898,8 +1880,7 @@ class _CupertinoDatePickerMonthYearState extends State<CupertinoETDatePicker> {
     var pickerBuilders = <_ColumnBuilder>[];
     var columnWidths = <double>[];
 
-    final datePickerDateOrder =
-        dateOrder ?? localizations.datePickerDateOrder;
+    final datePickerDateOrder = dateOrder ?? localizations.datePickerDateOrder;
 
     switch (datePickerDateOrder) {
       case DatePickerDateOrder.mdy:

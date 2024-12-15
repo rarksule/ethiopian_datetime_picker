@@ -275,8 +275,7 @@ class _CupertinoPickerState extends State<CupertinoETPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle =
-        CupertinoTheme.of(context).textTheme.pickerTextStyle;
+    final textStyle = CupertinoTheme.of(context).textTheme.pickerTextStyle;
     final resolvedBackgroundColor =
         CupertinoDynamicColor.maybeResolve(widget.backgroundColor, context);
 
