@@ -852,6 +852,7 @@ class _DayItem extends StatefulWidget {
 }
 
 class _DayItemState extends State<_DayItem> {
+  // ignore: deprecated_member_use
   final MaterialStatesController _statesController = MaterialStatesController();
 
   @override
