@@ -1,6 +1,6 @@
 // An abstract base class for the M2 and M3 defaults below, so that their return
 // types can be non-nullable.
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 abstract class ETTimePickerDefaults extends TimePickerThemeData {
   @override
@@ -96,232 +96,172 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
   late final ColorScheme _colors = Theme.of(context).colorScheme;
   late final TextTheme _textTheme = Theme.of(context).textTheme;
   static const OutlinedBorder _kDefaultShape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(4)));
+    borderRadius: BorderRadius.all(Radius.circular(4)),
+  );
 
   @override
-  Color get backgroundColor {
-    return _colors.surface;
-  }
+  Color get backgroundColor => _colors.surface;
 
   @override
-  ButtonStyle get cancelButtonStyle {
-    return TextButton.styleFrom();
-  }
+  ButtonStyle get cancelButtonStyle => TextButton.styleFrom();
 
   @override
-  ButtonStyle get confirmButtonStyle {
-    return TextButton.styleFrom();
-  }
+  ButtonStyle get confirmButtonStyle => TextButton.styleFrom();
 
   @override
-  BorderSide get dayPeriodBorderSide {
-    return BorderSide(
-      color: Color.alphaBlend(
-          _colors.onSurface.withOpacity(0.38), _colors.surface),
-    );
-  }
+  BorderSide get dayPeriodBorderSide => BorderSide(
+        color: Color.alphaBlend(
+          _colors.onSurface.withOpacity(0.38),
+          _colors.surface,
+        ),
+      );
 
   @override
-  Color get dayPeriodColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        return _colors.primary
-            .withOpacity(_colors.brightness == Brightness.dark ? 0.24 : 0.12);
-      }
-      // The unselected day period should match the overall picker dialog color.
-      // Making it transparent enables that without being redundant and allows
-      // the optional elevation overlay for dark mode to be visible.
-      return Colors.transparent;
-    });
-  }
+  Color get dayPeriodColor =>
+      MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return _colors.primary
+              .withOpacity(_colors.brightness == Brightness.dark ? 0.24 : 0.12);
+        }
+        // The unselected day period should match the overall picker dialog color.
+        // Making it transparent enables that without being redundant and allows
+        // the optional elevation overlay for dark mode to be visible.
+        return Colors.transparent;
+      });
 
   @override
-  OutlinedBorder get dayPeriodShape {
-    return _kDefaultShape;
-  }
+  OutlinedBorder get dayPeriodShape => _kDefaultShape;
 
   @override
-  Size get dayPeriodPortraitSize {
-    return const Size(52, 80);
-  }
+  Size get dayPeriodPortraitSize => const Size(52, 80);
 
   @override
-  Size get dayPeriodLandscapeSize {
-    return const Size(0, 40);
-  }
+  Size get dayPeriodLandscapeSize => const Size(0, 40);
 
   @override
-  Size get dayPeriodInputSize {
-    return const Size(52, 70);
-  }
+  Size get dayPeriodInputSize => const Size(52, 70);
 
   @override
-  Color get dayPeriodTextColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      return states.contains(MaterialState.selected)
-          ? _colors.primary
-          : _colors.onSurface.withOpacity(0.60);
-    });
-  }
+  Color get dayPeriodTextColor => MaterialStateColor.resolveWith(
+        (states) => states.contains(MaterialState.selected)
+            ? _colors.primary
+            : _colors.onSurface.withOpacity(0.60),
+      );
 
   @override
-  TextStyle get dayPeriodTextStyle {
-    return _textTheme.titleMedium!.copyWith(color: dayPeriodTextColor);
-  }
+  TextStyle get dayPeriodTextStyle =>
+      _textTheme.titleMedium!.copyWith(color: dayPeriodTextColor);
 
   @override
-  Color get dialBackgroundColor {
-    return _colors.onSurface
-        .withOpacity(_colors.brightness == Brightness.dark ? 0.12 : 0.08);
-  }
+  Color get dialBackgroundColor => _colors.onSurface
+      .withOpacity(_colors.brightness == Brightness.dark ? 0.12 : 0.08);
 
   @override
-  Color get dialHandColor {
-    return _colors.primary;
-  }
+  Color get dialHandColor => _colors.primary;
 
   @override
-  Size get dialSize {
-    return const Size.square(280);
-  }
+  Size get dialSize => const Size.square(280);
 
   @override
-  double get handWidth {
-    return 2;
-  }
+  double get handWidth => 2;
 
   @override
-  double get dotRadius {
-    return 22;
-  }
+  double get dotRadius => 22;
 
   @override
-  double get centerRadius {
-    return 4;
-  }
+  double get centerRadius => 4;
 
   @override
-  Color get dialTextColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        return _colors.surface;
-      }
-      return _colors.onSurface;
-    });
-  }
+  Color get dialTextColor =>
+      MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return _colors.surface;
+        }
+        return _colors.onSurface;
+      });
 
   @override
-  TextStyle get dialTextStyle {
-    return _textTheme.bodyLarge!;
-  }
+  TextStyle get dialTextStyle => _textTheme.bodyLarge!;
 
   @override
-  double get elevation {
-    return 6;
-  }
+  double get elevation => 6;
 
   @override
-  Color get entryModeIconColor {
-    return _colors.onSurface
-        .withOpacity(_colors.brightness == Brightness.dark ? 1.0 : 0.6);
-  }
+  Color get entryModeIconColor => _colors.onSurface
+      .withOpacity(_colors.brightness == Brightness.dark ? 1.0 : 0.6);
 
   @override
-  TextStyle get helpTextStyle {
-    return _textTheme.labelSmall!;
-  }
+  TextStyle get helpTextStyle => _textTheme.labelSmall!;
 
   @override
-  Color get hourMinuteColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      return states.contains(MaterialState.selected)
-          ? _colors.primary
-              .withOpacity(_colors.brightness == Brightness.dark ? 0.24 : 0.12)
-          : _colors.onSurface.withOpacity(0.12);
-    });
-  }
+  Color get hourMinuteColor => MaterialStateColor.resolveWith(
+        (states) => states.contains(MaterialState.selected)
+            ? _colors.primary.withOpacity(
+                _colors.brightness == Brightness.dark ? 0.24 : 0.12,
+              )
+            : _colors.onSurface.withOpacity(0.12),
+      );
 
   @override
-  ShapeBorder get hourMinuteShape {
-    return _kDefaultShape;
-  }
+  ShapeBorder get hourMinuteShape => _kDefaultShape;
 
   @override
-  Size get hourMinuteSize {
-    return const Size(96, 80);
-  }
+  Size get hourMinuteSize => const Size(96, 80);
 
   @override
-  Size get hourMinuteSize24Hour {
-    return const Size(114, 80);
-  }
+  Size get hourMinuteSize24Hour => const Size(114, 80);
 
   @override
-  Size get hourMinuteInputSize {
-    return const Size(96, 70);
-  }
+  Size get hourMinuteInputSize => const Size(96, 70);
 
   @override
-  Size get hourMinuteInputSize24Hour {
-    return const Size(114, 70);
-  }
+  Size get hourMinuteInputSize24Hour => const Size(114, 70);
 
   @override
-  Color get hourMinuteTextColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      return states.contains(MaterialState.selected)
-          ? _colors.primary
-          : _colors.onSurface;
-    });
-  }
+  Color get hourMinuteTextColor => MaterialStateColor.resolveWith(
+        (states) => states.contains(MaterialState.selected)
+            ? _colors.primary
+            : _colors.onSurface,
+      );
 
   @override
-  TextStyle get hourMinuteTextStyle {
-    return _textTheme.displayMedium!;
-  }
+  TextStyle get hourMinuteTextStyle => _textTheme.displayMedium!;
 
-  Color get _hourMinuteInputColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      return states.contains(MaterialState.selected)
-          ? Colors.transparent
-          : _colors.onSurface.withOpacity(0.12);
-    });
-  }
+  Color get _hourMinuteInputColor => MaterialStateColor.resolveWith(
+        (states) => states.contains(MaterialState.selected)
+            ? Colors.transparent
+            : _colors.onSurface.withOpacity(0.12),
+      );
 
   @override
-  InputDecorationTheme get inputDecorationTheme {
-    return InputDecorationTheme(
-      contentPadding: EdgeInsets.zero,
-      filled: true,
-      fillColor: _hourMinuteInputColor,
-      focusColor: Colors.transparent,
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: _colors.error, width: 2),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: _colors.primary, width: 2),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: _colors.error, width: 2),
-      ),
-      hintStyle: hourMinuteTextStyle.copyWith(
-          color: _colors.onSurface.withOpacity(0.36)),
-      errorStyle: const TextStyle(fontSize: 0, height: 0),
-    );
-  }
+  InputDecorationTheme get inputDecorationTheme => InputDecorationTheme(
+        contentPadding: EdgeInsets.zero,
+        filled: true,
+        fillColor: _hourMinuteInputColor,
+        focusColor: Colors.transparent,
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.transparent),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: _colors.error, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: _colors.primary, width: 2),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: _colors.error, width: 2),
+        ),
+        hintStyle: hourMinuteTextStyle.copyWith(
+          color: _colors.onSurface.withOpacity(0.36),
+        ),
+        errorStyle: const TextStyle(fontSize: 0, height: 0),
+      );
 
   @override
-  EdgeInsetsGeometry get padding {
-    return const EdgeInsets.fromLTRB(8, 18, 8, 8);
-  }
+  EdgeInsetsGeometry get padding => const EdgeInsets.fromLTRB(8, 18, 8, 8);
 
   @override
-  ShapeBorder get shape {
-    return _kDefaultShape;
-  }
+  ShapeBorder get shape => _kDefaultShape;
 }
 
 // BEGIN GENERATED TOKEN PROPERTIES - TimePicker
@@ -340,267 +280,215 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   late final TextTheme _textTheme = Theme.of(context).textTheme;
 
   @override
-  Color get backgroundColor {
-    return _colors.surface;
-  }
+  Color get backgroundColor => _colors.surface;
 
   @override
-  ButtonStyle get cancelButtonStyle {
-    return TextButton.styleFrom();
-  }
+  ButtonStyle get cancelButtonStyle => TextButton.styleFrom();
 
   @override
-  ButtonStyle get confirmButtonStyle {
-    return TextButton.styleFrom();
-  }
+  ButtonStyle get confirmButtonStyle => TextButton.styleFrom();
 
   @override
-  BorderSide get dayPeriodBorderSide {
-    return BorderSide(color: _colors.outline);
-  }
+  BorderSide get dayPeriodBorderSide => BorderSide(color: _colors.outline);
 
   @override
-  Color get dayPeriodColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        return _colors.tertiaryContainer;
-      }
-      // The unselected day period should match the overall picker dialog color.
-      // Making it transparent enables that without being redundant and allows
-      // the optional elevation overlay for dark mode to be visible.
-      return Colors.transparent;
-    });
-  }
+  Color get dayPeriodColor =>
+      MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return _colors.tertiaryContainer;
+        }
+        // The unselected day period should match the overall picker dialog color.
+        // Making it transparent enables that without being redundant and allows
+        // the optional elevation overlay for dark mode to be visible.
+        return Colors.transparent;
+      });
 
   @override
-  OutlinedBorder get dayPeriodShape {
-    return const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.0)))
-        .copyWith(side: dayPeriodBorderSide);
-  }
+  OutlinedBorder get dayPeriodShape => const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ).copyWith(side: dayPeriodBorderSide);
 
   @override
-  Size get dayPeriodPortraitSize {
-    return const Size(52, 80);
-  }
+  Size get dayPeriodPortraitSize => const Size(52, 80);
 
   @override
-  Size get dayPeriodLandscapeSize {
-    return const Size(216, 38);
-  }
+  Size get dayPeriodLandscapeSize => const Size(216, 38);
 
   @override
-  Size get dayPeriodInputSize {
-    // Input size is eight pixels smaller than the portrait size in the spec,
-    // but there's not token for it yet.
-    return Size(dayPeriodPortraitSize.width, dayPeriodPortraitSize.height - 8);
-  }
+  // Input size is eight pixels smaller than the portrait size in the spec,
+  // but there's not token for it yet.
+  Size get dayPeriodInputSize =>
+      Size(dayPeriodPortraitSize.width, dayPeriodPortraitSize.height - 8);
 
   @override
-  Color get dayPeriodTextColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        if (states.contains(MaterialState.focused)) {
+  Color get dayPeriodTextColor =>
+      MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          if (states.contains(MaterialState.focused)) {
+            return _colors.onTertiaryContainer;
+          }
+          if (states.contains(MaterialState.hovered)) {
+            return _colors.onTertiaryContainer;
+          }
+          if (states.contains(MaterialState.pressed)) {
+            return _colors.onTertiaryContainer;
+          }
           return _colors.onTertiaryContainer;
         }
-        if (states.contains(MaterialState.hovered)) {
-          return _colors.onTertiaryContainer;
-        }
-        if (states.contains(MaterialState.pressed)) {
-          return _colors.onTertiaryContainer;
-        }
-        return _colors.onTertiaryContainer;
-      }
-      if (states.contains(MaterialState.focused)) {
-        return _colors.onSurfaceVariant;
-      }
-      if (states.contains(MaterialState.hovered)) {
-        return _colors.onSurfaceVariant;
-      }
-      if (states.contains(MaterialState.pressed)) {
-        return _colors.onSurfaceVariant;
-      }
-      return _colors.onSurfaceVariant;
-    });
-  }
-
-  @override
-  TextStyle get dayPeriodTextStyle {
-    return _textTheme.titleMedium!.copyWith(color: dayPeriodTextColor);
-  }
-
-  @override
-  Color get dialBackgroundColor {
-    return _colors.surfaceVariant;
-  }
-
-  @override
-  Color get dialHandColor {
-    return _colors.primary;
-  }
-
-  @override
-  Size get dialSize {
-    return const Size.square(256.0);
-  }
-
-  @override
-  double get handWidth {
-    return const Size(2, double.infinity).width;
-  }
-
-  @override
-  double get dotRadius {
-    return const Size.square(48.0).width / 2;
-  }
-
-  @override
-  double get centerRadius {
-    return const Size.square(8.0).width / 2;
-  }
-
-  @override
-  Color get dialTextColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        return _colors.onPrimary;
-      }
-      return _colors.onSurface;
-    });
-  }
-
-  @override
-  TextStyle get dialTextStyle {
-    return _textTheme.bodyLarge!;
-  }
-
-  @override
-  double get elevation {
-    return 6.0;
-  }
-
-  @override
-  Color get entryModeIconColor {
-    return _colors.onSurface;
-  }
-
-  @override
-  TextStyle get helpTextStyle {
-    return MaterialStateTextStyle.resolveWith((Set<MaterialState> states) {
-      final TextStyle textStyle = _textTheme.labelMedium!;
-      return textStyle.copyWith(color: _colors.onSurfaceVariant);
-    });
-  }
-
-  @override
-  EdgeInsetsGeometry get padding {
-    return const EdgeInsets.all(24);
-  }
-
-  @override
-  Color get hourMinuteColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        Color overlayColor = _colors.primaryContainer;
-        if (states.contains(MaterialState.pressed)) {
-          overlayColor = _colors.onPrimaryContainer;
-        } else if (states.contains(MaterialState.hovered)) {
-          const double hoverOpacity = 0.08;
-          overlayColor = _colors.onPrimaryContainer.withOpacity(hoverOpacity);
-        } else if (states.contains(MaterialState.focused)) {
-          const double focusOpacity = 0.12;
-          overlayColor = _colors.onPrimaryContainer.withOpacity(focusOpacity);
-        }
-        return Color.alphaBlend(overlayColor, _colors.primaryContainer);
-      } else {
-        Color overlayColor = _colors.surfaceVariant;
-        if (states.contains(MaterialState.pressed)) {
-          overlayColor = _colors.onSurface;
-        } else if (states.contains(MaterialState.hovered)) {
-          const double hoverOpacity = 0.08;
-          overlayColor = _colors.onSurface.withOpacity(hoverOpacity);
-        } else if (states.contains(MaterialState.focused)) {
-          const double focusOpacity = 0.12;
-          overlayColor = _colors.onSurface.withOpacity(focusOpacity);
-        }
-        return Color.alphaBlend(overlayColor, _colors.surfaceVariant);
-      }
-    });
-  }
-
-  @override
-  ShapeBorder get hourMinuteShape {
-    return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8.0)));
-  }
-
-  @override
-  Size get hourMinuteSize {
-    return const Size(96, 80);
-  }
-
-  @override
-  Size get hourMinuteSize24Hour {
-    return Size(const Size(114, double.infinity).width, hourMinuteSize.height);
-  }
-
-  @override
-  Size get hourMinuteInputSize {
-    // Input size is eight pixels smaller than the regular size in the spec, but
-    // there's not token for it yet.
-    return Size(hourMinuteSize.width, hourMinuteSize.height - 8);
-  }
-
-  @override
-  Size get hourMinuteInputSize24Hour {
-    // Input size is eight pixels smaller than the regular size in the spec, but
-    // there's not token for it yet.
-    return Size(hourMinuteSize24Hour.width, hourMinuteSize24Hour.height - 8);
-  }
-
-  @override
-  Color get hourMinuteTextColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      return _hourMinuteTextColor.resolve(states);
-    });
-  }
-
-  MaterialStateProperty<Color> get _hourMinuteTextColor {
-    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        if (states.contains(MaterialState.pressed)) {
-          return _colors.onPrimaryContainer;
-        }
-        if (states.contains(MaterialState.hovered)) {
-          return _colors.onPrimaryContainer;
-        }
         if (states.contains(MaterialState.focused)) {
-          return _colors.onPrimaryContainer;
-        }
-        return _colors.onPrimaryContainer;
-      } else {
-        // unselected
-        if (states.contains(MaterialState.pressed)) {
-          return _colors.onSurface;
+          return _colors.onSurfaceVariant;
         }
         if (states.contains(MaterialState.hovered)) {
-          return _colors.onSurface;
+          return _colors.onSurfaceVariant;
         }
-        if (states.contains(MaterialState.focused)) {
-          return _colors.onSurface;
+        if (states.contains(MaterialState.pressed)) {
+          return _colors.onSurfaceVariant;
+        }
+        return _colors.onSurfaceVariant;
+      });
+
+  @override
+  TextStyle get dayPeriodTextStyle =>
+      _textTheme.titleMedium!.copyWith(color: dayPeriodTextColor);
+
+  @override
+  Color get dialBackgroundColor => _colors.surfaceVariant;
+
+  @override
+  Color get dialHandColor => _colors.primary;
+
+  @override
+  Size get dialSize => const Size.square(256);
+
+  @override
+  double get handWidth => const Size(2, double.infinity).width;
+
+  @override
+  double get dotRadius => const Size.square(48).width / 2;
+
+  @override
+  double get centerRadius => const Size.square(8).width / 2;
+
+  @override
+  Color get dialTextColor =>
+      MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return _colors.onPrimary;
         }
         return _colors.onSurface;
-      }
-    });
-  }
+      });
 
   @override
-  TextStyle get hourMinuteTextStyle {
-    return MaterialStateTextStyle.resolveWith((Set<MaterialState> states) {
-      return _textTheme.displayMedium!
-          .copyWith(color: _hourMinuteTextColor.resolve(states));
-    });
-  }
+  TextStyle get dialTextStyle => _textTheme.bodyLarge!;
+
+  @override
+  double get elevation => 6;
+
+  @override
+  Color get entryModeIconColor => _colors.onSurface;
+
+  @override
+  TextStyle get helpTextStyle =>
+      MaterialStateTextStyle.resolveWith((states) {
+        final textStyle = _textTheme.labelMedium!;
+        return textStyle.copyWith(color: _colors.onSurfaceVariant);
+      });
+
+  @override
+  EdgeInsetsGeometry get padding => const EdgeInsets.all(24);
+
+  @override
+  Color get hourMinuteColor =>
+      MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          var overlayColor = _colors.primaryContainer;
+          if (states.contains(MaterialState.pressed)) {
+            overlayColor = _colors.onPrimaryContainer;
+          } else if (states.contains(MaterialState.hovered)) {
+            const hoverOpacity = 0.08;
+            overlayColor = _colors.onPrimaryContainer.withOpacity(hoverOpacity);
+          } else if (states.contains(MaterialState.focused)) {
+            const focusOpacity = 0.12;
+            overlayColor = _colors.onPrimaryContainer.withOpacity(focusOpacity);
+          }
+          return Color.alphaBlend(overlayColor, _colors.primaryContainer);
+        } else {
+          var overlayColor = _colors.surfaceVariant;
+          if (states.contains(MaterialState.pressed)) {
+            overlayColor = _colors.onSurface;
+          } else if (states.contains(MaterialState.hovered)) {
+            const hoverOpacity = 0.08;
+            overlayColor = _colors.onSurface.withOpacity(hoverOpacity);
+          } else if (states.contains(MaterialState.focused)) {
+            const focusOpacity = 0.12;
+            overlayColor = _colors.onSurface.withOpacity(focusOpacity);
+          }
+          return Color.alphaBlend(overlayColor, _colors.surfaceVariant);
+        }
+      });
+
+  @override
+  ShapeBorder get hourMinuteShape => const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      );
+
+  @override
+  Size get hourMinuteSize => const Size(96, 80);
+
+  @override
+  Size get hourMinuteSize24Hour =>
+      Size(const Size(114, double.infinity).width, hourMinuteSize.height);
+
+  @override
+  // Input size is eight pixels smaller than the regular size in the spec, but
+  // there's not token for it yet.
+  Size get hourMinuteInputSize =>
+      Size(hourMinuteSize.width, hourMinuteSize.height - 8);
+
+  @override
+  // Input size is eight pixels smaller than the regular size in the spec, but
+  // there's not token for it yet.
+  Size get hourMinuteInputSize24Hour =>
+      Size(hourMinuteSize24Hour.width, hourMinuteSize24Hour.height - 8);
+
+  @override
+  Color get hourMinuteTextColor => MaterialStateColor.resolveWith(
+        (states) => _hourMinuteTextColor.resolve(states),
+      );
+
+  MaterialStateProperty<Color> get _hourMinuteTextColor =>
+      MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          if (states.contains(MaterialState.pressed)) {
+            return _colors.onPrimaryContainer;
+          }
+          if (states.contains(MaterialState.hovered)) {
+            return _colors.onPrimaryContainer;
+          }
+          if (states.contains(MaterialState.focused)) {
+            return _colors.onPrimaryContainer;
+          }
+          return _colors.onPrimaryContainer;
+        } else {
+          // unselected
+          if (states.contains(MaterialState.pressed)) {
+            return _colors.onSurface;
+          }
+          if (states.contains(MaterialState.hovered)) {
+            return _colors.onSurface;
+          }
+          if (states.contains(MaterialState.focused)) {
+            return _colors.onSurface;
+          }
+          return _colors.onSurface;
+        }
+      });
+
+  @override
+  TextStyle get hourMinuteTextStyle => MaterialStateTextStyle.resolveWith(
+        (states) => _textTheme.displayMedium!
+            .copyWith(color: _hourMinuteTextColor.resolve(states)),
+      );
 
   @override
   InputDecorationTheme get inputDecorationTheme {
@@ -608,10 +496,9 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
     // 'time-input.container.shape', so this is using the radius from the shape
     // for the hour/minute selector. It's a BorderRadiusGeometry, so we have to
     // resolve it before we can use it.
-    final BorderRadius selectorRadius = const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.0)))
-        .borderRadius
-        .resolve(Directionality.of(context));
+    final selectorRadius = const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ).borderRadius.resolve(Directionality.of(context));
     return InputDecorationTheme(
       contentPadding: EdgeInsets.zero,
       filled: true,
@@ -636,14 +523,14 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
         borderSide: BorderSide(color: _colors.error, width: 2),
       ),
       hintStyle: hourMinuteTextStyle.copyWith(
-          color: _colors.onSurface.withOpacity(0.36)),
+        color: _colors.onSurface.withOpacity(0.36),
+      ),
       errorStyle: const TextStyle(fontSize: 0, height: 0),
     );
   }
 
   @override
-  ShapeBorder get shape {
-    return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(28.0)));
-  }
+  ShapeBorder get shape => const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+      );
 }

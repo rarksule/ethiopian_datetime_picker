@@ -1,36 +1,36 @@
-import 'dart:math' as math;
+import "dart:math" as math;
 
-import 'package:ethiopian_datetime/ethiopian_datetime.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'calander_common.dart';
-import 'etdate_picker_header.dart';
-import 'string_text.dart';
+import "package:ethiopian_datetime/ethiopian_datetime.dart";
+import "package:ethiopian_datetime_picker/src/calander_common.dart";
+import "package:ethiopian_datetime_picker/src/etdate_picker_header.dart";
+import "package:ethiopian_datetime_picker/src/string_text.dart";
+import "package:flutter/material.dart";
+import "package:flutter/rendering.dart";
+import "package:flutter/services.dart";
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
-const double _monthItemHeaderHeight = 58.0;
-const double _monthItemFooterHeight = 12.0;
-const double _monthItemRowHeight = 42.0;
-const double _monthItemSpaceBetweenRows = 8.0;
-const double _horizontalPadding = 8.0;
-const double _maxCalendarWidthLandscape = 384.0;
-const double _maxCalendarWidthPortrait = 480.0;
+const double _monthItemHeaderHeight = 58;
+const double _monthItemFooterHeight = 12;
+const double _monthItemRowHeight = 42;
+const double _monthItemSpaceBetweenRows = 8;
+const double _horizontalPadding = 8;
+const double _maxCalendarWidthLandscape = 384;
+const double _maxCalendarWidthPortrait = 480;
 
 /// Displays a scrollable calendar grid that allows a user to select a range
 /// of dates.
 class CalendarETDateRangePicker extends StatefulWidget {
   /// Creates a scrollable calendar grid for picking date ranges.
   CalendarETDateRangePicker({
+    required this.onStartDateChanged,
+    required this.onEndDateChanged,
+    required ETDateTime firstDate,
+    required ETDateTime lastDate,
     super.key,
     ETDateTime? initialStartDate,
     ETDateTime? initialEndDate,
-    required ETDateTime firstDate,
-    required ETDateTime lastDate,
     ETDateTime? currentDate,
-    required this.onStartDateChanged,
-    required this.onEndDateChanged,
   })  : initialStartDate = initialStartDate != null
             ? ETDateUtils.dateOnly(initialStartDate)
             : null,
@@ -44,11 +44,11 @@ class CalendarETDateRangePicker extends StatefulWidget {
       this.initialStartDate == null ||
           this.initialEndDate == null ||
           !this.initialStartDate!.isAfter(initialEndDate!),
-      'initialStartDate must be on or before initialEndDate.',
+      "initialStartDate must be on or before initialEndDate.",
     );
     assert(
       !this.lastDate.isBefore(this.firstDate),
-      'firstDate must be on or before lastDate.',
+      "firstDate must be on or before lastDate.",
     );
   }
 
@@ -97,7 +97,7 @@ class _CalendarDateRangePickerState extends State<CalendarETDateRangePicker> {
 
     // Calculate the index for the initially displayed month. This is needed to
     // divide the list of months into two `SliverList`s.
-    final ETDateTime initialDate =
+    final initialDate =
         widget.initialStartDate ?? widget.currentDate;
     if (!initialDate.isBefore(widget.firstDate) &&
         !initialDate.isAfter(widget.lastDate)) {
@@ -171,11 +171,14 @@ class _CalendarDateRangePickerState extends State<CalendarETDateRangePicker> {
   }
 
   Widget _buildMonthItem(
-      BuildContext context, int index, bool beforeInitialMonth) {
-    final int monthIndex = beforeInitialMonth
+    BuildContext context,
+    int index,
+    bool beforeInitialMonth,
+  ) {
+    final monthIndex = beforeInitialMonth
         ? _initialMonthIndex - index - 1
         : _initialMonthIndex + index;
-    final ETDateTime month =
+    final month =
         ETDateUtils.addMonthsToMonthDate(widget.firstDate, monthIndex);
     return _MonthItem(
       selectedDateStart: _startDate,
@@ -190,7 +193,7 @@ class _CalendarDateRangePickerState extends State<CalendarETDateRangePicker> {
 
   @override
   Widget build(BuildContext context) {
-    const Key sliverAfterKey = Key('sliverAfterKey');
+    const sliverAfterKey = Key("sliverAfterKey");
 
     return Column(
       children: <Widget>[
@@ -213,7 +216,7 @@ class _CalendarDateRangePickerState extends State<CalendarETDateRangePicker> {
               slivers: <Widget>[
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) =>
+                    (context, index) =>
                         _buildMonthItem(context, index, true),
                     childCount: _initialMonthIndex,
                   ),
@@ -221,7 +224,7 @@ class _CalendarDateRangePickerState extends State<CalendarETDateRangePicker> {
                 SliverList(
                   key: sliverAfterKey,
                   delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) =>
+                    (context, index) =>
                         _buildMonthItem(context, index, false),
                     childCount: _numberOfMonths - _initialMonthIndex,
                   ),
@@ -279,11 +282,13 @@ class _CalendarKeyboardNavigatorState
       NextFocusIntent:
           CallbackAction<NextFocusIntent>(onInvoke: _handleGridNextFocus),
       PreviousFocusIntent: CallbackAction<PreviousFocusIntent>(
-          onInvoke: _handleGridPreviousFocus),
+        onInvoke: _handleGridPreviousFocus,
+      ),
       DirectionalFocusIntent: CallbackAction<DirectionalFocusIntent>(
-          onInvoke: _handleDirectionFocus),
+        onInvoke: _handleDirectionFocus,
+      ),
     };
-    _dayGridFocus = FocusNode(debugLabel: 'Day Grid');
+    _dayGridFocus = FocusNode(debugLabel: "Day Grid");
   }
 
   @override
@@ -302,14 +307,16 @@ class _CalendarKeyboardNavigatorState
 
   /// Move focus to the next element after the day grid.
   void _handleGridNextFocus(NextFocusIntent intent) {
-    _dayGridFocus.requestFocus();
-    _dayGridFocus.nextFocus();
+    _dayGridFocus
+      ..requestFocus()
+      ..nextFocus();
   }
 
   /// Move focus to the previous element before the day grid.
   void _handleGridPreviousFocus(PreviousFocusIntent intent) {
-    _dayGridFocus.requestFocus();
-    _dayGridFocus.previousFocus();
+    _dayGridFocus
+      ..requestFocus()
+      ..previousFocus();
   }
 
   /// Move the internal focus date in the direction of the given intent.
@@ -324,7 +331,7 @@ class _CalendarKeyboardNavigatorState
   void _handleDirectionFocus(DirectionalFocusIntent intent) {
     assert(_focusedDay != null);
     setState(() {
-      final ETDateTime? nextDate =
+      final nextDate =
           _nextDateInDirection(_focusedDay!, intent.direction);
       if (nextDate != null) {
         _focusedDay = nextDate;
@@ -342,23 +349,30 @@ class _CalendarKeyboardNavigatorState
   };
 
   int _dayDirectionOffset(
-      TraversalDirection traversalDirection, TextDirection textDirection) {
+    TraversalDirection traversalDirection,
+    TextDirection textDirection,
+  ) {
+    var traversalDirect = traversalDirection;
     // Swap left and right if the text direction if RTL
     if (textDirection == TextDirection.rtl) {
       if (traversalDirection == TraversalDirection.left) {
-        traversalDirection = TraversalDirection.right;
+        traversalDirect = TraversalDirection.right;
       } else if (traversalDirection == TraversalDirection.right) {
-        traversalDirection = TraversalDirection.left;
+        traversalDirect = TraversalDirection.left;
       }
     }
-    return _directionOffset[traversalDirection]!;
+    return _directionOffset[traversalDirect]!;
   }
 
   ETDateTime? _nextDateInDirection(
-      ETDateTime date, TraversalDirection direction) {
-    final TextDirection textDirection = Directionality.of(context);
-    final ETDateTime nextDate = ETDateUtils.addDaysToDate(
-        date, _dayDirectionOffset(direction, textDirection));
+    ETDateTime date,
+    TraversalDirection direction,
+  ) {
+    final textDirection = Directionality.of(context);
+    final nextDate = ETDateUtils.addDaysToDate(
+      date,
+      _dayDirectionOffset(direction, textDirection),
+    );
     if (!nextDate.isBefore(widget.firstDate) &&
         !nextDate.isAfter(widget.lastDate)) {
       return nextDate;
@@ -367,19 +381,18 @@ class _CalendarKeyboardNavigatorState
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FocusableActionDetector(
-      shortcuts: _shortcutMap,
-      actions: _actionMap,
-      focusNode: _dayGridFocus,
-      onFocusChange: _handleGridFocusChange,
-      child: ETFocusedDate(
-        date: _dayGridFocus.hasFocus ? _focusedDay : null,
-        scrollDirection: _dayGridFocus.hasFocus ? _dayTraversalDirection : null,
-        child: widget.child,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => FocusableActionDetector(
+        shortcuts: _shortcutMap,
+        actions: _actionMap,
+        focusNode: _dayGridFocus,
+        onFocusChange: _handleGridFocusChange,
+        child: ETFocusedDate(
+          date: _dayGridFocus.hasFocus ? _focusedDay : null,
+          scrollDirection:
+              _dayGridFocus.hasFocus ? _dayTraversalDirection : null,
+          child: widget.child,
+        ),
+      );
 }
 
 class _DayHeaders extends StatelessWidget {
@@ -387,16 +400,18 @@ class _DayHeaders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final ColorScheme colorScheme = themeData.colorScheme;
-    final Localized localized = Localized(context);
-    final TextStyle textStyle =
+    final themeData = Theme.of(context);
+    final colorScheme = themeData.colorScheme;
+    final localized = Localized(context);
+    final textStyle =
         themeData.textTheme.titleSmall!.apply(color: colorScheme.onSurface);
-    final List<Widget> labels = getDayHeaders(textStyle, localized);
+    final labels = getDayHeaders(textStyle, localized);
 
     // Add leading and trailing containers for edges of the custom grid layout.
-    labels.insert(0, Container());
-    labels.add(Container());
+    // ignore: cascade_invocations
+    labels
+      ..insert(0, Container())
+      ..add(Container());
 
     return Container(
       constraints: BoxConstraints(
@@ -422,7 +437,7 @@ class _MonthItemGridDelegate extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final double tileWidth =
+    final tileWidth =
         (constraints.crossAxisExtent - 2 * _horizontalPadding) /
             ETDateTime.daysPerWeek;
     return _MonthSliverGridLayout(
@@ -477,23 +492,18 @@ class _MonthSliverGridLayout extends SliverGridLayout {
 
   /// The number of logical pixels from the leading edge of one row to the
   /// leading edge of the next row.
-  double get _rowHeight {
-    return _monthItemRowHeight + _monthItemSpaceBetweenRows;
-  }
+  double get _rowHeight => _monthItemRowHeight + _monthItemSpaceBetweenRows;
 
   /// The height in logical pixels of the children widgets.
-  double get _childHeight {
-    return _monthItemRowHeight;
-  }
+  double get _childHeight => _monthItemRowHeight;
 
   @override
-  int getMinChildIndexForScrollOffset(double scrollOffset) {
-    return crossAxisCount * (scrollOffset ~/ _rowHeight);
-  }
+  int getMinChildIndexForScrollOffset(double scrollOffset) =>
+      crossAxisCount * (scrollOffset ~/ _rowHeight);
 
   @override
   int getMaxChildIndexForScrollOffset(double scrollOffset) {
-    final int mainAxisCount = (scrollOffset / _rowHeight).ceil();
+    final mainAxisCount = (scrollOffset / _rowHeight).ceil();
     return math.max(0, crossAxisCount * mainAxisCount - 1);
   }
 
@@ -508,8 +518,8 @@ class _MonthSliverGridLayout extends SliverGridLayout {
 
   @override
   SliverGridGeometry getGeometryForChildIndex(int index) {
-    final int adjustedIndex = index % crossAxisCount;
-    final bool isEdge =
+    final adjustedIndex = index % crossAxisCount;
+    final isEdge =
         adjustedIndex == 0 || adjustedIndex == crossAxisCount - 1;
     final double crossAxisStart =
         math.max(0, (adjustedIndex - 1) * dayChildWidth + edgeChildWidth);
@@ -525,8 +535,8 @@ class _MonthSliverGridLayout extends SliverGridLayout {
   @override
   double computeMaxScrollOffset(int childCount) {
     assert(childCount >= 0);
-    final int mainAxisCount = ((childCount - 1) ~/ crossAxisCount) + 1;
-    final double mainAxisSpacing = _rowHeight - _childHeight;
+    final mainAxisCount = ((childCount - 1) ~/ crossAxisCount) + 1;
+    final mainAxisSpacing = _rowHeight - _childHeight;
     return _rowHeight * mainAxisCount - mainAxisSpacing;
   }
 }
@@ -546,15 +556,19 @@ class _MonthItem extends StatefulWidget {
     required this.lastDate,
     required this.displayedMonth,
   })  : assert(!firstDate.isAfter(lastDate)),
-        assert(selectedDateStart == null ||
-            !selectedDateStart.isBefore(firstDate)),
+        assert(
+          selectedDateStart == null || !selectedDateStart.isBefore(firstDate),
+        ),
         assert(selectedDateEnd == null || !selectedDateEnd.isBefore(firstDate)),
         assert(
-            selectedDateStart == null || !selectedDateStart.isAfter(lastDate)),
+          selectedDateStart == null || !selectedDateStart.isAfter(lastDate),
+        ),
         assert(selectedDateEnd == null || !selectedDateEnd.isAfter(lastDate)),
-        assert(selectedDateStart == null ||
-            selectedDateEnd == null ||
-            !selectedDateStart.isAfter(selectedDateEnd));
+        assert(
+          selectedDateStart == null ||
+              selectedDateEnd == null ||
+              !selectedDateStart.isAfter(selectedDateEnd),
+        );
 
   /// The currently selected start date.
   ///
@@ -592,12 +606,14 @@ class _MonthItemState extends State<_MonthItem> {
   @override
   void initState() {
     super.initState();
-    final int daysInMonth = ETDateUtils.getDaysInMonth(
-        widget.displayedMonth.year, widget.displayedMonth.month);
+    final daysInMonth = ETDateUtils.getDaysInMonth(
+      widget.displayedMonth.year,
+      widget.displayedMonth.month,
+    );
     _dayFocusNodes = List<FocusNode>.generate(
       daysInMonth,
-      (int index) =>
-          FocusNode(skipTraversal: true, debugLabel: 'Day ${index + 1}'),
+      (index) =>
+          FocusNode(skipTraversal: true, debugLabel: "Day ${index + 1}"),
     );
   }
 
@@ -605,7 +621,7 @@ class _MonthItemState extends State<_MonthItem> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Check to see if the focused date is in this month, if so focus it.
-    final ETDateTime? focusedDate = ETFocusedDate.maybeOf(context)?.date;
+    final focusedDate = ETFocusedDate.maybeOf(context)?.date;
     if (focusedDate != null &&
         ETDateUtils.isSameMonth(widget.displayedMonth, focusedDate)) {
       _dayFocusNodes[focusedDate.day - 1].requestFocus();
@@ -614,23 +630,22 @@ class _MonthItemState extends State<_MonthItem> {
 
   @override
   void dispose() {
-    for (final FocusNode node in _dayFocusNodes) {
+    for (final node in _dayFocusNodes) {
       node.dispose();
     }
     super.dispose();
   }
 
-  Color _highlightColor(BuildContext context) {
-    return DatePickerTheme.of(context).rangeSelectionBackgroundColor ??
-        DatePickerTheme.defaults(context).rangeSelectionBackgroundColor!;
-  }
+  Color _highlightColor(BuildContext context) =>
+      DatePickerTheme.of(context).rangeSelectionBackgroundColor ??
+      DatePickerTheme.defaults(context).rangeSelectionBackgroundColor!;
 
   void _dayFocusChanged(bool focused) {
     if (focused) {
-      final TraversalDirection? focusDirection =
+      final focusDirection =
           ETFocusedDate.maybeOf(context)?.scrollDirection;
       if (focusDirection != null) {
-        ScrollPositionAlignmentPolicy policy =
+        var policy =
             ScrollPositionAlignmentPolicy.explicit;
         switch (focusDirection) {
           case TraversalDirection.up:
@@ -649,24 +664,28 @@ class _MonthItemState extends State<_MonthItem> {
     }
   }
 
-  Widget _buildDayItem(BuildContext context, ETDateTime dayToBuild,
-      int firstDayOffset, int daysInMonth) {
-    final int day = dayToBuild.day;
+  Widget _buildDayItem(
+    BuildContext context,
+    ETDateTime dayToBuild,
+    int firstDayOffset,
+    int daysInMonth,
+  ) {
+    final day = dayToBuild.day;
 
-    final bool isDisabled = dayToBuild.isAfter(widget.lastDate) ||
+    final isDisabled = dayToBuild.isAfter(widget.lastDate) ||
         dayToBuild.isBefore(widget.firstDate);
-    final bool isRangeSelected =
+    final isRangeSelected =
         widget.selectedDateStart != null && widget.selectedDateEnd != null;
-    final bool isSelectedDayStart = widget.selectedDateStart != null &&
+    final isSelectedDayStart = widget.selectedDateStart != null &&
         dayToBuild.isAtSameMomentAs(widget.selectedDateStart!);
-    final bool isSelectedDayEnd = widget.selectedDateEnd != null &&
+    final isSelectedDayEnd = widget.selectedDateEnd != null &&
         dayToBuild.isAtSameMomentAs(widget.selectedDateEnd!);
-    final bool isInRange = isRangeSelected &&
+    final isInRange = isRangeSelected &&
         dayToBuild.isAfter(widget.selectedDateStart!) &&
         dayToBuild.isBefore(widget.selectedDateEnd!);
-    final bool isOneDayRange =
+    final isOneDayRange =
         isRangeSelected && widget.selectedDateStart == widget.selectedDateEnd;
-    final bool isToday = ETDateUtils.isSameDay(widget.currentDate, dayToBuild);
+    final isToday = ETDateUtils.isSameDay(widget.currentDate, dayToBuild);
 
     return _DayItem(
       day: dayToBuild,
@@ -684,33 +703,32 @@ class _MonthItemState extends State<_MonthItem> {
     );
   }
 
-  Widget _buildEdgeContainer(BuildContext context, bool isHighlighted) {
-    return Container(color: isHighlighted ? _highlightColor(context) : null);
-  }
+  Widget _buildEdgeContainer(BuildContext context, bool isHighlighted) =>
+      Container(color: isHighlighted ? _highlightColor(context) : null);
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final TextTheme textTheme = themeData.textTheme;
-    final int year = widget.displayedMonth.year;
-    final int month = widget.displayedMonth.month;
-    final int daysInMonth = ETDateUtils.getDaysInMonth(year, month);
-    final int dayOffset = ETDateTime(year, month).weekday - 1;
-    final Localized localized = Localized(context);
-    final int weeks =
+    final themeData = Theme.of(context);
+    final textTheme = themeData.textTheme;
+    final year = widget.displayedMonth.year;
+    final month = widget.displayedMonth.month;
+    final daysInMonth = ETDateUtils.getDaysInMonth(year, month);
+    final dayOffset = ETDateTime(year, month).weekday - 1;
+    final localized = Localized(context);
+    final weeks =
         ((daysInMonth + dayOffset) / ETDateTime.daysPerWeek).ceil();
-    final double gridHeight =
+    final gridHeight =
         weeks * _monthItemRowHeight + (weeks - 1) * _monthItemSpaceBetweenRows;
-    final List<Widget> dayItems = <Widget>[];
+    final dayItems = <Widget>[];
 
     // 1-based day of month, e.g. 1-31 for January, and 1-29 for February on
     // a leap year.
-    for (int day = 0 - dayOffset + 1; day <= daysInMonth; day += 1) {
+    for (var day = 0 - dayOffset + 1; day <= daysInMonth; day += 1) {
       if (day < 1) {
         dayItems.add(Container());
       } else {
-        final ETDateTime dayToBuild = ETDateTime(year, month, day);
-        final Widget dayItem = _buildDayItem(
+        final dayToBuild = ETDateTime(year, month, day);
+        final dayItem = _buildDayItem(
           context,
           dayToBuild,
           dayOffset,
@@ -722,20 +740,20 @@ class _MonthItemState extends State<_MonthItem> {
 
     // Add the leading/trailing edge containers to each week in order to
     // correctly extend the range highlight.
-    final List<Widget> paddedDayItems = <Widget>[];
-    for (int i = 0; i < weeks; i++) {
-      final int start = i * ETDateTime.daysPerWeek;
+    final paddedDayItems = <Widget>[];
+    for (var i = 0; i < weeks; i++) {
+      final start = i * ETDateTime.daysPerWeek;
       final int end = math.min(
         start + ETDateTime.daysPerWeek,
         dayItems.length,
       );
-      final List<Widget> weekList = dayItems.sublist(start, end);
+      final weekList = dayItems.sublist(start, end);
 
-      final ETDateTime dateAfterLeadingPadding =
+      final dateAfterLeadingPadding =
           ETDateTime(year, month, start - dayOffset + 1);
       // Only color the edge container if it is after the start date and
       // on/before the end date.
-      final bool isLeadingInRange = !(dayOffset > 0 && i == 0) &&
+      final isLeadingInRange = !(dayOffset > 0 && i == 0) &&
           widget.selectedDateStart != null &&
           widget.selectedDateEnd != null &&
           dateAfterLeadingPadding.isAfter(widget.selectedDateStart!) &&
@@ -747,11 +765,11 @@ class _MonthItemState extends State<_MonthItem> {
       if (end < dayItems.length ||
           (end == dayItems.length &&
               dayItems.length % ETDateTime.daysPerWeek == 0)) {
-        final ETDateTime dateBeforeTrailingPadding =
+        final dateBeforeTrailingPadding =
             ETDateTime(year, month, end - dayOffset);
         // Only color the edge container if it is on/after the start date and
         // before the end date.
-        final bool isTrailingInRange = widget.selectedDateStart != null &&
+        final isTrailingInRange = widget.selectedDateStart != null &&
             widget.selectedDateEnd != null &&
             !dateBeforeTrailingPadding.isBefore(widget.selectedDateStart!) &&
             dateBeforeTrailingPadding.isBefore(widget.selectedDateEnd!);
@@ -761,7 +779,7 @@ class _MonthItemState extends State<_MonthItem> {
       paddedDayItems.addAll(weekList);
     }
 
-    final double maxWidth =
+    final maxWidth =
         MediaQuery.orientationOf(context) == Orientation.landscape
             ? _maxCalendarWidthLandscape
             : _maxCalendarWidthPortrait;
@@ -855,34 +873,31 @@ class _DayItemState extends State<_DayItem> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme colorScheme = theme.colorScheme;
-    final TextTheme textTheme = theme.textTheme;
-    final Localized localized = Localized(context);
-    final DatePickerThemeData datePickerTheme = DatePickerTheme.of(context);
-    final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
-    final TextDirection textDirection = Directionality.of(context);
-    final Color highlightColor = widget.highlightColor;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+    final localized = Localized(context);
+    final datePickerTheme = DatePickerTheme.of(context);
+    final defaults = DatePickerTheme.defaults(context);
+    final textDirection = Directionality.of(context);
+    final highlightColor = widget.highlightColor;
 
     BoxDecoration? decoration;
-    TextStyle? itemStyle = textTheme.bodyMedium;
+    var itemStyle = textTheme.bodyMedium;
 
-    T? effectiveValue<T>(T? Function(DatePickerThemeData? theme) getProperty) {
-      return getProperty(datePickerTheme) ?? getProperty(defaults);
-    }
+    T? effectiveValue<T>(T? Function(DatePickerThemeData? theme) getProperty) =>
+        getProperty(datePickerTheme) ?? getProperty(defaults);
 
     T? resolve<T>(
-        MaterialStateProperty<T>? Function(DatePickerThemeData? theme)
-            getProperty,
-        Set<MaterialState> states) {
-      return effectiveValue(
-        (DatePickerThemeData? theme) {
-          return getProperty(theme)?.resolve(states);
-        },
-      );
-    }
+      MaterialStateProperty<T>? Function(DatePickerThemeData? theme)
+          getProperty,
+      Set<MaterialState> states,
+    ) =>
+        effectiveValue(
+          (theme) => getProperty(theme)?.resolve(states),
+        );
 
-    final Set<MaterialState> states = <MaterialState>{
+    final states = <MaterialState>{
       if (widget.isDisabled) MaterialState.disabled,
       if (widget.isSelectedDayStart || widget.isSelectedDayEnd)
         MaterialState.selected,
@@ -890,17 +905,22 @@ class _DayItemState extends State<_DayItem> {
 
     _statesController.value = states;
 
-    final Color? dayForegroundColor = resolve<Color?>(
-        (DatePickerThemeData? theme) => theme?.dayForegroundColor, states);
-    final Color? dayBackgroundColor = resolve<Color?>(
-        (DatePickerThemeData? theme) => theme?.dayBackgroundColor, states);
-    final MaterialStateProperty<Color?> dayOverlayColor =
+    final dayForegroundColor = resolve<Color?>(
+      (theme) => theme?.dayForegroundColor,
+      states,
+    );
+    final dayBackgroundColor = resolve<Color?>(
+      (theme) => theme?.dayBackgroundColor,
+      states,
+    );
+    final dayOverlayColor =
         MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) => effectiveValue(
-                  (DatePickerThemeData? theme) => widget.isInRange
-                      ? theme?.rangeSelectionOverlayColor?.resolve(states)
-                      : theme?.dayOverlayColor?.resolve(states),
-                ));
+      (states) => effectiveValue(
+        (theme) => widget.isInRange
+            ? theme?.rangeSelectionOverlayColor?.resolve(states)
+            : theme?.dayOverlayColor?.resolve(states),
+      ),
+    );
 
     _HighlightPainter? highlightPainter;
 
@@ -914,7 +934,7 @@ class _DayItemState extends State<_DayItem> {
       );
 
       if (widget.isRangeSelected && !widget.isOneDayRange) {
-        final _HighlightPainterStyle style = widget.isSelectedDayStart
+        final style = widget.isSelectedDayStart
             ? _HighlightPainterStyle.highlightTrailing
             : _HighlightPainterStyle.highlightLeading;
         highlightPainter = _HighlightPainter(
@@ -943,7 +963,7 @@ class _DayItemState extends State<_DayItem> {
       );
     }
 
-    final String dayText = localized.formatDecimal(widget.day.day);
+    final dayText = localized.formatDecimal(widget.day.day);
 
     // We want the day of month to be spoken first irrespective of the
     // locale-specific preferences or TextDirection. This is because
@@ -951,16 +971,17 @@ class _DayItemState extends State<_DayItem> {
     // day of month before the rest of the date, as they are looking
     // for the day of month. To do that we prepend day of month to the
     // formatted full date.
-    final String semanticLabelSuffix =
-        widget.isToday ? ', ${localized.currentDateLabel}' : '';
-    String semanticLabel =
-        '$dayText, ${localized.formatFullDate(widget.day)}$semanticLabelSuffix';
+    final semanticLabelSuffix =
+        widget.isToday ? ", ${localized.currentDateLabel}" : "";
+    var semanticLabel =
+        "$dayText, ${localized.formatFullDate(widget.day)}$semanticLabelSuffix";
     if (widget.isSelectedDayStart) {
       semanticLabel = localized.dateRangeStartDateSemanticLabel(semanticLabel);
     } else if (widget.isSelectedDayEnd) {
       semanticLabel = localized.dateRangeEndDateSemanticLabel(semanticLabel);
     }
 
+    // ignore: use_decorated_box
     Widget dayWidget = Container(
       decoration: decoration,
       child: Center(
@@ -972,10 +993,10 @@ class _DayItemState extends State<_DayItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                    localized
-                        .formatDecimal(widget.day.convertToGregorian().day),
-                    style: const TextStyle(fontSize: 8)
-                        .copyWith(color: dayForegroundColor)),
+                  localized.formatDecimal(widget.day.convertToGregorian().day),
+                  style: const TextStyle(fontSize: 8)
+                      .copyWith(color: dayForegroundColor),
+                ),
                 Text(dayText, style: itemStyle),
               ],
             ),
@@ -1045,12 +1066,12 @@ class _HighlightPainter extends CustomPainter {
       return;
     }
 
-    final Paint paint = Paint()
+    final paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
 
-    final Rect rectLeft = Rect.fromLTWH(0, 0, size.width / 2, size.height);
-    final Rect rectRight =
+    final rectLeft = Rect.fromLTWH(0, 0, size.width / 2, size.height);
+    final rectRight =
         Rect.fromLTWH(size.width / 2, 0, size.width / 2, size.height);
 
     switch (style) {

@@ -1,17 +1,17 @@
-# <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/logo.png" width="36px"> Ethiopian (Amharic,Somali,Oromiffa,Tigrigna) Date & Time Picker for Flutter
+# <img src="/assets/logo.png" width="36px"> Ethiopian (Amharic,Somali,Oromiffa,Tigrigna) Date & Time Picker for Flutter
 
 [![pub package](https://img.shields.io/pub/v/ethiopian_datetime_picker.svg?color=%23e67e22&label=pub&logo=ethiopian_datetime_picker)](https://pub.dartlang.org/packages/ethiopian_datetime_picker)
-[![APK](https://img.shields.io/badge/APK-Demo-brightgreen.svg)](https://github.com/rarksule/ethiopian_datetime_picker/blob/main/sample.apk)
+[![APK](https://img.shields.io/badge/APK-Demo-brightgreen.svg)](/sample.apk)
 
-![Ethiopian DateTime Picker Banner](https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/banner.png)
+![Ethiopian DateTime Picker Banner](/assets/banner.png)
 
-## <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Telescope.webp" width="36px"> Overview
+## <img src="/assets/Telescope.webp" width="36px"> Overview
 
 A Ethiopian Date & Time picker inspired by Material Design's DateTime picker, built on the [ethiopian_datetime](https://pub.dev/packages/ethiopian_datetime) library. It offers full support for the Ethiopian calendar and is highly customizable, including compatibility with Material 3.
 
 Additionally, it supports multiple languages, including Amharic,Oromiffa,Afsomali,tigrigna and custom locales, all while ensuring seamless integration with Flutter and maintaining Material Design standards.
 
-## <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Rocket.png" width="36px">️ Features
+## <img src="/assets/Rocket.png" width="36px">️ Features
 
 - 🌟 Fully supports Ethiopian calendar
 - 🛠 Highly customizable
@@ -20,7 +20,7 @@ Additionally, it supports multiple languages, including Amharic,Oromiffa,Afsomal
 - 📱 Compatible with Material Design standards
 - Easy Documentation similar to Flutters Documentation
 
-## <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Fire.png" width="36px">️ Getting Started
+## <img src="/assets/Fire.png" width="36px">️ Getting Started
 
 To use the Ethiopian DateTime Picker, add the package to your `pubspec.yaml`:
 
@@ -35,12 +35,12 @@ Then, import it in your Dart code:
 import 'package:ethiopian_datetime_picker/ethiopian_datetime_picker.dart';
 ```
 
-## <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Comet.png" width="36px">️ Usage Examples
+## <img src="/assets/Comet.png" width="36px">️ Usage Examples
 
 ### 1. Ethiopian Date Picker
 
 <p align="center">
-  <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/screenshots/date_picker.png" alt="Screenshot 1" width="150" />
+  <img src="/assets/screenshots/date_picker.png" alt="Screenshot 1" width="150" />
 </p>
 
 ```dart
@@ -59,8 +59,8 @@ for more on [ETDateTime] check ethiopian_datetime_picker package
 ### 2. Ethiopian Time Picker
 
 <p align="center">
-  <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/screenshots/time_picker.png" alt="Screenshot 1" width="200" />
-  <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/screenshots/input_time_picker.png" alt="Screenshot 2" width="200" />
+  <img src="/assets/screenshots/time_picker.png" alt="Screenshot 1" width="200" />
+  <img src="/assets/screenshots/input_time_picker.png" alt="Screenshot 2" width="200" />
 </p>
 
 ```dart
@@ -75,7 +75,7 @@ if (picked != null) String label = picked.toString();
 ### 3. Modal Bottom Sheet with Ethiopian Cupertino Date Picker
 
 <p align="center">
-  <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/screenshots/cupertino_date_picker.png" alt="Screenshot 1" width="200" />
+  <img src="/assets/screenshots/cupertino_date_picker.png" alt="Screenshot 1" width="200" />
 </p>
 
 ```dart
@@ -142,8 +142,8 @@ if (pickedDate != null) {
 ### 4. Ethiopian Date Range Picker
 
 <p align="center">
-  <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/screenshots/range_picker.png" alt="Screenshot 1" width="200" />
-  <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/screenshots/input_range_picker.png" alt="Screenshot 2" width="200" />
+  <img src="/assets/screenshots/range_picker.png" alt="Screenshot 1" width="200" />
+  <img src="/assets/screenshots/input_range_picker.png" alt="Screenshot 2" width="200" />
 </p>
 
 ```dart
@@ -264,19 +264,19 @@ return MaterialApp(
 );
 ```
 
-## <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Star.png" width="36px">️ Support Us
+## <img src="/assets/Star.png" width="36px">️ Support Us
 
-Feel free to check it out and give it a <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Star.png" width="24px">️ if you love it.
+Feel free to check it out and give it a <img src="/assets/Star.png" width="24px">️ if you love it.
 Follow me for more updates and projects!
 
-## <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Folded Hands Medium Skin Tone.png" width="36px">️ Contributions and Feedback
+## <img src="/assets/Folded Hands Medium Skin Tone.png" width="36px">️ Contributions and Feedback
 
 Pull requests and feedback are always welcome!  
 Feel free to reach out at [rarsule30@gmail.com](mailto:rarksule30@gmail.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/suleyman-asrar-43101133a/).
 
 _Banner designed and whole package idea inspired by  [mohammad-amir-mohammadi](https://www.linkedin.com/in/mohammad-amir-mohammadi)_
 
-### <img src="https://github.com/rarksule/ethiopian_datetime_picker/blob/main/assets/Eyes.png" width="36px">️ Project License:
+### <img src="/assets/Eyes.png" width="36px">️ Project License:
 
 This project is licensed under the [BSD 3-Clause License](LICENSE).
 

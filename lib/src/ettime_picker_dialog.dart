@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'calander_common.dart';
-import 'ettime_picker.dart';
-import 'ettime_picker_theme.dart';
-import 'string_text.dart';
+import "package:ethiopian_datetime_picker/src/calander_common.dart";
+import "package:ethiopian_datetime_picker/src/ettime_picker.dart";
+import "package:ethiopian_datetime_picker/src/ettime_picker_theme.dart";
+import "package:ethiopian_datetime_picker/src/string_text.dart";
+import "package:flutter/material.dart";
+import "package:flutter_localizations/flutter_localizations.dart";
 
 const Duration _kDialogSizeAnimationDuration = Duration(milliseconds: 200);
 
@@ -98,7 +98,7 @@ const Duration _kDialogSizeAnimationDuration = Duration(milliseconds: 200);
 /// * [TimePickerThemeData], which allows you to customize the colors,
 ///   typography, and shape of the time picker.
 /// * [DisplayFeatureSubScreen], which documents the specifics of how
-///   [DisplayFeature]s can split the screen into sub-screens.
+///   (DisplayFeature)s can split the screen into sub-screens.
 Future<TimeOfDay?> showETTimePicker({
   required BuildContext context,
   required TimeOfDay initialTime,
@@ -141,14 +141,14 @@ Future<TimeOfDay?> showETTimePicker({
   );
 
   locale = locale ?? Localizations.localeOf(context);
-  GlobalLocale.locale = locale.languageCode;
+  setLocale = locale.languageCode;
 
   dialog = Localizations.override(
     context: context,
     delegates: const [
       GlobalMaterialLocalizations.delegate,
     ],
-    locale: Locale(globalLocale != null ? 'en' : locale.languageCode),
+    locale: Locale(globalLocale != null ? "en" : locale.languageCode),
     child: dialog,
   );
 
@@ -158,9 +158,8 @@ Future<TimeOfDay?> showETTimePicker({
     barrierColor: barrierColor,
     barrierLabel: barrierLabel,
     useRootNavigator: useRootNavigator,
-    builder: (BuildContext context) {
-      return builder == null ? dialog : builder(context, dialog);
-    },
+    builder: (context) =>
+        builder == null ? dialog : builder(context, dialog),
     routeSettings: routeSettings,
     anchorPoint: anchorPoint,
   );
@@ -177,8 +176,8 @@ Future<TimeOfDay?> showETTimePicker({
 class ETTimePickerDialog extends StatefulWidget {
   /// Creates a Material Design time picker.
   const ETTimePickerDialog({
-    super.key,
     required this.initialTime,
+    super.key,
     this.cancelText,
     this.confirmText,
     this.helpText,
@@ -226,7 +225,7 @@ class ETTimePickerDialog extends StatefulWidget {
   ///
   /// See also:
   ///
-  ///  * [RestorationManager], which explains how state restoration works in
+  ///  * RestorationManager, which explains how state restoration works in
   ///    Flutter.
   final String? restorationId;
 
@@ -256,17 +255,23 @@ class ETTimePickerDialog extends StatefulWidget {
 class _ETTimePickerDialogState extends State<ETTimePickerDialog>
     with RestorationMixin {
   late final RestorableEnum<TimePickerEntryMode> _entryMode =
-      RestorableEnum<TimePickerEntryMode>(widget.initialEntryMode,
-          values: TimePickerEntryMode.values);
+      RestorableEnum<TimePickerEntryMode>(
+    widget.initialEntryMode,
+    values: TimePickerEntryMode.values,
+  );
   late final RestorableTimeOfDay _selectedTime =
       RestorableTimeOfDay(widget.initialTime);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final RestorableEnum<AutovalidateMode> _autovalidateMode =
-      RestorableEnum<AutovalidateMode>(AutovalidateMode.disabled,
-          values: AutovalidateMode.values);
+      RestorableEnum<AutovalidateMode>(
+    AutovalidateMode.disabled,
+    values: AutovalidateMode.values,
+  );
   late final RestorableEnumN<Orientation> _orientation =
-      RestorableEnumN<Orientation>(widget.orientation,
-          values: Orientation.values);
+      RestorableEnumN<Orientation>(
+    widget.orientation,
+    values: Orientation.values,
+  );
 
   // Base sizes
   static const Size _kTimePickerPortraitSize = Size(310, 468);
@@ -294,10 +299,10 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(_selectedTime, 'selected_time');
-    registerForRestoration(_entryMode, 'entry_mode');
-    registerForRestoration(_autovalidateMode, 'autovalidate_mode');
-    registerForRestoration(_orientation, 'orientation');
+    registerForRestoration(_selectedTime, "selected_time");
+    registerForRestoration(_entryMode, "entry_mode");
+    registerForRestoration(_autovalidateMode, "autovalidate_mode");
+    registerForRestoration(_orientation, "orientation");
   }
 
   void _handleTimeChanged(TimeOfDay value) {
@@ -335,7 +340,7 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
         _handleEntryModeChanged(TimePickerEntryMode.dial);
       case TimePickerEntryMode.dialOnly:
       case TimePickerEntryMode.inputOnly:
-        FlutterError('Can not change entry mode from $_entryMode');
+        FlutterError("Can not change entry mode from $_entryMode");
     }
   }
 
@@ -346,7 +351,7 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
   void _handleOk() {
     if (_entryMode.value == TimePickerEntryMode.input ||
         _entryMode.value == TimePickerEntryMode.inputOnly) {
-      final FormState form = _formKey.currentState!;
+      final form = _formKey.currentState!;
       if (!form.validate()) {
         setState(() {
           _autovalidateMode.value = AutovalidateMode.always;
@@ -359,7 +364,7 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
   }
 
   Size _minDialogSize(BuildContext context, {required bool useMaterial3}) {
-    final Orientation orientation =
+    final orientation =
         _orientation.value ?? MediaQuery.orientationOf(context);
 
     switch (_entryMode.value) {
@@ -373,17 +378,18 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
         }
       case TimePickerEntryMode.input:
       case TimePickerEntryMode.inputOnly:
-        final MaterialLocalizations localizations =
+        final localizations =
             MaterialLocalizations.of(context);
-        final TimeOfDayFormat timeOfDayFormat = localizations.timeOfDayFormat(
-            alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context));
+        final timeOfDayFormat = localizations.timeOfDayFormat(
+          alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+        );
         final double timePickerWidth;
         switch (timeOfDayFormat) {
           case TimeOfDayFormat.HH_colon_mm:
           case TimeOfDayFormat.HH_dot_mm:
           case TimeOfDayFormat.frenchCanadian:
           case TimeOfDayFormat.H_colon_mm:
-            final ETTimePickerDefaults defaultTheme = useMaterial3
+            final defaultTheme = useMaterial3
                 ? ETTimePickerDefaultsM3(context)
                 : ETTimePickerDefaultsM2(context);
             timePickerWidth = _kTimePickerMinInputSize.width -
@@ -399,12 +405,12 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
   }
 
   Size _dialogSize(BuildContext context, {required bool useMaterial3}) {
-    final Orientation orientation =
+    final orientation =
         _orientation.value ?? MediaQuery.orientationOf(context);
     // Constrain the textScaleFactor to prevent layout issues. Since only some
     // parts of the time picker scale up with textScaleFactor, we cap the factor
     // to 1.1 as that provides enough space to reasonably fit all the content.
-    final double textScaleFactor =
+    final textScaleFactor =
         MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.1).scale(1);
 
     final Size timePickerSize;
@@ -416,24 +422,26 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
             timePickerSize = _kTimePickerPortraitSize;
           case Orientation.landscape:
             timePickerSize = Size(
-                _kTimePickerLandscapeSize.width * textScaleFactor,
-                useMaterial3
-                    ? _kTimePickerLandscapeSize.height
-                    : _kTimePickerLandscapeSizeM2.height);
+              _kTimePickerLandscapeSize.width * textScaleFactor,
+              useMaterial3
+                  ? _kTimePickerLandscapeSize.height
+                  : _kTimePickerLandscapeSizeM2.height,
+            );
         }
       case TimePickerEntryMode.input:
       case TimePickerEntryMode.inputOnly:
-        final MaterialLocalizations localizations =
+        final localizations =
             MaterialLocalizations.of(context);
-        final TimeOfDayFormat timeOfDayFormat = localizations.timeOfDayFormat(
-            alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context));
+        final timeOfDayFormat = localizations.timeOfDayFormat(
+          alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+        );
         final double timePickerWidth;
         switch (timeOfDayFormat) {
           case TimeOfDayFormat.HH_colon_mm:
           case TimeOfDayFormat.HH_dot_mm:
           case TimeOfDayFormat.frenchCanadian:
           case TimeOfDayFormat.H_colon_mm:
-            final ETTimePickerDefaults defaultTheme = useMaterial3
+            final defaultTheme = useMaterial3
                 ? ETTimePickerDefaultsM3(context)
                 : ETTimePickerDefaultsM2(context);
             timePickerWidth = _kTimePickerInputSize.width -
@@ -452,15 +460,15 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    final TimePickerThemeData pickerTheme = TimePickerTheme.of(context);
-    final ETTimePickerDefaults defaultTheme = theme.useMaterial3
+    final theme = Theme.of(context);
+    final pickerTheme = TimePickerTheme.of(context);
+    final defaultTheme = theme.useMaterial3
         ? ETTimePickerDefaultsM3(context)
         : ETTimePickerDefaultsM2(context);
-    final ShapeBorder shape = pickerTheme.shape ?? defaultTheme.shape;
-    final Color entryModeIconColor =
+    final shape = pickerTheme.shape ?? defaultTheme.shape;
+    final entryModeIconColor =
         pickerTheme.entryModeIconColor ?? defaultTheme.entryModeIconColor;
-    final Localized localized = Localized(context);
+    final localized = Localized(context);
 
     final Widget actions = Padding(
       padding: EdgeInsetsDirectional.only(start: theme.useMaterial3 ? 0 : 4),
@@ -478,9 +486,11 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
                   ? IconButton.styleFrom(foregroundColor: entryModeIconColor)
                   : null,
               onPressed: _toggleEntryMode,
-              icon: Icon(_entryMode.value == TimePickerEntryMode.dial
-                  ? Icons.keyboard_outlined
-                  : Icons.access_time),
+              icon: Icon(
+                _entryMode.value == TimePickerEntryMode.dial
+                    ? Icons.keyboard_outlined
+                    : Icons.access_time,
+              ),
               tooltip: _entryMode.value == TimePickerEntryMode.dial
                   ? localized.inputTimeModeButtonLabel
                   : localized.dialModeButtonLabel,
@@ -497,10 +507,12 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
                     style: pickerTheme.cancelButtonStyle ??
                         defaultTheme.cancelButtonStyle,
                     onPressed: _handleCancel,
-                    child: Text(widget.cancelText ??
-                        (theme.useMaterial3
-                            ? localized.cancelButtonLabel
-                            : localized.cancelButtonLabel.toUpperCase())),
+                    child: Text(
+                      widget.cancelText ??
+                          (theme.useMaterial3
+                              ? localized.cancelButtonLabel
+                              : localized.cancelButtonLabel.toUpperCase()),
+                    ),
                   ),
                   TextButton(
                     style: pickerTheme.confirmButtonStyle ??
@@ -524,10 +536,10 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
         // _dialogSize returns "padded" sizes.
         tapTargetSizeOffset = const Offset(0, -12);
     }
-    final Size dialogSize =
+    final dialogSize =
         _dialogSize(context, useMaterial3: theme.useMaterial3) +
             tapTargetSizeOffset;
-    final Size minDialogSize =
+    final minDialogSize =
         _minDialogSize(context, useMaterial3: theme.useMaterial3) +
             tapTargetSizeOffset;
     return Dialog(
@@ -545,56 +557,57 @@ class _ETTimePickerDialogState extends State<ETTimePickerDialog>
       child: Padding(
         padding: pickerTheme.padding ?? defaultTheme.padding,
         child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-          final Size constrainedSize = constraints.constrain(dialogSize);
-          final Size allowedSize = Size(
-            constrainedSize.width < minDialogSize.width
-                ? minDialogSize.width
-                : constrainedSize.width,
-            constrainedSize.height < minDialogSize.height
-                ? minDialogSize.height
-                : constrainedSize.height,
-          );
-          return SingleChildScrollView(
-            restorationId: 'time_picker_scroll_view_horizontal',
-            scrollDirection: Axis.horizontal,
-            child: SingleChildScrollView(
-              restorationId: 'time_picker_scroll_view_vertical',
-              child: AnimatedContainer(
-                width: allowedSize.width,
-                height: allowedSize.height,
-                duration: _kDialogSizeAnimationDuration,
-                curve: Curves.easeIn,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      child: Form(
-                        key: _formKey,
-                        autovalidateMode: _autovalidateMode.value,
-                        child: ETTimePicker(
-                          time: widget.initialTime,
-                          onTimeChanged: _handleTimeChanged,
-                          helpText: widget.helpText,
-                          cancelText: widget.cancelText,
-                          confirmText: widget.confirmText,
-                          errorInvalidText: widget.errorInvalidText,
-                          hourLabelText: widget.hourLabelText,
-                          minuteLabelText: widget.minuteLabelText,
-                          restorationId: 'time_picker',
-                          entryMode: _entryMode.value,
-                          orientation: widget.orientation,
-                          onEntryModeChanged: _handleEntryModeChanged,
+          builder: (context, constraints) {
+            final constrainedSize = constraints.constrain(dialogSize);
+            final allowedSize = Size(
+              constrainedSize.width < minDialogSize.width
+                  ? minDialogSize.width
+                  : constrainedSize.width,
+              constrainedSize.height < minDialogSize.height
+                  ? minDialogSize.height
+                  : constrainedSize.height,
+            );
+            return SingleChildScrollView(
+              restorationId: "time_picker_scroll_view_horizontal",
+              scrollDirection: Axis.horizontal,
+              child: SingleChildScrollView(
+                restorationId: "time_picker_scroll_view_vertical",
+                child: AnimatedContainer(
+                  width: allowedSize.width,
+                  height: allowedSize.height,
+                  duration: _kDialogSizeAnimationDuration,
+                  curve: Curves.easeIn,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Form(
+                          key: _formKey,
+                          autovalidateMode: _autovalidateMode.value,
+                          child: ETTimePicker(
+                            time: widget.initialTime,
+                            onTimeChanged: _handleTimeChanged,
+                            helpText: widget.helpText,
+                            cancelText: widget.cancelText,
+                            confirmText: widget.confirmText,
+                            errorInvalidText: widget.errorInvalidText,
+                            hourLabelText: widget.hourLabelText,
+                            minuteLabelText: widget.minuteLabelText,
+                            restorationId: "time_picker",
+                            entryMode: _entryMode.value,
+                            orientation: widget.orientation,
+                            onEntryModeChanged: _handleEntryModeChanged,
+                          ),
                         ),
                       ),
-                    ),
-                    actions,
-                  ],
+                      actions,
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }

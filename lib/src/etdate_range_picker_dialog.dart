@@ -1,16 +1,16 @@
-import 'package:ethiopian_datetime/ethiopian_datetime.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'calander_common.dart';
-import 'calander_etdate_range_picker.dart';
-import 'input_etdate_range_picker.dart';
-import 'string_text.dart';
+import "package:ethiopian_datetime/ethiopian_datetime.dart";
+import "package:ethiopian_datetime_picker/src/calander_common.dart";
+import "package:ethiopian_datetime_picker/src/calander_etdate_range_picker.dart";
+import "package:ethiopian_datetime_picker/src/input_etdate_range_picker.dart";
+import "package:ethiopian_datetime_picker/src/string_text.dart";
+import "package:flutter/material.dart";
+import "package:flutter_localizations/flutter_localizations.dart";
 
-const double _inputFormPortraitHeight = 98.0;
-const double _inputFormLandscapeHeight = 108.0;
-const Size _inputPortraitDialogSizeM2 = Size(330.0, 270.0);
-const Size _inputPortraitDialogSizeM3 = Size(328.0, 270.0);
-const Size _inputRangeLandscapeDialogSize = Size(496, 164.0);
+const double _inputFormPortraitHeight = 98;
+const double _inputFormLandscapeHeight = 108;
+const Size _inputPortraitDialogSizeM2 = Size(330, 270);
+const Size _inputPortraitDialogSizeM3 = Size(328, 270);
+const Size _inputRangeLandscapeDialogSize = Size(496, 164);
 const Duration _dialogSizeAnimationDuration = Duration(milliseconds: 200);
 const double _kMaxTextScaleFactor = 1.3;
 
@@ -92,7 +92,7 @@ const double _kMaxTextScaleFactor = 1.3;
 /// [Navigator.restorablePush] or [Navigator.restorablePushNamed] with
 /// [ETDateRangePickerDialog].
 ///
-/// For more information about state restoration, see [RestorationManager].
+/// For more information about state restoration, see (RestorationManager).
 ///
 /// {@macro flutter.widgets.RestorationManager}
 ///
@@ -111,12 +111,12 @@ const double _kMaxTextScaleFactor = 1.3;
 ///    select a single date.
 ///  * [ETDateTimeRange], which is used to describe a date range.
 ///  * [DisplayFeatureSubScreen], which documents the specifics of how
-///    [DisplayFeature]s can split the screen into sub-screens.
+///    (DisplayFeature)s can split the screen into sub-screens.
 Future<ETDateTimeRange?> showETDateRangePicker({
   required BuildContext context,
-  ETDateTimeRange? initialDateRange,
   required ETDateTime firstDate,
   required ETDateTime lastDate,
+  ETDateTimeRange? initialDateRange,
   ETDateTime? currentDate,
   DatePickerEntryMode initialEntryMode = DatePickerEntryMode.calendar,
   String? helpText,
@@ -140,8 +140,8 @@ Future<ETDateTimeRange?> showETDateRangePicker({
   TransitionBuilder? builder,
   Offset? anchorPoint,
   TextInputType keyboardType = TextInputType.datetime,
-  final Icon? switchToInputEntryModeIcon,
-  final Icon? switchToCalendarEntryModeIcon,
+  Icon? switchToInputEntryModeIcon,
+  Icon? switchToCalendarEntryModeIcon,
 }) async {
   assert(
     initialDateRange == null ||
@@ -154,7 +154,7 @@ Future<ETDateTimeRange?> showETDateRangePicker({
   lastDate = ETDateUtils.dateOnly(lastDate);
   assert(
     !lastDate.isBefore(firstDate),
-    'lastDate $lastDate must be on or after firstDate $firstDate.',
+    "lastDate $lastDate must be on or after firstDate $firstDate.",
   );
   assert(
     initialDateRange == null || !initialDateRange.start.isBefore(firstDate),
@@ -203,7 +203,7 @@ Future<ETDateTimeRange?> showETDateRangePicker({
       child: dialog,
     );
   }
-  GlobalLocale.locale =
+  setLocale =
       locale?.languageCode ?? Localizations.localeOf(context).languageCode;
   if (locale != null) {
     dialog = Localizations.override(
@@ -211,9 +211,11 @@ Future<ETDateTimeRange?> showETDateRangePicker({
       delegates: const [
         GlobalMaterialLocalizations.delegate,
       ],
-      locale: Locale(unsupportedMaterialCodes.contains(globalLocale)
-          ? 'en'
-          : globalLocale ?? locale.languageCode),
+      locale: Locale(
+        unsupportedMaterialCodes.contains(globalLocale)
+            ? "en"
+            : globalLocale ?? locale.languageCode,
+      ),
       child: dialog,
     );
   }
@@ -226,9 +228,8 @@ Future<ETDateTimeRange?> showETDateRangePicker({
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
     useSafeArea: false,
-    builder: (BuildContext context) {
-      return builder == null ? dialog : builder(context, dialog);
-    },
+    builder: (context) =>
+        builder == null ? dialog : builder(context, dialog),
     anchorPoint: anchorPoint,
   );
 }
@@ -245,10 +246,10 @@ Future<ETDateTimeRange?> showETDateRangePicker({
 class ETDateRangePickerDialog extends StatefulWidget {
   /// A Material-style date range picker dialog.
   const ETDateRangePickerDialog({
-    super.key,
-    this.initialDateRange,
     required this.firstDate,
     required this.lastDate,
+    super.key,
+    this.initialDateRange,
     this.currentDate,
     this.initialEntryMode = DatePickerEntryMode.calendar,
     this.helpText,
@@ -384,7 +385,7 @@ class ETDateRangePickerDialog extends StatefulWidget {
   ///
   /// See also:
   ///
-  ///  * [RestorationManager], which explains how state restoration works in
+  ///  * (RestorationManager), which explains how state restoration works in
   ///    Flutter.
   final String? restorationId;
 
@@ -416,10 +417,10 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(_entryMode, 'entry_mode');
-    registerForRestoration(_selectedStart, 'selected_start');
-    registerForRestoration(_selectedEnd, 'selected_end');
-    registerForRestoration(_autoValidate, 'autovalidate');
+    registerForRestoration(_entryMode, "entry_mode");
+    registerForRestoration(_selectedStart, "selected_start");
+    registerForRestoration(_selectedEnd, "selected_end");
+    registerForRestoration(_autoValidate, "autovalidate");
   }
 
   @override
@@ -434,7 +435,7 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
   void _handleOk() {
     if (_entryMode.value == DatePickerEntryMode.input ||
         _entryMode.value == DatePickerEntryMode.inputOnly) {
-      final InputETDateRangePickerState picker = _inputPickerKey.currentState!;
+      final picker = _inputPickerKey.currentState!;
       if (!picker.validate()) {
         setState(() {
           _autoValidate.value = true;
@@ -442,9 +443,11 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
         return;
       }
     }
-    final ETDateTimeRange? selectedRange = _hasSelectedDateRange
+    final selectedRange = _hasSelectedDateRange
         ? ETDateTimeRange(
-            start: _selectedStart.value!, end: _selectedEnd.value!)
+            start: _selectedStart.value!,
+            end: _selectedEnd.value!,
+          )
         : null;
 
     Navigator.pop(context, selectedRange);
@@ -485,7 +488,7 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
 
         case DatePickerEntryMode.calendarOnly:
         case DatePickerEntryMode.inputOnly:
-          assert(false, 'Can not change entry mode from $_entryMode');
+          assert(false, "Can not change entry mode from $_entryMode");
       }
     });
   }
@@ -503,12 +506,12 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final bool useMaterial3 = theme.useMaterial3;
-    final Localized localized = Localized(context);
-    final Orientation orientation = MediaQuery.orientationOf(context);
-    final DatePickerThemeData datePickerTheme = DatePickerTheme.of(context);
-    final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
+    final theme = Theme.of(context);
+    final useMaterial3 = theme.useMaterial3;
+    final localized = Localized(context);
+    final orientation = MediaQuery.orientationOf(context);
+    final datePickerTheme = DatePickerTheme.of(context);
+    final defaults = DatePickerTheme.defaults(context);
 
     final Widget contents;
     final Size size;
@@ -517,7 +520,7 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
     final Color? surfaceTintColor;
     final ShapeBorder? shape;
     final EdgeInsets insetPadding;
-    final bool showEntryModeButton =
+    final showEntryModeButton =
         _entryMode.value == DatePickerEntryMode.calendar ||
             _entryMode.value == DatePickerEntryMode.input;
     switch (_entryMode.value) {
@@ -621,7 +624,7 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
                   ? localized.dateRangePickerHelpText
                   : localized.dateRangePickerHelpText.toUpperCase()),
         );
-        final DialogTheme dialogTheme = theme.dialogTheme;
+        final dialogTheme = theme.dialogTheme;
         size = orientation == Orientation.portrait
             ? (useMaterial3
                 ? _inputPortraitDialogSizeM3
@@ -637,8 +640,7 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
             ? datePickerTheme.shape ?? defaults.shape
             : datePickerTheme.shape ?? dialogTheme.shape ?? defaults.shape;
 
-        insetPadding =
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0);
+        insetPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 24);
     }
 
     return Dialog(
@@ -657,9 +659,9 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
         curve: Curves.easeIn,
         child: MediaQuery.withClampedTextScaling(
           maxScaleFactor: _kMaxTextScaleFactor,
-          child: Builder(builder: (BuildContext context) {
-            return contents;
-          }),
+          child: Builder(
+            builder: (context) => contents,
+          ),
         ),
       ),
     );
@@ -668,7 +670,6 @@ class _DateRangePickerDialogState extends State<ETDateRangePickerDialog>
 
 class _CalendarRangePickerDialog extends StatelessWidget {
   const _CalendarRangePickerDialog({
-    super.key,
     required this.selectedStartDate,
     required this.selectedEndDate,
     required this.firstDate,
@@ -680,6 +681,7 @@ class _CalendarRangePickerDialog extends StatelessWidget {
     required this.onCancel,
     required this.confirmText,
     required this.helpText,
+    super.key,
     this.entryModeButton,
   });
 
@@ -698,43 +700,48 @@ class _CalendarRangePickerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final bool useMaterial3 = theme.useMaterial3;
-    final Orientation orientation = MediaQuery.orientationOf(context);
-    final DatePickerThemeData themeData = DatePickerTheme.of(context);
-    final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
-    final Color? dialogBackground = themeData.rangePickerBackgroundColor ??
+    final theme = Theme.of(context);
+    final useMaterial3 = theme.useMaterial3;
+    final orientation = MediaQuery.orientationOf(context);
+    final themeData = DatePickerTheme.of(context);
+    final defaults = DatePickerTheme.defaults(context);
+    final dialogBackground = themeData.rangePickerBackgroundColor ??
         defaults.rangePickerBackgroundColor;
-    final Color? headerBackground =
+    final headerBackground =
         themeData.rangePickerHeaderBackgroundColor ??
             defaults.rangePickerHeaderBackgroundColor;
-    final Color? headerForeground =
+    final headerForeground =
         themeData.rangePickerHeaderForegroundColor ??
             defaults.rangePickerHeaderForegroundColor;
-    final Color? headerDisabledForeground = headerForeground?.withOpacity(0.38);
-    final TextStyle? headlineStyle = themeData.rangePickerHeaderHeadlineStyle ??
+    final headerDisabledForeground = headerForeground?.withOpacity(0.38);
+    final headlineStyle = themeData.rangePickerHeaderHeadlineStyle ??
         defaults.rangePickerHeaderHeadlineStyle;
-    final TextStyle? headlineHelpStyle =
+    final headlineHelpStyle =
         (themeData.rangePickerHeaderHelpStyle ??
                 defaults.rangePickerHeaderHelpStyle)
             ?.apply(color: headerForeground);
-    final String startDateText =
+    final startDateText =
         formatRangeStartETDate(selectedStartDate, selectedEndDate, context);
-    final String endDateText = formatRangeEndETDate(
-        selectedStartDate, selectedEndDate, ETDateTime.now(), context);
-    final TextStyle? startDateStyle = headlineStyle?.apply(
+    final endDateText = formatRangeEndETDate(
+      selectedStartDate,
+      selectedEndDate,
+      ETDateTime.now(),
+      context,
+    );
+    final startDateStyle = headlineStyle?.apply(
       color: selectedStartDate != null
           ? headerForeground
           : headerDisabledForeground,
     );
-    final TextStyle? endDateStyle = headlineStyle?.apply(
+    final endDateStyle = headlineStyle?.apply(
       color:
           selectedEndDate != null ? headerForeground : headerDisabledForeground,
     );
-    final ButtonStyle buttonStyle = TextButton.styleFrom(
-        foregroundColor: headerForeground,
-        disabledForegroundColor: headerDisabledForeground);
-    final IconThemeData iconTheme = IconThemeData(color: headerForeground);
+    final buttonStyle = TextButton.styleFrom(
+      foregroundColor: headerForeground,
+      disabledForegroundColor: headerDisabledForeground,
+    );
+    final iconTheme = IconThemeData(color: headerForeground);
 
     return SafeArea(
       top: false,
@@ -762,54 +769,58 @@ class _CalendarRangePickerDialog extends StatelessWidget {
           ],
           bottom: PreferredSize(
             preferredSize: const Size(double.infinity, 64),
-            child: Row(children: <Widget>[
-              SizedBox(width: MediaQuery.sizeOf(context).width < 360 ? 42 : 72),
-              Expanded(
-                child: Semantics(
-                  label: '$helpText $startDateText to $endDateText',
-                  excludeSemantics: true,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(helpText, style: headlineHelpStyle),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            startDateText,
-                            style: startDateStyle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            ' – ',
-                            style: startDateStyle,
-                          ),
-                          Flexible(
-                            child: Text(
-                              endDateText,
-                              style: endDateStyle,
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width < 360 ? 42 : 72,
+                ),
+                Expanded(
+                  child: Semantics(
+                    label: "$helpText $startDateText to $endDateText",
+                    excludeSemantics: true,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(helpText, style: headlineHelpStyle),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              startDateText,
+                              style: startDateStyle,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                    ],
+                            Text(
+                              " – ",
+                              style: startDateStyle,
+                            ),
+                            Flexible(
+                              child: Text(
+                                endDateText,
+                                style: endDateStyle,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              if (orientation == Orientation.portrait &&
-                  entryModeButton != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: IconTheme(
-                    data: iconTheme,
-                    child: entryModeButton!,
+                if (orientation == Orientation.portrait &&
+                    entryModeButton != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: IconTheme(
+                      data: iconTheme,
+                      child: entryModeButton!,
+                    ),
                   ),
-                ),
-            ]),
+              ],
+            ),
           ),
         ),
         backgroundColor: dialogBackground,
@@ -867,18 +878,18 @@ class ETDateTimeRange {
   int get hashCode => Object.hash(start, end);
 
   @override
-  String toString() => '$start - $end';
+  String toString() => "$start - $end";
 }
 
+// ignore: avoid_classes_with_only_static_members
 class Utils {
   /// Returns a [ETDateTimeRange] with the dates of the original, but with times
   /// set to midnight.
   ///
   /// See also:
-  ///  * [dateOnly], which does the same thing for a single date.
-  static ETDateTimeRange datesOnly(ETDateTimeRange range) {
-    return ETDateTimeRange(
+  ///  * (dateOnly), which does the same thing for a single date.
+  static ETDateTimeRange datesOnly(ETDateTimeRange range) => ETDateTimeRange(
         start: ETDateUtils.dateOnly(range.start),
-        end: ETDateUtils.dateOnly(range.end));
-  }
+        end: ETDateUtils.dateOnly(range.end),
+      );
 }

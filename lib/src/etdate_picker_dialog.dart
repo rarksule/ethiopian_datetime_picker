@@ -2,30 +2,29 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:math' as math;
+import "dart:math" as math;
 
-import 'package:ethiopian_datetime/ethiopian_datetime.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'string_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'calander_common.dart';
-import 'calendar_etdate_picker.dart';
-import 'etdate_picker_header.dart';
-import 'input_etdate_picker_form_field.dart';
+import "package:ethiopian_datetime/ethiopian_datetime.dart";
+import "package:ethiopian_datetime_picker/src/calander_common.dart";
+import "package:ethiopian_datetime_picker/src/calendar_etdate_picker.dart";
+import "package:ethiopian_datetime_picker/src/etdate_picker_header.dart";
+import "package:ethiopian_datetime_picker/src/input_etdate_picker_form_field.dart";
+import "package:ethiopian_datetime_picker/src/string_text.dart";
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:flutter_localizations/flutter_localizations.dart";
 
 // The M3 sizes are coming from the tokens, but are hand coded,
 // as the current token DB does not contain landscape versions.
-const Size _calendarPortraitDialogSizeM2 = Size(330.0, 518.0);
-const Size _calendarPortraitDialogSizeM3 = Size(328.0, 512.0);
-const Size _calendarLandscapeDialogSize = Size(496.0, 346.0);
-const Size _inputPortraitDialogSizeM2 = Size(330.0, 270.0);
-const Size _inputPortraitDialogSizeM3 = Size(328.0, 270.0);
-const Size _inputLandscapeDialogSize = Size(496, 160.0);
+const Size _calendarPortraitDialogSizeM2 = Size(330, 518);
+const Size _calendarPortraitDialogSizeM3 = Size(328, 512);
+const Size _calendarLandscapeDialogSize = Size(496, 346);
+const Size _inputPortraitDialogSizeM2 = Size(330, 270);
+const Size _inputPortraitDialogSizeM3 = Size(328, 270);
+const Size _inputLandscapeDialogSize = Size(496, 160);
 const Duration _dialogSizeAnimationDuration = Duration(milliseconds: 200);
-const double _inputFormPortraitHeight = 98.0;
-const double _inputFormLandscapeHeight = 108.0;
+const double _inputFormPortraitHeight = 98;
+const double _inputFormLandscapeHeight = 108;
 const double _kMaxTextScaleFactor = 1.3;
 
 /// Shows a dialog containing a Material Design date picker.
@@ -134,13 +133,13 @@ const double _kMaxTextScaleFactor = 1.3;
 ///  * [CalendarDatePicker], which provides the calendar grid used by the date picker dialog.
 ///  * [InputDatePickerFormField], which provides a text input field for entering dates.
 ///  * [DisplayFeatureSubScreen], which documents the specifics of how
-///    [DisplayFeature]s can split the screen into sub-screens.
+///    (DisplayFeature)s can split the screen into sub-screens.
 ///  * [showTimePicker], which shows a dialog that contains a Material Design time picker.
 Future<ETDateTime?> showETDatePicker({
   required BuildContext context,
-  ETDateTime? initialDate,
   required ETDateTime firstDate,
   required ETDateTime lastDate,
+  ETDateTime? initialDate,
   ETDateTime? currentDate,
   DatePickerEntryMode initialEntryMode = DatePickerEntryMode.calendar,
   SelectableDayPredicate? selectableDayPredicate,
@@ -162,30 +161,30 @@ Future<ETDateTime?> showETDatePicker({
   String? fieldLabelText,
   TextInputType? keyboardType,
   Offset? anchorPoint,
-  final ValueChanged<DatePickerEntryMode>? onDatePickerModeChange,
-  final Icon? switchToInputEntryModeIcon,
-  final Icon? switchToCalendarEntryModeIcon,
+  ValueChanged<DatePickerEntryMode>? onDatePickerModeChange,
+  Icon? switchToInputEntryModeIcon,
+  Icon? switchToCalendarEntryModeIcon,
 }) async {
   initialDate = initialDate == null ? null : ETDateUtils.dateOnly(initialDate);
   firstDate = ETDateUtils.dateOnly(firstDate);
   lastDate = ETDateUtils.dateOnly(lastDate);
   assert(
     !lastDate.isBefore(firstDate),
-    'lastDate $lastDate must be on or after firstDate $firstDate.',
+    "lastDate $lastDate must be on or after firstDate $firstDate.",
   );
   assert(
     initialDate == null || !initialDate.isBefore(firstDate),
-    'initialDate $initialDate must be on or after firstDate $firstDate.',
+    "initialDate $initialDate must be on or after firstDate $firstDate.",
   );
   assert(
     initialDate == null || !initialDate.isAfter(lastDate),
-    'initialDate $initialDate must be on or before lastDate $lastDate.',
+    "initialDate $initialDate must be on or before lastDate $lastDate.",
   );
   assert(
     selectableDayPredicate == null ||
         initialDate == null ||
         selectableDayPredicate(initialDate),
-    'Provided initialDate $initialDate must satisfy provided selectableDayPredicate.',
+    "Provided initialDate $initialDate must satisfy provided selectableDayPredicate.",
   );
   assert(debugCheckHasMaterialLocalizations(context));
 
@@ -216,17 +215,21 @@ Future<ETDateTime?> showETDatePicker({
       child: dialog,
     );
   }
-  GlobalLocale.locale =
+  setLocale =
       locale?.languageCode ?? Localizations.localeOf(context).languageCode;
   if (locale != null) {
     dialog = Localizations.override(
       context: context,
-      delegates: const [
+
+      // ignore: strict_raw_type
+      delegates: const <LocalizationsDelegate>[
         GlobalMaterialLocalizations.delegate,
       ],
-      locale: Locale(unsupportedMaterialCodes.contains(globalLocale)
-          ? 'en'
-          : globalLocale ?? locale.languageCode),
+      locale: Locale(
+        unsupportedMaterialCodes.contains(globalLocale)
+            ? "en"
+            : globalLocale ?? locale.languageCode,
+      ),
       child: dialog,
     );
   }
@@ -238,9 +241,8 @@ Future<ETDateTime?> showETDatePicker({
     barrierLabel: barrierLabel,
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
-    builder: (BuildContext context) {
-      return builder == null ? dialog : builder(context, dialog);
-    },
+    builder: (context) =>
+        builder == null ? dialog : builder(context, dialog),
     anchorPoint: anchorPoint,
   );
 }
@@ -257,10 +259,10 @@ Future<ETDateTime?> showETDatePicker({
 class ETDatePickerDialog extends StatefulWidget {
   /// A Material-style date picker dialog.
   ETDatePickerDialog({
-    super.key,
-    ETDateTime? initialDate,
     required ETDateTime firstDate,
     required ETDateTime lastDate,
+    super.key,
+    ETDateTime? initialDate,
     ETDateTime? currentDate,
     this.initialEntryMode = DatePickerEntryMode.calendar,
     this.selectableDayPredicate,
@@ -284,21 +286,21 @@ class ETDatePickerDialog extends StatefulWidget {
         currentDate = ETDateUtils.dateOnly(currentDate ?? ETDateTime.now()) {
     assert(
       !this.lastDate.isBefore(this.firstDate),
-      'lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.',
+      "lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.",
     );
     assert(
       initialDate == null || !this.initialDate!.isBefore(this.firstDate),
-      'initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.',
+      "initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.",
     );
     assert(
       initialDate == null || !this.initialDate!.isAfter(this.lastDate),
-      'initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.',
+      "initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.",
     );
     assert(
       selectableDayPredicate == null ||
           initialDate == null ||
           selectableDayPredicate!(this.initialDate!),
-      'Provided initialDate ${this.initialDate} must satisfy provided selectableDayPredicate',
+      "Provided initialDate ${this.initialDate} must satisfy provided selectableDayPredicate",
     );
   }
 
@@ -422,9 +424,9 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(_selectedDate, 'selected_date');
-    registerForRestoration(_autovalidateMode, 'autovalidateMode');
-    registerForRestoration(_entryMode, 'calendar_entry_mode');
+    registerForRestoration(_selectedDate, "selected_date");
+    registerForRestoration(_autovalidateMode, "autovalidateMode");
+    registerForRestoration(_entryMode, "calendar_entry_mode");
   }
 
   final GlobalKey _calendarPickerKey = GlobalKey();
@@ -433,7 +435,7 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
   void _handleOk() {
     if (_entryMode.value == DatePickerEntryMode.input ||
         _entryMode.value == DatePickerEntryMode.inputOnly) {
-      final FormState form = _formKey.currentState!;
+      final form = _formKey.currentState!;
       if (!form.validate()) {
         setState(() => _autovalidateMode.value = AutovalidateMode.always);
         return;
@@ -464,7 +466,7 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
           _handleOnDatePickerModeChange();
         case DatePickerEntryMode.calendarOnly:
         case DatePickerEntryMode.inputOnly:
-          assert(false, 'Can not change entry mode from ${_entryMode.value}');
+          assert(false, "Can not change entry mode from ${_entryMode.value}");
       }
     });
   }
@@ -476,8 +478,8 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
   }
 
   Size _dialogSize(BuildContext context) {
-    final bool useMaterial3 = Theme.of(context).useMaterial3;
-    final Orientation orientation = MediaQuery.orientationOf(context);
+    final useMaterial3 = Theme.of(context).useMaterial3;
+    final orientation = MediaQuery.orientationOf(context);
 
     switch (_entryMode.value) {
       case DatePickerEntryMode.calendar:
@@ -511,13 +513,13 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final bool useMaterial3 = theme.useMaterial3;
-    final Localized localized = Localized(context);
-    final Orientation orientation = MediaQuery.orientationOf(context);
-    final DatePickerThemeData datePickerTheme = DatePickerTheme.of(context);
-    final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
-    final TextTheme textTheme = theme.textTheme;
+    final theme = Theme.of(context);
+    final useMaterial3 = theme.useMaterial3;
+    final localized = Localized(context);
+    final orientation = MediaQuery.orientationOf(context);
+    final datePickerTheme = DatePickerTheme.of(context);
+    final defaults = DatePickerTheme.defaults(context);
+    final textTheme = theme.textTheme;
 
     // There's no M3 spec for a landscape layout input (not calendar)
     // date picker. To ensure that the date displayed in the input
@@ -542,13 +544,13 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
           ? textTheme.headlineSmall
           : textTheme.headlineMedium;
     }
-    final Color? headerForegroundColor =
+    final headerForegroundColor =
         datePickerTheme.headerForegroundColor ?? defaults.headerForegroundColor;
     headlineStyle = headlineStyle?.copyWith(color: headerForegroundColor);
 
     final Widget actions = Container(
       alignment: AlignmentDirectional.centerEnd,
-      constraints: const BoxConstraints(minHeight: 52.0),
+      constraints: const BoxConstraints(minHeight: 52),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: OverflowBar(
         spacing: 8,
@@ -557,10 +559,12 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
             style:
                 datePickerTheme.cancelButtonStyle ?? defaults.cancelButtonStyle,
             onPressed: _handleCancel,
-            child: Text(widget.cancelText ??
-                (useMaterial3
-                    ? localized.cancelButtonLabel
-                    : localized.cancelButtonLabel.toUpperCase())),
+            child: Text(
+              widget.cancelText ??
+                  (useMaterial3
+                      ? localized.cancelButtonLabel
+                      : localized.cancelButtonLabel.toUpperCase()),
+            ),
           ),
           TextButton(
             style: datePickerTheme.confirmButtonStyle ??
@@ -572,54 +576,50 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
       ),
     );
 
-    ETCalendarDatePicker calendarDatePicker() {
-      return ETCalendarDatePicker(
-        key: _calendarPickerKey,
-        initialDate: _selectedDate.value,
-        firstDate: widget.firstDate,
-        lastDate: widget.lastDate,
-        currentDate: widget.currentDate,
-        onDateChanged: _handleDateChanged,
-        selectableDayPredicate: widget.selectableDayPredicate,
-        initialCalendarMode: widget.initialCalendarMode,
-      );
-    }
+    ETCalendarDatePicker calendarDatePicker() => ETCalendarDatePicker(
+          key: _calendarPickerKey,
+          initialDate: _selectedDate.value,
+          firstDate: widget.firstDate,
+          lastDate: widget.lastDate,
+          currentDate: widget.currentDate,
+          onDateChanged: _handleDateChanged,
+          selectableDayPredicate: widget.selectableDayPredicate,
+          initialCalendarMode: widget.initialCalendarMode,
+        );
 
-    Form inputDatePicker() {
-      return Form(
-        key: _formKey,
-        autovalidateMode: _autovalidateMode.value,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          height: orientation == Orientation.portrait
-              ? _inputFormPortraitHeight
-              : _inputFormLandscapeHeight,
-          child: Shortcuts(
-            shortcuts: _formShortcutMap,
-            child: Column(
-              children: <Widget>[
-                const Spacer(),
-                InputETDatePickerFormField(
-                  initialDate: _selectedDate.value,
-                  firstDate: widget.firstDate,
-                  lastDate: widget.lastDate,
-                  onDateSubmitted: _handleDateChanged,
-                  onDateSaved: _handleDateChanged,
-                  selectableDayPredicate: widget.selectableDayPredicate,
-                  errorFormatText: widget.errorFormatText,
-                  errorInvalidText: widget.errorInvalidText,
-                  fieldHintText: widget.fieldHintText,
-                  fieldLabelText: widget.fieldLabelText,
-                  keyboardType: widget.keyboardType,
-                  autofocus: true,
-                ),
-                const Spacer(),
-              ],
+    Form inputDatePicker() => Form(
+          key: _formKey,
+          autovalidateMode: _autovalidateMode.value,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            height: orientation == Orientation.portrait
+                ? _inputFormPortraitHeight
+                : _inputFormLandscapeHeight,
+            child: Shortcuts(
+              shortcuts: _formShortcutMap,
+              child: Column(
+                children: <Widget>[
+                  const Spacer(),
+                  InputETDatePickerFormField(
+                    initialDate: _selectedDate.value,
+                    firstDate: widget.firstDate,
+                    lastDate: widget.lastDate,
+                    onDateSubmitted: _handleDateChanged,
+                    onDateSaved: _handleDateChanged,
+                    selectableDayPredicate: widget.selectableDayPredicate,
+                    errorFormatText: widget.errorFormatText,
+                    errorInvalidText: widget.errorInvalidText,
+                    fieldHintText: widget.fieldHintText,
+                    fieldLabelText: widget.fieldLabelText,
+                    keyboardType: widget.keyboardType,
+                    autofocus: true,
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    }
+        );
 
     final Widget picker;
     final Widget? entryModeButton;
@@ -633,11 +633,9 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
           tooltip: localized.inputDateModeButtonLabel,
           onPressed: _handleEntryModeToggle,
         );
-        break;
       case DatePickerEntryMode.calendarOnly:
         picker = calendarDatePicker();
         entryModeButton = null;
-        break;
       case DatePickerEntryMode.input:
         picker = inputDatePicker();
         entryModeButton = IconButton(
@@ -647,11 +645,9 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
           tooltip: localized.calendarModeButtonLabel,
           onPressed: _handleEntryModeToggle,
         );
-        break;
       case DatePickerEntryMode.inputOnly:
         picker = inputDatePicker();
         entryModeButton = null;
-        break;
     }
 
     final Widget header = ETDatePickerHeader(
@@ -660,7 +656,7 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
               ? localized.datePickerHelpText
               : localized.datePickerHelpText.toUpperCase()),
       titleText: _selectedDate.value == null
-          ? ''
+          ? ""
           : localized.formatMediumDate(_selectedDate.value!),
       titleStyle: headlineStyle,
       orientation: orientation,
@@ -670,12 +666,12 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
 
     // Constrain the textScaleFactor to the largest supported value to prevent
     // layout issues.
-    final double textScaleFactor = MediaQuery.textScalerOf(context)
+    final textScaleFactor = MediaQuery.textScalerOf(context)
         .clamp(maxScaleFactor: _kMaxTextScaleFactor)
         .scale(1);
 
-    final Size dialogSize = _dialogSize(context) * textScaleFactor;
-    final DialogTheme dialogTheme = theme.dialogTheme;
+    final dialogSize = _dialogSize(context) * textScaleFactor;
+    final dialogTheme = theme.dialogTheme;
     return Dialog(
       backgroundColor:
           datePickerTheme.backgroundColor ?? defaults.backgroundColor,
@@ -688,8 +684,7 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
       shape: useMaterial3
           ? datePickerTheme.shape ?? defaults.shape
           : datePickerTheme.shape ?? dialogTheme.shape ?? defaults.shape,
-      insetPadding:
-          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       clipBehavior: Clip.antiAlias,
       child: AnimatedContainer(
         width: dialogSize.width,
@@ -701,53 +696,56 @@ class _ETDatePickerDialogState extends State<ETDatePickerDialog>
           // layout issues.
           maxScaleFactor: _kMaxTextScaleFactor,
           child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            final Size portraitDialogSize = useMaterial3
-                ? _inputPortraitDialogSizeM3
-                : _inputPortraitDialogSizeM2;
-            // Make sure the portrait dialog can fit the contents comfortably when
-            // resized from the landscape dialog.
-            final bool isFullyPortrait = constraints.maxHeight >=
-                math.min(dialogSize.height, portraitDialogSize.height);
+            builder: (context, constraints) {
+              final portraitDialogSize = useMaterial3
+                  ? _inputPortraitDialogSizeM3
+                  : _inputPortraitDialogSizeM2;
+              // Make sure the portrait dialog can fit the contents comfortably when
+              // resized from the landscape dialog.
+              final isFullyPortrait = constraints.maxHeight >=
+                  math.min(dialogSize.height, portraitDialogSize.height);
 
-            switch (orientation) {
-              case Orientation.portrait:
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    header,
-                    if (useMaterial3)
-                      Divider(height: 0, color: datePickerTheme.dividerColor),
-                    if (isFullyPortrait) ...<Widget>[
-                      Expanded(child: picker),
-                      actions,
+              switch (orientation) {
+                case Orientation.portrait:
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      header,
+                      if (useMaterial3)
+                        Divider(height: 0, color: datePickerTheme.dividerColor),
+                      if (isFullyPortrait) ...<Widget>[
+                        Expanded(child: picker),
+                        actions,
+                      ],
                     ],
-                  ],
-                );
-              case Orientation.landscape:
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    header,
-                    if (useMaterial3)
-                      VerticalDivider(
-                          width: 0, color: datePickerTheme.dividerColor),
-                    Flexible(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Expanded(child: picker),
-                          actions,
-                        ],
+                  );
+                case Orientation.landscape:
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      header,
+                      if (useMaterial3)
+                        VerticalDivider(
+                          width: 0,
+                          color: datePickerTheme.dividerColor,
+                        ),
+                      Flexible(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Expanded(child: picker),
+                            actions,
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                );
-            }
-          }),
+                    ],
+                  );
+              }
+            },
+          ),
         ),
       ),
     );

@@ -1,7 +1,6 @@
-import 'package:ethiopian_datetime/ethiopian_datetime.dart';
-import 'package:flutter/material.dart';
-
-import 'calander_common.dart';
+import "package:ethiopian_datetime/ethiopian_datetime.dart";
+import "package:ethiopian_datetime_picker/src/calander_common.dart";
+import "package:flutter/material.dart";
 
 /// Returns a locale-appropriate string to describe the start of a date range.
 ///
@@ -10,8 +9,11 @@ import 'calander_common.dart';
 /// day format (i.e. 'Jan 21'). Otherwise it will return the short date format
 /// (i.e. 'Jan 21, 2020').
 String formatRangeStartETDate(
-    ETDateTime? startDate, ETDateTime? endDate, BuildContext context) {
-  final Localized localized = Localized(context);
+  ETDateTime? startDate,
+  ETDateTime? endDate,
+  BuildContext context,
+) {
+  final localized = Localized(context);
   return startDate == null
       ? localized.dateRangeStartLabel
       : (endDate == null || startDate.year == endDate.year)
@@ -25,9 +27,13 @@ String formatRangeStartETDate(
 /// is in the same year as the `startDate` and the `currentDate` then it will
 /// just use the short month day format (i.e. 'Jan 21'), otherwise it will
 /// include the year (i.e. 'Jan 21, 2020').
-String formatRangeEndETDate(ETDateTime? startDate, ETDateTime? endDate,
-    ETDateTime currentDate, BuildContext context) {
-  final Localized localized = Localized(context);
+String formatRangeEndETDate(
+  ETDateTime? startDate,
+  ETDateTime? endDate,
+  ETDateTime currentDate,
+  BuildContext context,
+) {
+  final localized = Localized(context);
   return endDate == null
       ? localized.dateRangeEndLabel
       : (startDate != null &&
@@ -43,407 +49,382 @@ ETDateTime? parseCompactDate(String? inputString) {
   }
 
   // Assumes US mm/dd/yyyy format
-  final List<String> inputParts = inputString.split('/');
+  final inputParts = inputString.split("/");
   if (inputParts.length != 3) {
     return null;
   }
 
-  final int? year = int.tryParse(inputParts[2], radix: 10);
+  final year = int.tryParse(inputParts[2], radix: 10);
   if (year == null || year < 1) {
     return null;
   }
 
-  final int? month = int.tryParse(inputParts[0], radix: 10);
+  final month = int.tryParse(inputParts[0], radix: 10);
   if (month == null || month < 1 || month > 12) {
     return null;
   }
 
-  final int? day = int.tryParse(inputParts[1], radix: 10);
+  final day = int.tryParse(inputParts[1], radix: 10);
   if (day == null || day < 1 || day > ETDateUtils.getDaysInMonth(year, month)) {
     return null;
   }
 
   try {
     return ETDateTime(year, month, day);
+    // ignore: avoid_catching_errors
   } on ArgumentError {
     return null;
   }
 }
 
+///
 class Localized {
-  final BuildContext context;
+  ///
   Localized(this.context);
-  String timePickerMinuteModeAnnouncement() {
-    return '';
-  }
 
+  ///
+  final BuildContext context;
+
+  ///
+  String timePickerMinuteModeAnnouncement() => "";
+
+  ///
   String formatMonthYear(ETDateTime date) {
     if (globalLocale != null) {
-      return '${ETDateUtils.getMonthNames(globalLocale)[date.month - 1]} ${date.year}';
+      return "${ETDateUtils.getMonthNames(globalLocale)[date.month - 1]} ${date.year}";
     } else if (date.month == 13) {
-      return 'Pagume ${date.year}';
+      return "Pagume ${date.year}";
     }
     return MaterialLocalizations.of(context).formatMonthYear(date);
   }
 
   String formatFullDate(ETDateTime date) {
     if (globalLocale != null) {
-      final String month = ETDateUtils.getMonthNames(
-          globalLocale)[date.month - ETDateTime.meskerem];
-      return '${ETDateUtils.getWeekDayNames(globalLocale)[date.weekday - ETDateTime.segno]}, $month ${date.day}, ${date.year}';
+      final month = ETDateUtils.getMonthNames(
+        globalLocale,
+      )[date.month - ETDateTime.meskerem];
+      return "${ETDateUtils.getWeekDayNames(globalLocale)[date.weekday - ETDateTime.segno]}, $month ${date.day}, ${date.year}";
     } else if (date.month == 13) {
-      const String month = 'pagume';
-      return '${MaterialLocalizations.of(context).narrowWeekdays[date.weekday - ETDateTime.segno]}, $month ${date.day}, ${date.year}';
+      const month = "pagume";
+      return "${MaterialLocalizations.of(context).narrowWeekdays[date.weekday - ETDateTime.segno]}, $month ${date.day}, ${date.year}";
     }
     return MaterialLocalizations.of(context).formatFullDate(date);
   }
 
   String formatMediumDate(ETDateTime date) {
-    bool isAmharic =
-        false; //Localizations.localeOf(context).languageCode != 'am';
-
-    if (globalLocale != null || isAmharic) {
-      final String day = ETDateUtils.getShortWeekDayNames(
-          globalLocale)[date.weekday - ETDateTime.segno];
-      final String month = ETDateUtils.getMonthNames(
-          globalLocale)[date.month - ETDateTime.meskerem];
-      return '$day, $month ${date.day}';
+    if (globalLocale != null) {
+      final day = ETDateUtils.getShortWeekDayNames(
+        globalLocale,
+      )[date.weekday - ETDateTime.segno];
+      final month = ETDateUtils.getMonthNames(
+        globalLocale,
+      )[date.month - ETDateTime.meskerem];
+      return "$day, $month ${date.day}";
     } else if (date.month == 13) {
-      const String month = 'pagume';
-      return '${MaterialLocalizations.of(context).narrowWeekdays[date.weekday - ETDateTime.segno]}, $month ${date.day}';
+      const month = "pagume";
+      return "${MaterialLocalizations.of(context).narrowWeekdays[date.weekday - ETDateTime.segno]}, $month ${date.day}";
     }
     return MaterialLocalizations.of(context).formatMediumDate(date);
   }
 
   String formatShortMonthDay(ETDateTime date) {
     if (globalLocale != null) {
-      final String month = ETDateUtils.getShortMonthNames(
-          globalLocale)[date.month - ETDateTime.meskerem];
-      return '$month ${date.day}';
+      final month = ETDateUtils.getShortMonthNames(
+        globalLocale,
+      )[date.month - ETDateTime.meskerem];
+      return "$month ${date.day}";
     } else if (date.month == 13) {
-      const String month = 'pag';
-      return '$month ${date.day}';
+      const month = "pag";
+      return "$month ${date.day}";
     }
     return MaterialLocalizations.of(context).formatShortMonthDay(date);
   }
 
   String formatShortDate(ETDateTime date) {
     if (globalLocale != null) {
-      final String month = ETDateUtils.getShortMonthNames(
-          globalLocale)[date.month - ETDateTime.meskerem];
-      return '$month ${date.day}, ${date.year}';
+      final month = ETDateUtils.getShortMonthNames(
+        globalLocale,
+      )[date.month - ETDateTime.meskerem];
+      return "$month ${date.day}, ${date.year}";
     } else if (date.month == 13) {
-      const String month = 'pag';
-      return '$month ${date.day}, ${date.year}';
+      const month = "pag";
+      return "$month ${date.day}, ${date.year}";
     }
     return MaterialLocalizations.of(context).formatShortDate(date);
   }
 
-  String formatYear(ETDateTime selectedDate) {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
-    return localization.formatYear(selectedDate);
-  }
+  String formatYear(ETDateTime selectedDate) =>
+      MaterialLocalizations.of(context).formatYear(selectedDate);
 
-  String formatCompactDate(ETDateTime date) {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
-    return localization.formatCompactDate(date);
-  }
+  String formatCompactDate(ETDateTime date) =>
+      MaterialLocalizations.of(context).formatCompactDate(date);
 
-  String formatDecimal(int value) {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
-    return localization.formatDecimal(value);
-  }
+  String formatDecimal(int value) =>
+      MaterialLocalizations.of(context).formatDecimal(value);
 
-  String dateRangeStartDateSemanticLabel(String label) {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
-    return localization.dateRangeStartDateSemanticLabel(label);
-  }
+  String dateRangeStartDateSemanticLabel(String label) =>
+      MaterialLocalizations.of(context).dateRangeStartDateSemanticLabel(label);
 
-  String dateRangeEndDateSemanticLabel(String label) {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
-    return localization.dateRangeStartDateSemanticLabel(label);
-  }
+  String dateRangeEndDateSemanticLabel(String label) =>
+      MaterialLocalizations.of(context).dateRangeStartDateSemanticLabel(label);
 
-  String get unspecifiedDateRange {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
-    return localization.unspecifiedDateRange;
-  }
+  String get unspecifiedDateRange =>
+      MaterialLocalizations.of(context).unspecifiedDateRange;
 
   String get dateHelpText {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
-
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.dateHelpText;
-      case 'so':
+      case "so":
         return AfsomaliTexts.dateHelpText;
-      case 'ti':
+      case "ti":
         return TigrayTexts.dateHelpText;
     }
-    return localization.dateHelpText;
+    return MaterialLocalizations.of(context).dateHelpText;
   }
 
   String get dateRangeStartLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.dateRangeStartLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.dateRangeStartLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.dateRangeStartLabel;
     }
-    return localization.dateRangeStartLabel;
+    return MaterialLocalizations.of(context).dateRangeStartLabel;
   }
 
   String get dateRangeEndLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.dateRangeEndLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.dateRangeEndLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.dateRangeEndLabel;
     }
-    return localization.dateRangeEndLabel;
+    return MaterialLocalizations.of(context).dateRangeEndLabel;
   }
 
   String get dateRangePickerHelpText {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.dateRangePickerHelpText;
-      case 'so':
+      case "so":
         return AfsomaliTexts.dateRangePickerHelpText;
-      case 'ti':
+      case "ti":
         return TigrayTexts.dateRangePickerHelpText;
     }
-    return localization.dateRangePickerHelpText;
+    return MaterialLocalizations.of(context).dateRangePickerHelpText;
   }
 
   String get dateInputLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.dateInputLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.dateInputLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.dateInputLabel;
     }
-    return localization.dateInputLabel;
+    return MaterialLocalizations.of(context).dateInputLabel;
   }
 
   String get saveButtonLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.saveButtonLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.saveButtonLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.saveButtonLabel;
     }
-    return localization.saveButtonLabel;
+    return MaterialLocalizations.of(context).saveButtonLabel;
   }
 
   String get previousMonthTooltip {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.previousMonthTooltip;
-      case 'so':
+      case "so":
         return AfsomaliTexts.previousMonthTooltip;
-      case 'ti':
+      case "ti":
         return TigrayTexts.previousMonthTooltip;
     }
-    return localization.previousMonthTooltip;
+    return MaterialLocalizations.of(context).previousMonthTooltip;
   }
 
   String get nextMonthTooltip {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.nextMonthTooltip;
-      case 'so':
+      case "so":
         return AfsomaliTexts.nextMonthTooltip;
-      case 'ti':
+      case "ti":
         return TigrayTexts.nextMonthTooltip;
     }
-    return localization.nextMonthTooltip;
+    return MaterialLocalizations.of(context).nextMonthTooltip;
   }
 
   String get cancelButtonLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.cancelButtonLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.cancelButtonLabel;
-      case 'ti':
-      case 'am':
+      case "ti":
+      case "am":
         return TigrayTexts.cancelButtonLabel;
     }
-    return localization.cancelButtonLabel;
+    return MaterialLocalizations.of(context).cancelButtonLabel;
   }
 
   String get okButtonLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.okButtonLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.okButtonLabel;
-      case 'ti':
-      case 'am':
+      case "ti":
+      case "am":
         return TigrayTexts.okButtonLabel;
     }
-    return localization.okButtonLabel;
+    return MaterialLocalizations.of(context).okButtonLabel;
   }
 
   String get inputDateModeButtonLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.inputDateModeButtonLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.inputDateModeButtonLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.inputDateModeButtonLabel;
     }
-    return localization.inputDateModeButtonLabel;
+    return MaterialLocalizations.of(context).inputDateModeButtonLabel;
   }
 
   String get calendarModeButtonLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.calendarModeButtonLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.calendarModeButtonLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.calendarModeButtonLabel;
     }
-    return localization.calendarModeButtonLabel;
+    return MaterialLocalizations.of(context).calendarModeButtonLabel;
   }
 
   String get datePickerHelpText {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.datePickerHelpText;
-      case 'so':
+      case "so":
         return AfsomaliTexts.datePickerHelpText;
-      case 'ti':
+      case "ti":
         return TigrayTexts.datePickerHelpText;
     }
-    return localization.datePickerHelpText;
+    return MaterialLocalizations.of(context).datePickerHelpText;
   }
 
   String get currentDateLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.currentDateLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.currentDateLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.currentDateLabel;
-      case 'am':
+      case "am":
         return AmharicTexts.currentDateLabel;
     }
-    return localization.currentDateLabel;
+    return MaterialLocalizations.of(context).currentDateLabel;
   }
 
   String get timePickerDialHelpText {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.timePickerDialHelpText;
-      case 'so':
+      case "so":
         return AfsomaliTexts.timePickerDialHelpText;
-      case 'ti':
+      case "ti":
         return TigrayTexts.timePickerDialHelpText;
-      case 'am':
+      case "am":
         return AmharicTexts.timePickerDialHelpText;
     }
-    return localization.timePickerDialHelpText;
+    return MaterialLocalizations.of(context).timePickerDialHelpText;
   }
 
   String get timePickerInputHelpText {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.timePickerInputHelpText;
-      case 'so':
+      case "so":
         return AfsomaliTexts.timePickerInputHelpText;
-      case 'ti':
+      case "ti":
         return TigrayTexts.timePickerInputHelpText;
-      case 'am':
+      case "am":
         return AmharicTexts.timePickerInputHelpText;
     }
-    return localization.timePickerInputHelpText;
+    return MaterialLocalizations.of(context).timePickerInputHelpText;
   }
 
   String get timePickerHourLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.timePickerHourLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.timePickerHourLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.timePickerHourLabel;
-      case 'am':
+      case "am":
         return AmharicTexts.timePickerHourLabel;
     }
-    return localization.timePickerHourLabel;
+    return MaterialLocalizations.of(context).timePickerHourLabel;
   }
 
   String get timePickerMinuteLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.timePickerMinuteLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.timePickerMinuteLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.timePickerMinuteLabel;
-      case 'am':
+      case "am":
         return AmharicTexts.timePickerMinuteLabel;
     }
-    return localization.timePickerMinuteLabel;
+    return MaterialLocalizations.of(context).timePickerMinuteLabel;
   }
 
   String get inputTimeModeButtonLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.inputTimeModeButtonLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.inputTimeModeButtonLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.inputTimeModeButtonLabel;
-      case 'am':
+      case "am":
         return AmharicTexts.inputTimeModeButtonLabel;
     }
-    return localization.inputTimeModeButtonLabel;
+    return MaterialLocalizations.of(context).inputTimeModeButtonLabel;
   }
 
   String get dialModeButtonLabel {
-    MaterialLocalizations localization = MaterialLocalizations.of(context);
     switch (globalLocale) {
-      case 'om':
+      case "om":
         return OromiffaTexts.dialModeButtonLabel;
-      case 'so':
+      case "so":
         return AfsomaliTexts.dialModeButtonLabel;
-      case 'ti':
+      case "ti":
         return TigrayTexts.dialModeButtonLabel;
-      case 'am':
+      case "am":
         return AmharicTexts.dialModeButtonLabel;
     }
-    return localization.dialModeButtonLabel;
+    return MaterialLocalizations.of(context).dialModeButtonLabel;
   }
 
   List<String> get narrowWeekdays {
@@ -454,83 +435,87 @@ class Localized {
   }
 }
 
+// ignore: avoid_classes_with_only_static_members
 class OromiffaTexts {
-  static String get dateHelpText => 'gg/jj/wwww';
-  static String get dateRangeStartLabel => 'Guyyaa Jalqabaa';
-  static String get dateRangeEndLabel => 'Guyyaa Xumuraa';
-  static String get dateRangePickerHelpText => 'Daangaa filadhu';
-  static String get dateInputLabel => 'Guyyaa galchi';
-  static String get saveButtonLabel => 'kaa\'i';
-  static String get previousMonthTooltip => 'ji\'a darbe';
-  static String get nextMonthTooltip => 'ji\'a itti aanu';
-  static String get cancelButtonLabel => 'Dhisii';
-  static String get okButtonLabel => 'Hayyee';
-  static String get inputDateModeButtonLabel => 'Gara galtee jijjiiri';
-  static String get calendarModeButtonLabel => 'Gara filannootti jijjiiri';
-  static String get datePickerHelpText => 'Guyyaa Filadhu';
-  static String get currentDateLabel => 'har\'a';
-  static String get timePickerDialHelpText => 'yeroo filadhu';
-  static String get timePickerInputHelpText => 'Yeroo galchi';
-  static String get timePickerMinuteLabel => 'daqiiqaa';
+  static String get dateHelpText => "gg/jj/wwww";
+  static String get dateRangeStartLabel => "Guyyaa Jalqabaa";
+  static String get dateRangeEndLabel => "Guyyaa Xumuraa";
+  static String get dateRangePickerHelpText => "Daangaa filadhu";
+  static String get dateInputLabel => "Guyyaa galchi";
+  static String get saveButtonLabel => "kaa'i";
+  static String get previousMonthTooltip => "ji'a darbe";
+  static String get nextMonthTooltip => "ji'a itti aanu";
+  static String get cancelButtonLabel => "Dhisii";
+  static String get okButtonLabel => "Hayyee";
+  static String get inputDateModeButtonLabel => "Gara galtee jijjiiri";
+  static String get calendarModeButtonLabel => "Gara filannootti jijjiiri";
+  static String get datePickerHelpText => "Guyyaa Filadhu";
+  static String get currentDateLabel => "har'a";
+  static String get timePickerDialHelpText => "yeroo filadhu";
+  static String get timePickerInputHelpText => "Yeroo galchi";
+  static String get timePickerMinuteLabel => "daqiiqaa";
   static String get timePickerHourLabel => "sa'a";
-  static String get dialModeButtonLabel => 'Gara haalata filannoo jijjiiri';
+  static String get dialModeButtonLabel => "Gara haalata filannoo jijjiiri";
   static String get inputTimeModeButtonLabel =>
-      'Gara haalata galtee barruutti jijjiiri';
+      "Gara haalata galtee barruutti jijjiiri";
 }
 
+// ignore: avoid_classes_with_only_static_members
 class AmharicTexts {
-  static String get currentDateLabel => 'ዛሬ';
-  static String get timePickerDialHelpText => 'ጊዜ ምረጥ';
-  static String get timePickerInputHelpText => 'ጊዜ ጻፍ';
-  static String get timePickerMinuteLabel => 'ደቂቃ';
-  static String get timePickerHourLabel => 'ሰአት';
-  static String get dialModeButtonLabel => 'ወደ መራጭ ሁነታ ቀይር';
-  static String get inputTimeModeButtonLabel => 'ወደ የጽሑፍ ሁነታ ቀይር';
+  static String get currentDateLabel => "ዛሬ";
+  static String get timePickerDialHelpText => "ጊዜ ምረጥ";
+  static String get timePickerInputHelpText => "ጊዜ ጻፍ";
+  static String get timePickerMinuteLabel => "ደቂቃ";
+  static String get timePickerHourLabel => "ሰአት";
+  static String get dialModeButtonLabel => "ወደ መራጭ ሁነታ ቀይር";
+  static String get inputTimeModeButtonLabel => "ወደ የጽሑፍ ሁነታ ቀይር";
 }
 
+// ignore: avoid_classes_with_only_static_members
 class AfsomaliTexts {
-  static String get dateHelpText => 'mm/bb/ssss';
-  static String get dateRangeStartLabel => 'Taariikhda Bilawga';
-  static String get dateRangeEndLabel => 'Taariikhda dhamaadka';
-  static String get dateRangePickerHelpText => 'Dooro kala duwan';
-  static String get dateInputLabel => 'Gali Taariikhda';
-  static String get saveButtonLabel => 'kaydinta';
-  static String get previousMonthTooltip => 'bishii hore';
-  static String get nextMonthTooltip => 'bisha soo socota';
-  static String get cancelButtonLabel => 'Jooji';
-  static String get okButtonLabel => 'OK';
-  static String get inputDateModeButtonLabel => 'U beddel gelinta';
-  static String get calendarModeButtonLabel => 'U beddelo kalandarka';
-  static String get datePickerHelpText => 'Taariikhda dooro';
-  static String get currentDateLabel => 'Maanta';
-  static String get timePickerDialHelpText => 'waqti dooro';
-  static String get timePickerInputHelpText => 'Gali wakhtiga';
-  static String get timePickerMinuteLabel => 'daqiiqo';
-  static String get timePickerHourLabel => 'saac';
-  static String get dialModeButtonLabel => 'U beddel qaabka';
+  static String get dateHelpText => "mm/bb/ssss";
+  static String get dateRangeStartLabel => "Taariikhda Bilawga";
+  static String get dateRangeEndLabel => "Taariikhda dhamaadka";
+  static String get dateRangePickerHelpText => "Dooro kala duwan";
+  static String get dateInputLabel => "Gali Taariikhda";
+  static String get saveButtonLabel => "kaydinta";
+  static String get previousMonthTooltip => "bishii hore";
+  static String get nextMonthTooltip => "bisha soo socota";
+  static String get cancelButtonLabel => "Jooji";
+  static String get okButtonLabel => "OK";
+  static String get inputDateModeButtonLabel => "U beddel gelinta";
+  static String get calendarModeButtonLabel => "U beddelo kalandarka";
+  static String get datePickerHelpText => "Taariikhda dooro";
+  static String get currentDateLabel => "Maanta";
+  static String get timePickerDialHelpText => "waqti dooro";
+  static String get timePickerInputHelpText => "Gali wakhtiga";
+  static String get timePickerMinuteLabel => "daqiiqo";
+  static String get timePickerHourLabel => "saac";
+  static String get dialModeButtonLabel => "U beddel qaabka";
   static String get inputTimeModeButtonLabel =>
-      'U beddel habka gelinta qoraalka';
+      "U beddel habka gelinta qoraalka";
 }
 
+// ignore: avoid_classes_with_only_static_members
 class TigrayTexts {
-  static String get dateHelpText => 'ዕዕ/ወወ/ዓዓዓዓ';
-  static String get dateRangeStartLabel => 'ዕለት ምጅማር';
-  static String get dateRangeEndLabel => 'መወዳእታ ዕለት';
-  static String get dateRangePickerHelpText => 'ደረጃ ምረጽ';
-  static String get dateInputLabel => 'ዕለት ኣእትዉ';
-  static String get saveButtonLabel => 'ዕቅብ';
-  static String get previousMonthTooltip => 'ዝሓለፈ ወርሒ';
-  static String get nextMonthTooltip => 'ዝመጽእ ወርሒ';
-  static String get cancelButtonLabel => 'ሰርዝ';
-  static String get okButtonLabel => 'እሺ';
-  static String get inputDateModeButtonLabel => 'ናብ ምእታው ምቕያር';
-  static String get calendarModeButtonLabel => 'ናብ ካላንደር ቀይር';
-  static String get datePickerHelpText => 'ዕለት ምረጽ';
-  static String get currentDateLabel => 'ሎምዓንቲ';
-  static String get timePickerDialHelpText => 'ግዜ ምረጽ';
-  static String get timePickerInputHelpText => 'ግዜ ኣእቱ';
-  static String get timePickerMinuteLabel => 'ደቒቓ';
-  static String get timePickerHourLabel => 'ሰአት';
-  static String get dialModeButtonLabel => 'ናብ ምምራጽ ቀይር';
-  static String get inputTimeModeButtonLabel => 'ናብ ናይ ጽሑፍ ምእታው ቀይር';
+  static String get dateHelpText => "ዕዕ/ወወ/ዓዓዓዓ";
+  static String get dateRangeStartLabel => "ዕለት ምጅማር";
+  static String get dateRangeEndLabel => "መወዳእታ ዕለት";
+  static String get dateRangePickerHelpText => "ደረጃ ምረጽ";
+  static String get dateInputLabel => "ዕለት ኣእትዉ";
+  static String get saveButtonLabel => "ዕቅብ";
+  static String get previousMonthTooltip => "ዝሓለፈ ወርሒ";
+  static String get nextMonthTooltip => "ዝመጽእ ወርሒ";
+  static String get cancelButtonLabel => "ሰርዝ";
+  static String get okButtonLabel => "እሺ";
+  static String get inputDateModeButtonLabel => "ናብ ምእታው ምቕያር";
+  static String get calendarModeButtonLabel => "ናብ ካላንደር ቀይር";
+  static String get datePickerHelpText => "ዕለት ምረጽ";
+  static String get currentDateLabel => "ሎምዓንቲ";
+  static String get timePickerDialHelpText => "ግዜ ምረጽ";
+  static String get timePickerInputHelpText => "ግዜ ኣእቱ";
+  static String get timePickerMinuteLabel => "ደቒቓ";
+  static String get timePickerHourLabel => "ሰአት";
+  static String get dialModeButtonLabel => "ናብ ምምራጽ ቀይር";
+  static String get inputTimeModeButtonLabel => "ናብ ናይ ጽሑፍ ምእታው ቀይር";
 }

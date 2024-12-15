@@ -2,9 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
-import 'package:ethiopian_datetime/ethiopian_datetime.dart';
-import 'string_text.dart';
+// ignore_for_file: avoid_types_on_closure_parameters, omit_local_variable_types
+
+import "package:ethiopian_datetime/ethiopian_datetime.dart";
+import "package:ethiopian_datetime_picker/src/string_text.dart";
+import "package:flutter/material.dart";
 
 /// A [TextFormField] configured to accept and validate a date entered by a user.
 ///
@@ -37,10 +39,10 @@ class InputETDatePickerFormField extends StatefulWidget {
   ///
   /// [firstDate] must be on or before [lastDate].
   InputETDatePickerFormField({
-    super.key,
-    ETDateTime? initialDate,
     required ETDateTime firstDate,
     required ETDateTime lastDate,
+    super.key,
+    ETDateTime? initialDate,
     this.onDateSubmitted,
     this.onDateSaved,
     this.selectableDayPredicate,
@@ -58,21 +60,21 @@ class InputETDatePickerFormField extends StatefulWidget {
         lastDate = ETDateUtils.dateOnly(lastDate) {
     assert(
       !this.lastDate.isBefore(this.firstDate),
-      'lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.',
+      "lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.",
     );
     assert(
       initialDate == null || !this.initialDate!.isBefore(this.firstDate),
-      'initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.',
+      "initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.",
     );
     assert(
       initialDate == null || !this.initialDate!.isAfter(this.lastDate),
-      'initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.',
+      "initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.",
     );
     assert(
       selectableDayPredicate == null ||
           initialDate == null ||
           selectableDayPredicate!(this.initialDate!),
-      'Provided initialDate ${this.initialDate} must satisfy provided selectableDayPredicate.',
+      "Provided initialDate ${this.initialDate} must satisfy provided selectableDayPredicate.",
     );
   }
 
@@ -171,12 +173,15 @@ class _InputDatePickerFormFieldState extends State<InputETDatePickerFormField> {
     super.didUpdateWidget(oldWidget);
     if (widget.initialDate != oldWidget.initialDate) {
       // Can't update the form field in the middle of a build, so do it next frame
-      WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
-        setState(() {
-          _selectedDate = widget.initialDate;
-          _updateValueForSelectedDate();
-        });
-      }, debugLabel: 'InputETDatePickerFormField.update');
+      WidgetsBinding.instance.addPostFrameCallback(
+        (Duration timeStamp) {
+          setState(() {
+            _selectedDate = widget.initialDate;
+            _updateValueForSelectedDate();
+          });
+        },
+        debugLabel: "InputETDatePickerFormField.update",
+      );
     }
   }
 
@@ -188,30 +193,28 @@ class _InputDatePickerFormFieldState extends State<InputETDatePickerFormField> {
       // Select the new text if we are auto focused and haven't selected the text before.
       if (widget.autofocus && !_autoSelected) {
         textEditingValue = textEditingValue.copyWith(
-            selection: TextSelection(
-          baseOffset: 0,
-          extentOffset: _inputText!.length,
-        ));
+          selection: TextSelection(
+            baseOffset: 0,
+            extentOffset: _inputText!.length,
+          ),
+        );
         _autoSelected = true;
       }
       _controller.value = textEditingValue;
     } else {
-      _inputText = '';
+      _inputText = "";
       _controller.value = TextEditingValue(text: _inputText!);
     }
   }
 
-  ETDateTime? _parseDate(String? text) {
-    return parseCompactDate(text);
-  }
+  ETDateTime? _parseDate(String? text) => parseCompactDate(text);
 
-  bool _isValidAcceptableDate(ETDateTime? date) {
-    return date != null &&
-        !date.isBefore(widget.firstDate) &&
-        !date.isAfter(widget.lastDate) &&
-        (widget.selectableDayPredicate == null ||
-            widget.selectableDayPredicate!(date));
-  }
+  bool _isValidAcceptableDate(ETDateTime? date) =>
+      date != null &&
+      !date.isBefore(widget.firstDate) &&
+      !date.isAfter(widget.lastDate) &&
+      (widget.selectableDayPredicate == null ||
+          widget.selectableDayPredicate!(date));
 
   String? _validateDate(String? text) {
     if ((text == null || text.isEmpty) && widget.acceptEmptyDate) {

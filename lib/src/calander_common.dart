@@ -1,23 +1,27 @@
-import 'package:ethiopian_datetime/ethiopian_datetime.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import "package:ethiopian_datetime/ethiopian_datetime.dart";
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
 /// List of supported Ethiopian language codes for localization.
-const supportedETLanguageCodes = ['om', 'so', 'ti', 'am', 'en'];
-const unsupportedMaterialCodes = ['om', 'so', 'ti'];
+const List<String> supportedETLanguageCodes = <String>[
+  "om",
+  "so",
+  "ti",
+  "am",
+  "en",
+];
 
-/// Class to manage the global locale setting for Ethiopian languages.
-class GlobalLocale {
-  static String? _locale;
+///List of locales that are not supported by global Material Localization delege
+const List<String> unsupportedMaterialCodes = <String>["om", "so", "ti"];
 
-  // Setter for _locale
-  static set locale(String? value) {
-    _locale = supportedETLanguageCodes.contains(value) ? value : null;
-  }
+/// variable to manage the global locale setting for Ethiopian languages.
+String? _locale;
+set setLocale(String? value) {
+  _locale = supportedETLanguageCodes.contains(value) ? value : null;
 }
 
 /// Getter to retrieve the global locale set for Ethiopian languages.
-String? get globalLocale => GlobalLocale._locale;
+String? get globalLocale => _locale;
 
 // A restorable [DatePickerEntryMode] value.
 //
@@ -107,12 +111,12 @@ class RestorableETDateTimeN extends RestorableValue<ETDateTime?> {
 
 /// InheritedWidget indicating what the current focused date is for its children.
 ///
-/// This is used by the [_MonthPicker] to let its children [_DayPicker]s know
+/// This is used by the (MonthPicker) to let its children (DayPicker)s know
 /// what the currently focused date (if any) should be.
 class ETFocusedDate extends InheritedWidget {
   const ETFocusedDate({
-    super.key,
     required super.child,
+    super.key,
     this.date,
     this.scrollDirection,
   });
@@ -121,19 +125,17 @@ class ETFocusedDate extends InheritedWidget {
   final TraversalDirection? scrollDirection;
 
   @override
-  bool updateShouldNotify(ETFocusedDate oldWidget) {
-    return !ETDateUtils.isSameDay(date, oldWidget.date) ||
-        scrollDirection != oldWidget.scrollDirection;
-  }
+  bool updateShouldNotify(ETFocusedDate oldWidget) =>
+      !ETDateUtils.isSameDay(date, oldWidget.date) ||
+      scrollDirection != oldWidget.scrollDirection;
 
-  static ETFocusedDate? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<ETFocusedDate>();
-  }
+  static ETFocusedDate? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<ETFocusedDate>();
 }
 
-TimeOfDayFormat timeOfDayFormat(BuildContext context,
-    [bool alwaysUse24HourFormat = false]) {
-  return alwaysUse24HourFormat
-      ? TimeOfDayFormat.HH_colon_mm
-      : TimeOfDayFormat.h_colon_mm_space_a;
-}
+// TimeOfDayFormat timeOfDayFormat(BuildContext context,
+//     [bool alwaysUse24HourFormat = false,]) {
+//   return alwaysUse24HourFormat
+//       ? TimeOfDayFormat.HH_colon_mm
+//       : TimeOfDayFormat.h_colon_mm_space_a;
+// }

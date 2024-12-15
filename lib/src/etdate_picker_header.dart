@@ -1,7 +1,6 @@
-import 'package:ethiopian_datetime/ethiopian_datetime.dart';
-import 'package:flutter/material.dart';
-
-import 'string_text.dart';
+import "package:ethiopian_datetime/ethiopian_datetime.dart";
+import "package:ethiopian_datetime_picker/src/string_text.dart";
+import "package:flutter/material.dart";
 
 /// Re-usable widget that displays the selected date (in large font) and the
 /// help text above it.
@@ -12,24 +11,24 @@ import 'string_text.dart';
 /// * Single Date picker with text input mode.
 /// * Date Range picker with text input mode.
 ///
-/// [helpText], [orientation], [icon], [onIconPressed] are required and must be
+/// [helpText], [orientation], (icon), (onIconPressed) are required and must be
 /// non-null.
 class ETDatePickerHeader extends StatelessWidget {
   /// Creates a header for use in a date picker dialog.
   const ETDatePickerHeader({
-    super.key,
     required this.helpText,
     required this.titleText,
-    this.titleSemanticsLabel,
     required this.titleStyle,
     required this.orientation,
+    super.key,
+    this.titleSemanticsLabel,
     this.isShort = false,
     this.entryModeButton,
   });
 
-  static const double _datePickerHeaderLandscapeWidth = 152.0;
-  static const double _datePickerHeaderPortraitHeight = 120.0;
-  static const double _headerPaddingLandscape = 16.0;
+  static const double _datePickerHeaderLandscapeWidth = 152;
+  static const double _datePickerHeaderPortraitHeight = 120;
+  static const double _headerPaddingLandscape = 16;
 
   /// The text that is displayed at the top of the header.
   ///
@@ -62,24 +61,24 @@ class ETDatePickerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DatePickerThemeData themeData = DatePickerTheme.of(context);
-    final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
-    final Color? backgroundColor =
+    final themeData = DatePickerTheme.of(context);
+    final defaults = DatePickerTheme.defaults(context);
+    final backgroundColor =
         themeData.headerBackgroundColor ?? defaults.headerBackgroundColor;
-    final Color? foregroundColor =
+    final foregroundColor =
         themeData.headerForegroundColor ?? defaults.headerForegroundColor;
-    final TextStyle? helpStyle =
+    final helpStyle =
         (themeData.headerHelpStyle ?? defaults.headerHelpStyle)?.copyWith(
       color: foregroundColor,
     );
 
-    final Text help = Text(
+    final help = Text(
       helpText,
       style: helpStyle,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
-    final Text title = Text(
+    final title = Text(
       titleText,
       semanticsLabel: titleSemanticsLabel ?? titleText,
       style: titleStyle,
@@ -171,14 +170,16 @@ class ETDatePickerHeader extends StatelessWidget {
 ///     4 5 6 7 8 9 10
 ///
 List<Widget> getDayHeaders(TextStyle? headerStyle, Localized localized) {
-  final List<Widget> result = <Widget>[];
-  for (int i = 0;
+  final result = <Widget>[];
+  for (var i = 0;
       result.length < ETDateTime.daysPerWeek;
       i = (i + 1) % ETDateTime.daysPerWeek) {
-    final String weekday = localized.narrowWeekdays[i];
-    result.add(ExcludeSemantics(
-      child: Center(child: Text(weekday, style: headerStyle)),
-    ));
+    final weekday = localized.narrowWeekdays[i];
+    result.add(
+      ExcludeSemantics(
+        child: Center(child: Text(weekday, style: headerStyle)),
+      ),
+    );
   }
   return result;
 }
