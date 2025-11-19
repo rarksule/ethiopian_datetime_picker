@@ -272,7 +272,7 @@ Follow me for more updates and projects!
 ## <img src="https://github.com/rarksule/ethiopian_datetime_picker/raw/main/assets/Folded Hands Medium Skin Tone.png" width="36px">️ Contributions and Feedback
 
 Pull requests and feedback are always welcome!  
-Feel free to reach out at [rarsule30@gmail.com](mailto:rarksule30@gmail.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/suleyman-asrar-43101133a/).
+Feel free to reach out at [rarksule30@gmail.com](mailto:rarksule30@gmail.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/suleyman-asrar-43101133a/).
 
 _Banner designed and whole package idea inspired by  [mohammad-amir-mohammadi](https://www.linkedin.com/in/mohammad-amir-mohammadi)_
 
