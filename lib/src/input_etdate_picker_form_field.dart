@@ -254,7 +254,7 @@ class _InputDatePickerFormFieldState extends State<InputETDatePickerFormField> {
     final bool useMaterial3 = theme.useMaterial3;
     final Localized localized = Localized(context);
     final DatePickerThemeData datePickerTheme = theme.datePickerTheme;
-    final InputDecorationTheme inputTheme = theme.inputDecorationTheme;
+    final InputDecorationThemeData inputTheme = theme.inputDecorationTheme;
     final InputBorder effectiveInputBorder =
         datePickerTheme.inputDecorationTheme?.border ??
             theme.inputDecorationTheme.border ??

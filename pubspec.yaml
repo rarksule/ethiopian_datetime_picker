@@ -4,7 +4,7 @@ version: 0.0.2+1
 homepage: https://github.com/rarksule/ethiopian_datetime_picker.git
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   ethiopian_datetime: ^1.0.3
@@ -19,4 +19,3 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-

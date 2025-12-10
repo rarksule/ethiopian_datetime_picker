@@ -2201,10 +2201,12 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField>
         : ETTimePickerDefaultsM2(context);
     final alwaysUse24HourFormat = MediaQuery.alwaysUse24HourFormatOf(context);
 
-    final inputDecorationTheme = timePickerTheme.inputDecorationTheme ??
+    // final inputDecorationTheme = timePickerTheme.inputDecorationTheme ??
+    //     defaultTheme.inputDecorationTheme;
+    final effectiveInputTheme = timePickerTheme.inputDecorationTheme ??
         defaultTheme.inputDecorationTheme;
-    var inputDecoration =
-        const InputDecoration().applyDefaults(inputDecorationTheme);
+    var inputDecoration = (const InputDecoration())
+        .applyDefaults(effectiveInputTheme ?? const InputDecorationThemeData());
     // Remove the hint text when focused because the centered cursor
     // appears odd above the hint text.
     final hintText = focusNode.hasFocus ? null : _formattedValue;
