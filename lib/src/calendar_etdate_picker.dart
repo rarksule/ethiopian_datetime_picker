@@ -184,7 +184,8 @@ class _ETCalendarDatePickerState extends State<ETCalendarDatePicker> {
       final isToday = ETDateUtils.isSameDay(widget.currentDate, _selectedDate);
       final semanticLabelSuffix =
           isToday ? ", ${localized.currentDateLabel}" : "";
-      SemanticsService.announce(
+      SemanticsService.sendAnnouncement(
+        View.of(context),
         "${localized.formatFullDate(_selectedDate!)}$semanticLabelSuffix",
         _textDirection,
       );
@@ -210,12 +211,14 @@ class _ETCalendarDatePickerState extends State<ETCalendarDatePicker> {
       _mode = mode;
       if (_selectedDate != null) {
         if (_mode == DatePickerMode.day) {
-          SemanticsService.announce(
+          SemanticsService.sendAnnouncement(
+            View.of(context),
             localized.formatMonthYear(_selectedDate!),
             _textDirection,
           );
         } else {
-          SemanticsService.announce(
+          SemanticsService.sendAnnouncement(
+            View.of(context),
             localized.formatYear(_selectedDate!),
             _textDirection,
           );
@@ -576,7 +579,8 @@ class _MonthPickerState extends State<_MonthPicker> {
           // the same day of the month.
           _focusedDay = _focusableDayForMonth(_currentMonth, _focusedDay!.day);
         }
-        SemanticsService.announce(
+        SemanticsService.sendAnnouncement(
+          View.of(context),
           localized.formatMonthYear(_currentMonth),
           _textDirection,
         );

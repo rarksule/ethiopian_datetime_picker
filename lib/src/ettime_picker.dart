@@ -2715,7 +2715,8 @@ class _TimePickerState extends State<ETTimePicker> with RestorationMixin {
 }
 
 void _announceToAccessibility(BuildContext context, String message) {
-  SemanticsService.announce(message, Directionality.of(context));
+  SemanticsService.sendAnnouncement(
+      View.of(context), message, Directionality.of(context));
 }
 
 // END GENERATED TOKEN PROPERTIES - TimePicker

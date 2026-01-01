@@ -12,3 +12,6 @@
  * Migrate to widget state
  * Apply normalization to TimePickerThemeData.inputDecorationTheme 
  * replaced withOpacity deprecation with WithAlpha
+## 0.2.0
+
+ * updated the announce implementation to latest for better working with android apis
