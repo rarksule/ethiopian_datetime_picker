@@ -853,7 +853,7 @@ class _DayItem extends StatefulWidget {
 
 class _DayItemState extends State<_DayItem> {
   // ignore: deprecated_member_use
-  final MaterialStatesController _statesController = MaterialStatesController();
+  final WidgetStatesController _statesController = WidgetStatesController();
 
   @override
   void dispose() {
@@ -879,18 +879,17 @@ class _DayItemState extends State<_DayItem> {
         getProperty(datePickerTheme) ?? getProperty(defaults);
 
     T? resolve<T>(
-      MaterialStateProperty<T>? Function(DatePickerThemeData? theme)
-          getProperty,
-      Set<MaterialState> states,
+      WidgetStateProperty<T>? Function(DatePickerThemeData? theme) getProperty,
+      Set<WidgetState> states,
     ) =>
         effectiveValue(
           (theme) => getProperty(theme)?.resolve(states),
         );
 
-    final states = <MaterialState>{
-      if (widget.isDisabled) MaterialState.disabled,
+    final states = <WidgetState>{
+      if (widget.isDisabled) WidgetState.disabled,
       if (widget.isSelectedDayStart || widget.isSelectedDayEnd)
-        MaterialState.selected,
+        WidgetState.selected,
     };
 
     _statesController.value = states;
@@ -903,7 +902,7 @@ class _DayItemState extends State<_DayItem> {
       (theme) => theme?.dayBackgroundColor,
       states,
     );
-    final dayOverlayColor = MaterialStateProperty.resolveWith<Color?>(
+    final dayOverlayColor = WidgetStateProperty.resolveWith<Color?>(
       (states) => effectiveValue(
         (theme) => widget.isInRange
             ? theme?.rangeSelectionOverlayColor?.resolve(states)
@@ -941,7 +940,7 @@ class _DayItemState extends State<_DayItem> {
       );
     } else if (widget.isDisabled) {
       itemStyle = textTheme.bodyMedium
-          ?.apply(color: colorScheme.onSurface.withOpacity(0.38));
+          ?.apply(color: colorScheme.onSurface.withAlpha(97));
     } else if (widget.isToday) {
       // The current day gets a different text color and a circle stroke
       // border.

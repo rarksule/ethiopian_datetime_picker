@@ -304,15 +304,15 @@ class _HourMinuteControl extends StatelessWidget {
     final shape =
         timePickerTheme.hourMinuteShape ?? defaultTheme.hourMinuteShape;
 
-    final states = <MaterialState>{
-      if (isSelected) MaterialState.selected,
+    final states = <WidgetState>{
+      if (isSelected) WidgetState.selected,
     };
-    final effectiveTextColor = MaterialStateProperty.resolveAs<Color>(
+    final effectiveTextColor = WidgetStateProperty.resolveAs<Color>(
       _TimePickerModel.themeOf(context).hourMinuteTextColor ??
           _TimePickerModel.defaultThemeOf(context).hourMinuteTextColor,
       states,
     );
-    final effectiveStyle = MaterialStateProperty.resolveAs<TextStyle>(
+    final effectiveStyle = WidgetStateProperty.resolveAs<TextStyle>(
       timePickerTheme.hourMinuteTextStyle ?? defaultTheme.hourMinuteTextStyle,
       states,
     ).copyWith(color: effectiveTextColor);
@@ -330,7 +330,7 @@ class _HourMinuteControl extends StatelessWidget {
     return SizedBox(
       height: height,
       child: Material(
-        color: MaterialStateProperty.resolveAs(backgroundColor, states),
+        color: WidgetStateProperty.resolveAs(backgroundColor, states),
         clipBehavior: Clip.antiAlias,
         shape: shape,
         child: InkWell(
@@ -455,13 +455,13 @@ class _StringFragment extends StatelessWidget {
     final defaultTheme = theme.useMaterial3
         ? ETTimePickerDefaultsM3(context)
         : ETTimePickerDefaultsM2(context);
-    final states = <MaterialState>{};
+    final states = <WidgetState>{};
 
-    final effectiveTextColor = MaterialStateProperty.resolveAs<Color>(
+    final effectiveTextColor = WidgetStateProperty.resolveAs<Color>(
       timePickerTheme.hourMinuteTextColor ?? defaultTheme.hourMinuteTextColor,
       states,
     );
-    final effectiveStyle = MaterialStateProperty.resolveAs<TextStyle>(
+    final effectiveStyle = WidgetStateProperty.resolveAs<TextStyle>(
       timePickerTheme.hourMinuteTextStyle ?? defaultTheme.hourMinuteTextStyle,
       states,
     ).copyWith(color: effectiveTextColor);
@@ -714,20 +714,20 @@ class _AmPmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final states = <MaterialState>{
-      if (selected) MaterialState.selected,
+    final states = <WidgetState>{
+      if (selected) WidgetState.selected,
     };
     final timePickerTheme = _TimePickerModel.themeOf(context);
     final defaultTheme = _TimePickerModel.defaultThemeOf(context);
-    final resolvedBackgroundColor = MaterialStateProperty.resolveAs<Color>(
+    final resolvedBackgroundColor = WidgetStateProperty.resolveAs<Color>(
       timePickerTheme.dayPeriodColor ?? defaultTheme.dayPeriodColor,
       states,
     );
-    final resolvedTextColor = MaterialStateProperty.resolveAs<Color>(
+    final resolvedTextColor = WidgetStateProperty.resolveAs<Color>(
       timePickerTheme.dayPeriodTextColor ?? defaultTheme.dayPeriodTextColor,
       states,
     );
-    final resolvedTextStyle = MaterialStateProperty.resolveAs<TextStyle?>(
+    final resolvedTextStyle = WidgetStateProperty.resolveAs<TextStyle?>(
       timePickerTheme.dayPeriodTextStyle ?? defaultTheme.dayPeriodTextStyle,
       states,
     )?.copyWith(
@@ -1129,11 +1129,11 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     _thetaTween = Tween<double>(begin: _getThetaForTime(widget.selectedTime));
     _radiusTween = Tween<double>(begin: _getRadiusForTime(widget.selectedTime));
     _theta = _animationController
-        .drive(CurveTween(curve: standardEasing))
+        .drive(CurveTween(curve: Easing.standard))
         .drive(_thetaTween)
       ..addListener(() => setState(() {/* _theta.value has changed */}));
     _radius = _animationController
-        .drive(CurveTween(curve: standardEasing))
+        .drive(CurveTween(curve: Easing.standard))
         .drive(_radiusTween)
       ..addListener(() => setState(() {/* _radius.value has changed */}));
   }
@@ -1633,13 +1633,13 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
         timePickerTheme.dialHandColor ?? defaultTheme.dialHandColor;
     final labelStyle =
         timePickerTheme.dialTextStyle ?? defaultTheme.dialTextStyle;
-    final dialTextUnselectedColor = MaterialStateProperty.resolveAs<Color>(
+    final dialTextUnselectedColor = WidgetStateProperty.resolveAs<Color>(
       timePickerTheme.dialTextColor ?? defaultTheme.dialTextColor,
-      <MaterialState>{},
+      <WidgetState>{},
     );
-    final dialTextSelectedColor = MaterialStateProperty.resolveAs<Color>(
+    final dialTextSelectedColor = WidgetStateProperty.resolveAs<Color>(
       timePickerTheme.dialTextColor ?? defaultTheme.dialTextColor,
-      <MaterialState>{MaterialState.selected},
+      <WidgetState>{WidgetState.selected},
     );
     final resolvedUnselectedLabelStyle =
         labelStyle.copyWith(color: dialTextUnselectedColor);
@@ -2220,11 +2220,11 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField>
         defaultTheme.hourMinuteColor;
     final Color fillColor;
     if (theme.useMaterial3) {
-      fillColor = MaterialStateProperty.resolveAs<Color>(
+      fillColor = WidgetStateProperty.resolveAs<Color>(
         startingFillColor,
-        <MaterialState>{
-          if (focusNode.hasFocus) MaterialState.focused,
-          if (focusNode.hasFocus) MaterialState.selected,
+        <WidgetState>{
+          if (focusNode.hasFocus) WidgetState.focused,
+          if (focusNode.hasFocus) WidgetState.selected,
         },
       );
     } else {
@@ -2236,16 +2236,16 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField>
       fillColor: fillColor,
     );
 
-    final states = <MaterialState>{
-      if (focusNode.hasFocus) MaterialState.focused,
-      if (focusNode.hasFocus) MaterialState.selected,
+    final states = <WidgetState>{
+      if (focusNode.hasFocus) WidgetState.focused,
+      if (focusNode.hasFocus) WidgetState.selected,
     };
-    final effectiveTextColor = MaterialStateProperty.resolveAs<Color>(
+    final effectiveTextColor = WidgetStateProperty.resolveAs<Color>(
       timePickerTheme.hourMinuteTextColor ?? defaultTheme.hourMinuteTextColor,
       states,
     );
     final effectiveStyle =
-        MaterialStateProperty.resolveAs<TextStyle>(widget.style, states)
+        WidgetStateProperty.resolveAs<TextStyle>(widget.style, states)
             .copyWith(color: effectiveTextColor);
 
     return SizedBox.fromSize(

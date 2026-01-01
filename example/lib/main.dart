@@ -11,23 +11,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [Locale('en'), Locale('am')],
-      locale: const Locale('am'),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
+    return SafeArea(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('en'), Locale('am')],
+        locale: const Locale('am'),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true,
+        ),
 
-      debugShowCheckedModeBanner: false,
-      // theme: androidTheme,
-      home: const MyHomePage(title: 'Sample Demonstaration App'),
+        debugShowCheckedModeBanner: false,
+        // theme: androidTheme,
+        home: const MyHomePage(title: 'Sample Demonstaration App'),
+      ),
     );
   }
 }
@@ -321,7 +323,7 @@ class _MyHomePageState extends State<MyHomePage> {
             blurRadius: 3,
             spreadRadius: 0,
             offset: const Offset(0, 4),
-            color: const Color(0xff000000).withOpacity(0.3),
+            color: const Color(0xff000000).withAlpha(77),
           ),
         ], color: Colors.white),
         child: Center(
@@ -357,7 +359,7 @@ class ImageBu extends StatelessWidget {
                 blurRadius: 3,
                 spreadRadius: 0,
                 offset: const Offset(0, 4),
-                color: const Color(0xff000000).withOpacity(0.3),
+                color: const Color(0xff000000).withAlpha(77),
               ),
             ],
             borderRadius: const BorderRadius.all(Radius.circular(10))),

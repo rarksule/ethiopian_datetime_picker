@@ -710,7 +710,7 @@ class _CalendarRangePickerDialog extends StatelessWidget {
         defaults.rangePickerHeaderBackgroundColor;
     final headerForeground = themeData.rangePickerHeaderForegroundColor ??
         defaults.rangePickerHeaderForegroundColor;
-    final headerDisabledForeground = headerForeground?.withOpacity(0.38);
+    final headerDisabledForeground = headerForeground?.withAlpha(97);
     final headlineStyle = themeData.rangePickerHeaderHeadlineStyle ??
         defaults.rangePickerHeaderHeadlineStyle;
     final headlineHelpStyle = (themeData.rangePickerHeaderHelpStyle ??

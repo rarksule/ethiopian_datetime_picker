@@ -388,7 +388,7 @@ class _DatePickerModeToggleButtonState
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final controlColor = colorScheme.onSurface.withOpacity(0.60);
+    final controlColor = colorScheme.onSurface.withAlpha(153);
 
     return Container(
       padding: const EdgeInsetsDirectional.only(start: 16, end: 4),
@@ -772,8 +772,7 @@ class _MonthPickerState extends State<_MonthPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final controlColor =
-        Theme.of(context).colorScheme.onSurface.withOpacity(0.60);
+    final controlColor = Theme.of(context).colorScheme.onSurface.withAlpha(153);
     final localized = Localized(context);
     return Semantics(
       child: Column(
@@ -1002,7 +1001,7 @@ class _Day extends StatefulWidget {
 }
 
 class _DayState extends State<_Day> {
-  final MaterialStatesController _statesController = MaterialStatesController();
+  final WidgetStatesController _statesController = WidgetStatesController();
 
   @override
   Widget build(BuildContext context) {
@@ -1013,9 +1012,8 @@ class _DayState extends State<_Day> {
         getProperty(datePickerTheme) ?? getProperty(defaults);
 
     T? resolve<T>(
-      MaterialStateProperty<T>? Function(DatePickerThemeData? theme)
-          getProperty,
-      Set<MaterialState> states,
+      WidgetStateProperty<T>? Function(DatePickerThemeData? theme) getProperty,
+      Set<WidgetState> states,
     ) =>
         effectiveValue(
           (theme) => getProperty(theme)?.resolve(states),
@@ -1025,9 +1023,9 @@ class _DayState extends State<_Day> {
     final semanticLabelSuffix =
         widget.isToday ? ", ${localized.currentDateLabel}" : "";
 
-    final states = <MaterialState>{
-      if (widget.isDisabled) MaterialState.disabled,
-      if (widget.isSelectedDay) MaterialState.selected,
+    final states = <WidgetState>{
+      if (widget.isDisabled) WidgetState.disabled,
+      if (widget.isSelectedDay) WidgetState.selected,
     };
 
     _statesController.value = states;
@@ -1044,7 +1042,7 @@ class _DayState extends State<_Day> {
           : theme?.dayBackgroundColor,
       states,
     );
-    final dayOverlayColor = MaterialStateProperty.resolveWith<Color?>(
+    final dayOverlayColor = WidgetStateProperty.resolveWith<Color?>(
       (states) => effectiveValue(
         (theme) => theme?.dayOverlayColor?.resolve(states),
       ),
@@ -1213,7 +1211,7 @@ class YearPicker extends StatefulWidget {
 
 class _YearPickerState extends State<YearPicker> {
   ScrollController? _scrollController;
-  final MaterialStatesController _statesController = MaterialStatesController();
+  final WidgetStatesController _statesController = WidgetStatesController();
 
   // The approximate number of years necessary to fill the available space.
   static const int minYears = 18;
@@ -1259,9 +1257,8 @@ class _YearPickerState extends State<YearPicker> {
         getProperty(datePickerTheme) ?? getProperty(defaults);
 
     T? resolve<T>(
-      MaterialStateProperty<T>? Function(DatePickerThemeData? theme)
-          getProperty,
-      Set<MaterialState> states,
+      WidgetStateProperty<T>? Function(DatePickerThemeData? theme) getProperty,
+      Set<WidgetState> states,
     ) =>
         effectiveValue(
           (theme) => getProperty(theme)?.resolve(states),
@@ -1277,9 +1274,9 @@ class _YearPickerState extends State<YearPicker> {
     const decorationHeight = 36.0;
     const decorationWidth = 72.0;
 
-    final states = <MaterialState>{
-      if (isDisabled) MaterialState.disabled,
-      if (isSelected) MaterialState.selected,
+    final states = <WidgetState>{
+      if (isDisabled) WidgetState.disabled,
+      if (isSelected) WidgetState.selected,
     };
 
     final textColor = resolve<Color?>(
@@ -1294,7 +1291,7 @@ class _YearPickerState extends State<YearPicker> {
           : theme?.yearBackgroundColor,
       states,
     );
-    final overlayColor = MaterialStateProperty.resolveWith<Color?>(
+    final overlayColor = WidgetStateProperty.resolveWith<Color?>(
       (states) => effectiveValue(
         (theme) => theme?.yearOverlayColor?.resolve(states),
       ),

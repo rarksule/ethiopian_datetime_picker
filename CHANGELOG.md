@@ -7,3 +7,8 @@
 ## 0.0.2+1
 
  * screenshots added
+## 0.1.0
+ 
+ * Migrate to widget state
+ * Apply normalization to TimePickerThemeData.inputDecorationTheme 
+ * replaced withOpacity deprecation with WithAlpha

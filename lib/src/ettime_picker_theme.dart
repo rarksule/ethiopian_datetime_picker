@@ -77,7 +77,7 @@ abstract class ETTimePickerDefaults extends TimePickerThemeData {
   TextStyle get hourMinuteTextStyle;
 
   @override
-  InputDecorationTheme get inputDecorationTheme;
+  InputDecorationThemeData get inputDecorationTheme;
 
   @override
   EdgeInsetsGeometry get padding;
@@ -111,16 +111,16 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
   @override
   BorderSide get dayPeriodBorderSide => BorderSide(
         color: Color.alphaBlend(
-          _colors.onSurface.withOpacity(0.38),
+          _colors.onSurface.withAlpha(97),
           _colors.surface,
         ),
       );
 
   @override
-  Color get dayPeriodColor => MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+  Color get dayPeriodColor => WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return _colors.primary
-              .withOpacity(_colors.brightness == Brightness.dark ? 0.24 : 0.12);
+              .withAlpha(_colors.brightness == Brightness.dark ? 61 : 31);
         }
         // The unselected day period should match the overall picker dialog color.
         // Making it transparent enables that without being redundant and allows
@@ -141,10 +141,10 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
   Size get dayPeriodInputSize => const Size(52, 70);
 
   @override
-  Color get dayPeriodTextColor => MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
+  Color get dayPeriodTextColor => WidgetStateColor.resolveWith(
+        (states) => states.contains(WidgetState.selected)
             ? _colors.primary
-            : _colors.onSurface.withOpacity(0.60),
+            : _colors.onSurface.withAlpha(153),
       );
 
   @override
@@ -153,7 +153,7 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
 
   @override
   Color get dialBackgroundColor => _colors.onSurface
-      .withOpacity(_colors.brightness == Brightness.dark ? 0.12 : 0.08);
+      .withAlpha(_colors.brightness == Brightness.dark ? 31 : 20);
 
   @override
   Color get dialHandColor => _colors.primary;
@@ -171,8 +171,8 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
   double get centerRadius => 4;
 
   @override
-  Color get dialTextColor => MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+  Color get dialTextColor => WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return _colors.surface;
         }
         return _colors.onSurface;
@@ -186,18 +186,18 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
 
   @override
   Color get entryModeIconColor => _colors.onSurface
-      .withOpacity(_colors.brightness == Brightness.dark ? 1.0 : 0.6);
+      .withAlpha(_colors.brightness == Brightness.dark ? 255 : 153);
 
   @override
   TextStyle get helpTextStyle => _textTheme.labelSmall!;
 
   @override
-  Color get hourMinuteColor => MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
-            ? _colors.primary.withOpacity(
-                _colors.brightness == Brightness.dark ? 0.24 : 0.12,
+  Color get hourMinuteColor => WidgetStateColor.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? _colors.primary.withAlpha(
+                _colors.brightness == Brightness.dark ? 61 : 31,
               )
-            : _colors.onSurface.withOpacity(0.12),
+            : _colors.onSurface.withAlpha(31),
       );
 
   @override
@@ -216,8 +216,8 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
   Size get hourMinuteInputSize24Hour => const Size(114, 70);
 
   @override
-  Color get hourMinuteTextColor => MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
+  Color get hourMinuteTextColor => WidgetStateColor.resolveWith(
+        (states) => states.contains(WidgetState.selected)
             ? _colors.primary
             : _colors.onSurface,
       );
@@ -225,14 +225,14 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
   @override
   TextStyle get hourMinuteTextStyle => _textTheme.displayMedium!;
 
-  Color get _hourMinuteInputColor => MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
+  Color get _hourMinuteInputColor => WidgetStateColor.resolveWith(
+        (states) => states.contains(WidgetState.selected)
             ? Colors.transparent
-            : _colors.onSurface.withOpacity(0.12),
+            : _colors.onSurface.withAlpha(31),
       );
 
   @override
-  InputDecorationTheme get inputDecorationTheme => InputDecorationTheme(
+  InputDecorationThemeData get inputDecorationTheme => InputDecorationThemeData(
         contentPadding: EdgeInsets.zero,
         filled: true,
         fillColor: _hourMinuteInputColor,
@@ -250,7 +250,7 @@ class ETTimePickerDefaultsM2 extends ETTimePickerDefaults {
           borderSide: BorderSide(color: _colors.error, width: 2),
         ),
         hintStyle: hourMinuteTextStyle.copyWith(
-          color: _colors.onSurface.withOpacity(0.36),
+          color: _colors.onSurface.withAlpha(92),
         ),
         errorStyle: const TextStyle(fontSize: 0, height: 0),
       );
@@ -290,8 +290,8 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   BorderSide get dayPeriodBorderSide => BorderSide(color: _colors.outline);
 
   @override
-  Color get dayPeriodColor => MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+  Color get dayPeriodColor => WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return _colors.tertiaryContainer;
         }
         // The unselected day period should match the overall picker dialog color.
@@ -318,26 +318,26 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
       Size(dayPeriodPortraitSize.width, dayPeriodPortraitSize.height - 8);
 
   @override
-  Color get dayPeriodTextColor => MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
-          if (states.contains(MaterialState.focused)) {
+  Color get dayPeriodTextColor => WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          if (states.contains(WidgetState.focused)) {
             return _colors.onTertiaryContainer;
           }
-          if (states.contains(MaterialState.hovered)) {
+          if (states.contains(WidgetState.hovered)) {
             return _colors.onTertiaryContainer;
           }
-          if (states.contains(MaterialState.pressed)) {
+          if (states.contains(WidgetState.pressed)) {
             return _colors.onTertiaryContainer;
           }
           return _colors.onTertiaryContainer;
         }
-        if (states.contains(MaterialState.focused)) {
+        if (states.contains(WidgetState.focused)) {
           return _colors.onSurfaceVariant;
         }
-        if (states.contains(MaterialState.hovered)) {
+        if (states.contains(WidgetState.hovered)) {
           return _colors.onSurfaceVariant;
         }
-        if (states.contains(MaterialState.pressed)) {
+        if (states.contains(WidgetState.pressed)) {
           return _colors.onSurfaceVariant;
         }
         return _colors.onSurfaceVariant;
@@ -348,7 +348,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
       _textTheme.titleMedium!.copyWith(color: dayPeriodTextColor);
 
   @override
-  Color get dialBackgroundColor => _colors.surfaceVariant;
+  Color get dialBackgroundColor => _colors.surfaceContainerHighest;
 
   @override
   Color get dialHandColor => _colors.primary;
@@ -366,8 +366,8 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   double get centerRadius => const Size.square(8).width / 2;
 
   @override
-  Color get dialTextColor => MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+  Color get dialTextColor => WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return _colors.onPrimary;
         }
         return _colors.onSurface;
@@ -383,7 +383,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   Color get entryModeIconColor => _colors.onSurface;
 
   @override
-  TextStyle get helpTextStyle => MaterialStateTextStyle.resolveWith((states) {
+  TextStyle get helpTextStyle => WidgetStateTextStyle.resolveWith((states) {
         final textStyle = _textTheme.labelMedium!;
         return textStyle.copyWith(color: _colors.onSurfaceVariant);
       });
@@ -392,31 +392,32 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
   EdgeInsetsGeometry get padding => const EdgeInsets.all(24);
 
   @override
-  Color get hourMinuteColor => MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+  Color get hourMinuteColor => WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           var overlayColor = _colors.primaryContainer;
-          if (states.contains(MaterialState.pressed)) {
+          if (states.contains(WidgetState.pressed)) {
             overlayColor = _colors.onPrimaryContainer;
-          } else if (states.contains(MaterialState.hovered)) {
-            const hoverOpacity = 0.08;
-            overlayColor = _colors.onPrimaryContainer.withOpacity(hoverOpacity);
-          } else if (states.contains(MaterialState.focused)) {
-            const focusOpacity = 0.12;
-            overlayColor = _colors.onPrimaryContainer.withOpacity(focusOpacity);
+          } else if (states.contains(WidgetState.hovered)) {
+            const hoverAlpha = 20;
+            overlayColor = _colors.onPrimaryContainer.withAlpha(hoverAlpha);
+          } else if (states.contains(WidgetState.focused)) {
+            const focusAlpha = 31;
+            overlayColor = _colors.onPrimaryContainer.withAlpha(focusAlpha);
           }
           return Color.alphaBlend(overlayColor, _colors.primaryContainer);
         } else {
-          var overlayColor = _colors.surfaceVariant;
-          if (states.contains(MaterialState.pressed)) {
+          var overlayColor = _colors.surfaceContainerHighest;
+          if (states.contains(WidgetState.pressed)) {
             overlayColor = _colors.onSurface;
-          } else if (states.contains(MaterialState.hovered)) {
-            const hoverOpacity = 0.08;
-            overlayColor = _colors.onSurface.withOpacity(hoverOpacity);
-          } else if (states.contains(MaterialState.focused)) {
-            const focusOpacity = 0.12;
-            overlayColor = _colors.onSurface.withOpacity(focusOpacity);
+          } else if (states.contains(WidgetState.hovered)) {
+            const hoverAlpha = 20;
+            overlayColor = _colors.onSurface.withAlpha(hoverAlpha);
+          } else if (states.contains(WidgetState.focused)) {
+            const focusAlpha = 31;
+            overlayColor = _colors.onSurface.withAlpha(focusAlpha);
           }
-          return Color.alphaBlend(overlayColor, _colors.surfaceVariant);
+          return Color.alphaBlend(
+              overlayColor, _colors.surfaceContainerHighest);
         }
       });
 
@@ -445,32 +446,32 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
       Size(hourMinuteSize24Hour.width, hourMinuteSize24Hour.height - 8);
 
   @override
-  Color get hourMinuteTextColor => MaterialStateColor.resolveWith(
+  Color get hourMinuteTextColor => WidgetStateColor.resolveWith(
         (states) => _hourMinuteTextColor.resolve(states),
       );
 
-  MaterialStateProperty<Color> get _hourMinuteTextColor =>
-      MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
-          if (states.contains(MaterialState.pressed)) {
+  WidgetStateProperty<Color> get _hourMinuteTextColor =>
+      WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          if (states.contains(WidgetState.pressed)) {
             return _colors.onPrimaryContainer;
           }
-          if (states.contains(MaterialState.hovered)) {
+          if (states.contains(WidgetState.hovered)) {
             return _colors.onPrimaryContainer;
           }
-          if (states.contains(MaterialState.focused)) {
+          if (states.contains(WidgetState.focused)) {
             return _colors.onPrimaryContainer;
           }
           return _colors.onPrimaryContainer;
         } else {
           // unselected
-          if (states.contains(MaterialState.pressed)) {
+          if (states.contains(WidgetState.pressed)) {
             return _colors.onSurface;
           }
-          if (states.contains(MaterialState.hovered)) {
+          if (states.contains(WidgetState.hovered)) {
             return _colors.onSurface;
           }
-          if (states.contains(MaterialState.focused)) {
+          if (states.contains(WidgetState.focused)) {
             return _colors.onSurface;
           }
           return _colors.onSurface;
@@ -478,13 +479,13 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
       });
 
   @override
-  TextStyle get hourMinuteTextStyle => MaterialStateTextStyle.resolveWith(
+  TextStyle get hourMinuteTextStyle => WidgetStateTextStyle.resolveWith(
         (states) => _textTheme.displayMedium!
             .copyWith(color: _hourMinuteTextColor.resolve(states)),
       );
 
   @override
-  InputDecorationTheme get inputDecorationTheme {
+  InputDecorationThemeData get inputDecorationTheme {
     // This is NOT correct, but there's no token for
     // 'time-input.container.shape', so this is using the radius from the shape
     // for the hour/minute selector. It's a BorderRadiusGeometry, so we have to
@@ -492,7 +493,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
     final selectorRadius = const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(8)),
     ).borderRadius.resolve(Directionality.of(context));
-    return InputDecorationTheme(
+    return InputDecorationThemeData(
       contentPadding: EdgeInsets.zero,
       filled: true,
       // This should be derived from a token, but there isn't one for 'time-input'.
@@ -516,7 +517,7 @@ class ETTimePickerDefaultsM3 extends ETTimePickerDefaults {
         borderSide: BorderSide(color: _colors.error, width: 2),
       ),
       hintStyle: hourMinuteTextStyle.copyWith(
-        color: _colors.onSurface.withOpacity(0.36),
+        color: _colors.onSurface.withAlpha(92),
       ),
       errorStyle: const TextStyle(fontSize: 0, height: 0),
     );
