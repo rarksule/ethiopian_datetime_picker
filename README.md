@@ -64,7 +64,7 @@ for more on [ETDateTime] check ethiopian_datetime_picker package
 </p>
 
 ```dart
-var picked = await showTimePicker(
+var picked = await showETTimePicker(
   context: context,
   initialTime: TimeOfDay.fromDateTime(ETDateTime.now()),
   initialEntryMode: TimePickerEntryMode.input,
@@ -135,7 +135,7 @@ ETdateTime? pickedDate = await showModalBottomSheet<ETdateTime>(
   },
 
 if (pickedDate != null) {
-   String label = '${pickedDate.toJalaliDateTime()}';
+   String label = '${pickedDate.toString()}';
 }
 ```
 
